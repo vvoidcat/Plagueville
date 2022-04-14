@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cda0b66e20e08445aa76cb5398cdd5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: 2
+  stat: 0
 --- !u!1 &258025817
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cda0b66e20e08445aa76cb5398cdd5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: 3
+  stat: 0
 --- !u!1 &535372083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cda0b66e20e08445aa76cb5398cdd5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: 1
+  stat: 0
 --- !u!1 &1159088456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,11 +3025,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1979000579}
-  - component: {fileID: 1979000580}
+  - component: {fileID: 1979000583}
   - component: {fileID: 1979000581}
+  - component: {fileID: 1979000584}
+  - component: {fileID: 1979000582}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3049,7 +3051,30 @@ Transform:
   m_Father: {fileID: 1836183533}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1979000580
+--- !u!114 &1979000581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979000578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee8344b67fe480469108447b0b52b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initValue: 25
+  useInitValueOnGameStart: 1
+  stats:
+  - type: 0
+    value: 0
+  - type: 1
+    value: 0
+  - type: 2
+    value: 0
+  - type: 3
+    value: 0
+--- !u!114 &1979000582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3061,8 +3086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc3f258db5daa49418d39d05d1072d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerClass: 0
---- !u!114 &1979000581
+--- !u!114 &1979000583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3071,16 +3095,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1979000578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77b50698c345fe646a0d85b667bb8022, type: 3}
+  m_Script: {fileID: 11500000, guid: a56dd0e7f427c3c4eb2da1a8ab474882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initValue: 25
-  useInitValueOnGameStart: 1
-  money: 0
-  knowledge: 0
-  glory: 0
-  faith: 0
-  statPanel: {fileID: 0}
+  playerClass: 0
+--- !u!114 &1979000584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979000578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec44a2f15bbcba4ab8e3748860516f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prologueOn: 1
+  endingOn: 0
 --- !u!1 &2027000860
 GameObject:
   m_ObjectHideFlags: 0

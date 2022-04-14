@@ -5,7 +5,6 @@ using PLAGUEV.Core;
 
 namespace PLAGUEV.Control {
     public class PlayerController : MonoBehaviour {
-        [SerializeField] PlayerClass playerClass;   // delete later
 
         void Start() {
 
@@ -14,6 +13,8 @@ namespace PLAGUEV.Control {
         void Update() {
             
         }
+
+        // functions for key and mouse input
     }
 }
 

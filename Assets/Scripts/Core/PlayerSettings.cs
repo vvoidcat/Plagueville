@@ -4,18 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PLAGUEV.Core {
-
     public class PlayerSettings : MonoBehaviour {
-        public static bool isMale { get; private set; }
-
-        [System.Serializable] struct Player {
+        [SerializeField] PlayerClass playerClass;
+        struct Player {
             public PlayerClass playerClass;
             public StatType mainStat;
             public bool isMale;
             public bool isNull;
         }
-
-        [SerializeField] PlayerClass playerClass;
         Player player = new Player();
 
         void Awake() {
