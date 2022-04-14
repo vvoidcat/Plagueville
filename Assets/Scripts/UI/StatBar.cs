@@ -6,21 +6,30 @@ using PLAGUEV.Core;
 
 namespace PLAGUEV.UI {
    public class StatBar : MonoBehaviour {
-        [SerializeField] Stat stat;
-        RectTransform rect;
+        [SerializeField] StatType stat;
+
+        RectTransform rect = null;
+        StatManager statManager = null;
 
         void Awake() {
             rect = transform.GetChild(0).GetComponent<RectTransform>();
+            statManager = GameObject.FindGameObjectWithTag("Player").GetComponent<StatManager>();
         }
 
         void Start() {
-            if (Stats.valuesExist) {
-                rect.localScale = new Vector2(Stats.GetFraction(stat), 1);
-            }
+           rect.localScale = new Vector2(statManager.GetFraction(stat), 1);
         }
 
-        public void UpdateDepiction() {
-            rect.localScale = new Vector2(Stats.GetFraction(stat), 1);
+        void FixedUpdate() {
+            // if (statManager.valueModified) {          // these things should actually fire on card choice but they'll be here for now
+                DrawFiller();
+                statManager.valueModified = false;
+            //}
+        }
+
+        public void DrawFiller() {
+            rect.localScale = new Vector2(statManager.GetFraction(stat), 1);
+
         }
 
     }
