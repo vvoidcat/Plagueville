@@ -74,4 +74,4 @@ crashlytics-build.properties
 *.jpg
 
 # TextMeshPro folder
-/[Aa]ssets/[Tt]extMeshPro/
+/[Aa]ssets/[Tt]ext[Mm]esh [Pp]ro/
