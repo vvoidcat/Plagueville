@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace PLAGUEV.Core {
 
     public class StatManager : MonoBehaviour {
-        public bool valueModified { get; set; }
 
         public const int statMax = 100;
         public const int statMin = 0;
@@ -25,26 +23,18 @@ namespace PLAGUEV.Core {
 
 
         void Awake() {
-            valueModified = false;
             InitializeStats();
         }
-
-        void FixedUpdate() {
-            //valueModified = true;
-        }
-
 
 
         private void InitializeStats() {
             int i = 0;
 
             foreach (StatType type in Enum.GetValues(typeof(StatType))) {
-                stats[i].type = type;
-
                 if (useInitValueOnGameStart) {
                     stats[i].value = initValue;
                 }
-
+                stats[i].type = type;
                 i++;
             }
         }
@@ -64,8 +54,6 @@ namespace PLAGUEV.Core {
                     break;
                 }
             }
-
-            valueModified = true;
         }
 
         public int GetValue(StatType stat) {

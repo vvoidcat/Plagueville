@@ -5,7 +5,9 @@ using PLAGUEV.Core;
 
 
 namespace PLAGUEV.UI {
+
    public class StatBar : MonoBehaviour {
+
         [SerializeField] StatType stat;
 
         RectTransform rect = null;
@@ -21,15 +23,12 @@ namespace PLAGUEV.UI {
         }
 
         void FixedUpdate() {
-            // if (statManager.valueModified) {          // these things should actually fire on card choice but they'll be here for now
-                DrawFiller();
-                statManager.valueModified = false;
-            //}
+            // these things should actually fire on card choice but they'll be here for now
+            DrawFiller();
         }
 
         public void DrawFiller() {
             rect.localScale = new Vector2(statManager.GetFraction(stat), 1);
-
         }
 
     }

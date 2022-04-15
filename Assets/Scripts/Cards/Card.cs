@@ -5,7 +5,9 @@ using UnityEngine;
 
 
 namespace PLAGUEV.Cards {
+
     public class Card : MonoBehaviour {
+        
         [SerializeField] CardType type;
         CardEvent cardEvent = null;
         CardProgression progression = null;

@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PLAGUEV.Core {
+
     public class PlayerSettings : MonoBehaviour {
+        
         [SerializeField] PlayerClass playerClass;
         struct Player {
             public PlayerClass playerClass;

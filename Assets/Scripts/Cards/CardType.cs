@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace PLAGUEV.Cards {
+
     public enum CardType {
         NONE,
         UNIQUE,

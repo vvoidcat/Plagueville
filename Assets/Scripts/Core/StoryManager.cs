@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace PLAGUEV.Core {
-    public class StoryManager : MonoBehaviour
-    {
-            public bool prologueOn = true;
-            public bool endingOn = false;
+
+    public class StoryManager : MonoBehaviour {
+
+        [SerializeField] bool prologueOn = true;
+        [SerializeField] bool endingOn = false;
+
+
+        public bool GetPrologueState() {
+            return prologueOn;
+        }
+
+        public bool GetEndingState() {
+            return endingOn;
+        }
     }
 }
