@@ -26,6 +26,10 @@ namespace PLAGUEV.Core {
             InitializeStats();
         }
 
+        void FixedUpdate() {
+
+        }
+
 
         private void InitializeStats() {
             int i = 0;

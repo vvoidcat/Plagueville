@@ -6,7 +6,6 @@ namespace PLAGUEV.Control {
 
     public interface iRaycastable {
 
-        CursorType GetCursorType();
-        bool HandleRaycast();   // arguments?..
+        bool HandleRaycast();
     }
 }

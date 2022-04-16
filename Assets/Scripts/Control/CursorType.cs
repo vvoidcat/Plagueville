@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PLAGUEV.Control {
 
     public enum CursorType {
-        NONE,
+        INACTIVE,
         DEFAULT,
         HOVERING,
         CLICK

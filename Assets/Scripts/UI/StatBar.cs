@@ -27,9 +27,8 @@ namespace PLAGUEV.UI {
             DrawFiller();
         }
 
-        public void DrawFiller() {
+        private void DrawFiller() {
             rect.localScale = new Vector2(statManager.GetFraction(stat), 1);
         }
-
     }
 }
