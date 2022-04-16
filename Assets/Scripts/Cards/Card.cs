@@ -28,10 +28,18 @@ namespace PLAGUEV.Cards {
         ///*    iRAYCASTABLE    *///
 
         public bool HandleRaycast() {
-            if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) {
+            if (Input.GetKey(KeyCode.Mouse0)) {
+
+                print("card iray");
                 
                 //  player controller performs some stuff
             }
+
+            // if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) {
+
+            // }
+
+            // left and right keys ?
 
             return true;
         }

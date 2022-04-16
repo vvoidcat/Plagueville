@@ -25,14 +25,15 @@ namespace PLAGUEV.Control {
         }
 
         void Update() {
-            if (InteractWithGameObject()) return;
+            if (InteractWithUI()) return;
             if (InteractWithComponent()) return;
+            // if interact with background?..
 
             SetCursor(CursorType.INACTIVE);
         }
 
 
-        private bool InteractWithGameObject() {
+        private bool InteractWithUI() {
             bool isInterracting = false;
 
             if (EventSystem.current.IsPointerOverGameObject()) {        // find a better solution later
@@ -47,16 +48,15 @@ namespace PLAGUEV.Control {
             bool isInterracting = false;
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, Vector2.zero);
-            
-            iRaycastable raycastable = hit.transform.GetComponent<iRaycastable>();
+            RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, Vector2.zero);
 
-            if (raycastable != null && raycastable.HandleRaycast()) {
-                SetCursor(CursorType.HOVERING);
-                isInterracting = true;
-            } else {
-                SetCursor(CursorType.DEFAULT);
-                isInterracting = true;
+            foreach (RaycastHit2D hit in hits) {
+                iRaycastable raycastable = hit.transform.GetComponent<iRaycastable>();
+
+                if (raycastable != null && raycastable.HandleRaycast()) {
+                    SetCursor(CursorType.HOVERING);     // move to CardController?
+                    isInterracting = true;
+                }
             }
 
             return isInterracting;

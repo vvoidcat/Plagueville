@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 namespace PLAGUEV.Core {
 
     public class PlayerSettings : MonoBehaviour {
-        
-        [SerializeField] PlayerClass playerClass;
+
         struct Player {
             public PlayerClass playerClass;
             public StatType mainStat;
             public bool isMale;
-            public bool isNull;
+            public bool isNull;     // do i need this?..
         }
+        
+        [SerializeField] PlayerClass playerClass;
         Player player = new Player();
 
         void Awake() {
@@ -21,9 +22,8 @@ namespace PLAGUEV.Core {
         }
 
         public void InitializePlayer(PlayerClass playerClass) {
-            if (!player.isNull) return;
-
             player.playerClass = playerClass;
+            player.isNull = false;
 
             if (player.playerClass == PlayerClass.THIEF) {
                 player.mainStat = StatType.MONEY;
@@ -41,11 +41,6 @@ namespace PLAGUEV.Core {
                 player.mainStat = StatType.FAITH;
                 player.isMale = false;
             }
-
-            player.isNull = false;
-
-            // if (SceneManager.GetActiveScene().name == "Main") {
-            // }
         }
     }
 }
