@@ -8,8 +8,10 @@ namespace PLAGUEV.Cards {
     public class CardData : ScriptableObject {
 
         public CardType type;
-        public CardLocation location;
+        public bool canAppearEverywhere = false;
+        public CardLocation[] locations = new CardLocation[1];        // hidable?.. i need a custom editor.........
         public Sprite sprite = null;
+        public string characterName = null;
 
         // CardEvent dialogueTreeMain = null;
         // CardEvent dialogueTreeAlternate = null;

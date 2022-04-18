@@ -60,11 +60,22 @@ namespace PLAGUEV.Control {
             // if child of the card's current dialogue node is chained to the next one -> choose this card again and make it so that the chained node appears
             // else below
             
-            int orderInDeck = (int)Random.Range(0, cardDatas.Length - 1);
+            int orderInDeck = Random.Range(0, cardDatas.Length - 1);
             cardData = cardDatas[orderInDeck];
 
-            if (cardData.location != CardLocation.ALL && (int)cardData.location != (int)currentLocation) {
-                ChooseAgain();
+            if (!cardData.canAppearEverywhere) {
+                bool canBeChosen = false;
+
+                foreach (CardLocation cardLocation in cardData.locations) {
+                    if ((int)cardLocation == (int)currentLocation) {
+                        canBeChosen = true;
+                        break;
+                    }
+                }
+                
+                if (!canBeChosen) {
+                    ChooseAgain();
+                }
             }
         }
 
@@ -115,8 +126,10 @@ namespace PLAGUEV.Control {
             int count = 0;
 
             foreach (CardData data in cardDatas) {
-                if (data.location == check) {
-                    count++;
+                foreach (CardLocation cardLocation in data.locations) {
+                    if (cardLocation == check) {
+                        count++;
+                    }
                 }
             }
 

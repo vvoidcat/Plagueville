@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: vil_oldlady
   m_EditorClassIdentifier: 
   type: 0
-  location: 2
+  canAppearEverywhere: 0
+  locations: 10000000
   sprite: {fileID: 21300000, guid: 11c154c44d28a0542aa05abd6697143e, type: 3}
+  characterName: 
   hasClassTrees: 0
   useMainTree: 1

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: vil_boy
   m_EditorClassIdentifier: 
   type: 0
-  location: 2
+  canAppearEverywhere: 0
+  locations: 10000000
   sprite: {fileID: 21300000, guid: 4dc0ea7f62e31a441b59211f6f36aa2e, type: 3}
+  characterName: 
   hasClassTrees: 0
   useMainTree: 1
