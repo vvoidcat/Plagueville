@@ -1119,7 +1119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7c3d97f8b2cd954eb77777febb5c443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLocation: 2
+  currentLocation: 16
   cardPrefab: {fileID: 6033554468970661597, guid: d716cd1666a9e044a939b8a63c77ba1f, type: 3}
 --- !u!1 &1138655074
 GameObject:
