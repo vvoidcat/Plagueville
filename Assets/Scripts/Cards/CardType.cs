@@ -5,15 +5,11 @@ using UnityEngine;
 namespace PLAGUEV.Cards {
 
     public enum CardType {
-        NONE,
+        DEFAULT,
         UNIQUE,
         THIEF,
         WIZARD,
         GUARD,
         NUN,
-        CITY,
-        VILLAGE,
-        FOREST,
-        DUNGEON
     }
 }

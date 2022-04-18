@@ -75,3 +75,6 @@ crashlytics-build.properties
 
 # TextMeshPro folder
 /[Aa]ssets/[Tt]ext[Mm]esh [Pp]ro/
+
+# temp folders
+/[Aa]ssets/[Ss]cripts/_*

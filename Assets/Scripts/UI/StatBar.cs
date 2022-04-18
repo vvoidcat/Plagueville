@@ -19,7 +19,7 @@ namespace PLAGUEV.UI {
         }
 
         void Start() {
-           rect.localScale = new Vector2(statManager.GetFraction(stat), 1);
+            rect.localScale = new Vector2(statManager.GetFraction(stat), 1);
         }
 
         void FixedUpdate() {

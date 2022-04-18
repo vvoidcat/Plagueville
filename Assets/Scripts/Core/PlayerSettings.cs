@@ -11,7 +11,7 @@ namespace PLAGUEV.Core {
             public PlayerClass playerClass;
             public StatType mainStat;
             public bool isMale;
-            public bool isNull;     // do i need this?..
+            public bool isNull;         // do i need this?.. for what?
         }
         
         [SerializeField] PlayerClass playerClass;
@@ -21,26 +21,32 @@ namespace PLAGUEV.Core {
             InitializePlayer(playerClass);          // REMOVE WHEN THE MAIN MENU IS READY
         }
 
-        public void InitializePlayer(PlayerClass playerClass) {
-            player.playerClass = playerClass;
+        public void InitializePlayer(PlayerClass choiceClass) {
+            player.playerClass = choiceClass;
             player.isNull = false;
 
-            if (player.playerClass == PlayerClass.THIEF) {
-                player.mainStat = StatType.MONEY;
-                player.isMale = false;
+            switch (player.playerClass) {
+                case PlayerClass.THIEF:
+                    player.mainStat = StatType.MONEY;
+                    player.isMale = false;
+                    break;
+                case PlayerClass.WIZARD:
+                    player.mainStat = StatType.KNOW;
+                    player.isMale = true;
+                    break;
+                case PlayerClass.GUARD:
+                    player.mainStat = StatType.GLORY;
+                    player.isMale = true;
+                    break;
+                case PlayerClass.NUN:
+                    player.mainStat = StatType.FAITH;
+                    player.isMale = false;
+                    break;       
             }
-            if (player.playerClass == PlayerClass.WIZARD) {
-                player.mainStat = StatType.KNOW;
-                player.isMale = true;
-            }
-            if (player.playerClass == PlayerClass.GUARD) {
-                player.mainStat = StatType.GLORY;
-                player.isMale = true;
-            }
-            if (player.playerClass == PlayerClass.NUN) {
-                player.mainStat = StatType.FAITH;
-                player.isMale = false;
-            }
+        }
+
+        public PlayerClass GetPlayerClass() {
+            return player.playerClass;
         }
     }
 }

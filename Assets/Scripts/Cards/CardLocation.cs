@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace PLAGUEV.Cards {
 
-    public class CardProgression : MonoBehaviour {
-
+    public enum CardLocation {
+        ALL,
+        CITY,
+        VILLAGE,
+        FOREST,
+        DUNGEON
     }
 }
