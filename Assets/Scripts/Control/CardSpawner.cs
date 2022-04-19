@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using PLAGUEV.Cards;
 using PLAGUEV.Core;
 
@@ -90,6 +91,8 @@ namespace PLAGUEV.Control {
 
             card = Instantiate(cardPrefab, transform);
             card.GetComponent<SpriteRenderer>().sprite = cardData.sprite;
+            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);
+            // card.transform.GetChild(1).GetComponent<TextMeshPro>().SetText(cardData.characterName);      // dialogue node text
         }
 
         private void ResolveDialogueTrees() {
