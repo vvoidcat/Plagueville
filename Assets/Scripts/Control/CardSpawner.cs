@@ -89,9 +89,10 @@ namespace PLAGUEV.Control {
                 Destroy(card);
             }
 
-            card = Instantiate(cardPrefab, transform);
+            card = Instantiate(cardPrefab, transform);              // move all these to card controller
             card.GetComponent<SpriteRenderer>().sprite = cardData.sprite;
-            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);
+            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);         // should this be configurable in the dialogue system instead?..
+
             // card.transform.GetChild(1).GetComponent<TextMeshPro>().SetText(cardData.characterName);      // dialogue node text
         }
 
