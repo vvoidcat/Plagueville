@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9387dcaae84d142a01b5ffd5b4cad5, type: 3}
   m_Name: vil_boy
   m_EditorClassIdentifier: 
+  characterName: "\u0414\u0435\u0440\u0435\u0432\u0435\u043D\u0441\u043A\u0438\u0439
+    \u043C\u0430\u043B\u044C\u0447\u0438\u043A"
+  sprite: {fileID: 21300000, guid: 4dc0ea7f62e31a441b59211f6f36aa2e, type: 3}
   type: 0
   canAppearEverywhere: 0
   locations: 10000000
-  sprite: {fileID: 21300000, guid: 4dc0ea7f62e31a441b59211f6f36aa2e, type: 3}
-  characterName: 
   hasClassTrees: 0
   useMainTree: 1

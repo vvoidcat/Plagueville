@@ -30,7 +30,7 @@ namespace PLAGUEV.Control {
 
         void FixedUpdate() {
             if (hasWaited == timeToWait) {
-                if (LocationExistsInDeck((int)currentLocation)) {
+                if (LocationExistsInDeck()) {
                     ChooseCard();
                     CreateNewCard();
                 } else {
@@ -66,8 +66,8 @@ namespace PLAGUEV.Control {
             if (!cardData.canAppearEverywhere) {
                 bool canBeChosen = false;
 
-                foreach (CardLocation cardLocation in cardData.locations) {
-                    if ((int)cardLocation == (int)currentLocation) {
+                foreach (GameLocation cardLocation in cardData.locations) {
+                    if (cardLocation == currentLocation) {
                         canBeChosen = true;
                         break;
                     }
@@ -121,20 +121,24 @@ namespace PLAGUEV.Control {
             }
         }
 
-        private bool LocationExistsInDeck(int location) {
-            CardLocation check = (CardLocation)location;
-            int count = 0;
+        private bool LocationExistsInDeck() {
+            bool isInDeck = false;
 
             foreach (CardData data in cardDatas) {
-                foreach (CardLocation cardLocation in data.locations) {
-                    if (cardLocation == check) {
-                        count++;
+                if (!data.canAppearEverywhere) {
+                    isInDeck = true;
+                    break;
+                }
+
+                foreach (GameLocation cardLocation in data.locations) {
+                    if (cardLocation == currentLocation) {
+                        isInDeck = true;
+                        break;
                     }
                 }
             }
 
-            if (count > 0) return true;
-            else return false;
+            return isInDeck;
         }
     }
 }

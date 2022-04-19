@@ -7,11 +7,12 @@ namespace PLAGUEV.Cards {
     [CreateAssetMenu(fileName = "Card", menuName = "Cards/New Card", order = 0)]
     public class CardData : ScriptableObject {
 
+        public string characterName = null;
+        public Sprite sprite = null;        
         public CardType type;
         public bool canAppearEverywhere = false;
-        public CardLocation[] locations = new CardLocation[1];        // hidable?.. i need a custom editor.........
-        public Sprite sprite = null;
-        public string characterName = null;
+        public GameLocation[] locations = new GameLocation[1];        // hidable?.. i need a custom editor.........
+
 
         // CardEvent dialogueTreeMain = null;
         // CardEvent dialogueTreeAlternate = null;
