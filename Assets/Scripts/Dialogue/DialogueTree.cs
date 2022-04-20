@@ -10,9 +10,43 @@ namespace PLAGUEV.Dialogue {
     public class DialogueTree : ScriptableObject {
 
         //
-        public DialogueNode[] nodes;
+        [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
 
-        public bool isPlot = true;
-        public string characterName;
+        bool isPlot = false;
+        string characterName;
+
+#if UNITY_EDITOR
+        private void Awake() {
+            if (nodes.Count == 0) {
+                AddRootNode();
+            }
+        }
+
+        private void AddRootNode() {
+            DialogueNode rootNode = new DialogueNode();  //CreateInstance<DialogueNode>();
+
+            nodes.Add(rootNode);
+        }
+
+        public void SetPlotRelation(bool state) {
+            isPlot = state;
+        }
+
+        public void SetCharacterName(string newName) {
+            characterName = newName;
+        }
+#endif
+
+        public IEnumerable<DialogueNode> GetAllNodes() {
+            return nodes;
+        }
+
+        public bool IsPlot() {
+            return isPlot;
+        }
+
+        public string GetCharacterName() {
+            return characterName;
+        }
     }
 }
