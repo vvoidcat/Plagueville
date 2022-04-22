@@ -9,13 +9,20 @@ namespace PLAGUEV.Dialogue {
     public class DialogueNode { //: ScriptableObject {
 
         [SerializeField] SpeakerType speaker;
+        [SerializeField] string characterName;
         [SerializeField] string uniqueID;
         [SerializeField] string text;
         [SerializeField] string[] children;
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
-        [SerializeField] bool isCleared = false;
+        [SerializeField] Sprite sprite = null;
+
+        // stats
+        // bool isNegative for each
+
+        [SerializeField] bool isCleared = false;    // implement
         [SerializeField] bool isChained;
-        bool hasChainedChildren = false;            // set it somewhere
+        [SerializeField] bool isChainStarter = false;
+
         bool isRoot = false;
 
 
@@ -23,12 +30,32 @@ namespace PLAGUEV.Dialogue {
             return speaker;
         }
 
+        public string GetCharacterName() {
+            return characterName;
+        }
+
         public string GetText() {
             return text;
         }
 
+        public Sprite GetSprite() {
+            return sprite;
+        }
+
         public Rect GetRect() {
             return rect;
+        }
+
+        public bool IsCleared() {
+            return isCleared;
+        }
+
+        public bool IsChained() {
+            return isChained;
+        }
+
+        public bool IsChainStarter() {
+            return isChainStarter;
         }
 
         public bool IsRootNode() {

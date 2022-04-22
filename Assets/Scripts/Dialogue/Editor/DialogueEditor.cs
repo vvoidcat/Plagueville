@@ -51,12 +51,12 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void OnGUI() {
             DialogueGUI.SetGUIStyles();
+            EditorGUI.BeginChangeCheck();
 
             if (selectedDialogue == null) {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DrawDialogueSettings();
-                EditorGUI.BeginChangeCheck();
                 ProcessEvents();
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
@@ -69,7 +69,7 @@ namespace PLAGUEV.Dialogue.Editor {
         private void ProcessEvents() {
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
                 draggingNode = GetNodeAtPoint(Event.current.mousePosition);
-                
+
                 if (draggingNode != null) {
                     draggingOffset = draggingNode.GetRect().position - Event.current.mousePosition;
                 }
@@ -119,15 +119,12 @@ namespace PLAGUEV.Dialogue.Editor {
             EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel);
 
             GUILayout.BeginVertical();
-            EditorGUI.BeginChangeCheck();
 
             bool isPlot = EditorGUILayout.Toggle("Is Plot", selectedDialogue.IsPlot());
             string newName = "";
 
             if (!isPlot) {
-                newName = EditorGUILayout.TextField("Character Name", selectedDialogue.GetCharacterName());
-            } else {
-                // display customizable speaker name and assignable card sprite for every node
+                newName = EditorGUILayout.TextField("Character Name", selectedDialogue.GetCharacterName(), GUILayout.Width(400));
             }
 
             if (EditorGUI.EndChangeCheck()) {
@@ -147,10 +144,18 @@ namespace PLAGUEV.Dialogue.Editor {
             // if node == root
             // DrawRootNode(node);
 
-            // EditorGUI.BeginChangeCheck();
 
-            SpeakerType newSpeaker = (SpeakerType)EditorGUILayout.EnumPopup(node.GetSpeaker());
-            string newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(100));
+            SpeakerType newSpeaker = DrawSpeakerPopup(node);
+
+            if (node.GetSpeaker() == SpeakerType.CARD) {
+                if (selectedDialogue.IsPlot()) {
+                    DrawAdditionalNodeFields(node);
+                }
+                DrawToggles(node);
+            }
+
+            DrawLabel("Text", 80);
+            string newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(70));
 
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
@@ -164,6 +169,57 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void DrawRootNode(DialogueNode node) {
 
+        }
+
+        private void DrawAdditionalNodeFields(DialogueNode node) {
+            GUILayout.BeginHorizontal();
+
+            DrawLabel("Character", 80);
+            EditorGUILayout.TextField(node.GetCharacterName());
+            // set
+
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+
+            DrawLabel("Sprite", 80);
+            EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
+            // set
+
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawToggles(DialogueNode node) {
+            GUILayout.BeginHorizontal();
+
+            DrawLabel("Is Chained", 80);
+            EditorGUILayout.Toggle(node.IsChained());
+            // set
+
+            DrawLabel("Chain Starter", 100);
+            EditorGUILayout.Toggle(node.IsChainStarter());
+            // set
+
+            GUILayout.EndHorizontal();
+        }
+
+        private SpeakerType DrawSpeakerPopup(DialogueNode node)
+        {
+            SpeakerType speaker;
+
+            GUILayout.BeginHorizontal();
+
+            DrawLabel("Speaker", 80);
+            speaker = (SpeakerType)EditorGUILayout.EnumPopup(node.GetSpeaker());
+            node.SetSpeaker(speaker);
+
+            GUILayout.EndHorizontal();
+
+            return speaker;
+        }
+
+        private void DrawLabel(string labelText, float width) {
+            EditorGUILayout.LabelField(labelText + ":", EditorStyles.boldLabel, GUILayout.Width(width));
         }
     }
 }

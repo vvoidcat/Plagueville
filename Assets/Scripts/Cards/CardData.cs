@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PLAGUEV.Dialogue;
 
 namespace PLAGUEV.Cards {
 
@@ -12,14 +13,11 @@ namespace PLAGUEV.Cards {
         public CardType type;
         public bool canAppearEverywhere = false;
         public GameLocation[] locations = new GameLocation[1];
-
-
-        // CardEvent dialogueTreeMain = null;
-        // CardEvent dialogueTreeAlternate = null;
-        // CardProgression progression = null;
-
         public bool hasClassTrees = false;
         public bool useMainTree = true;
+        public DialogueTree dialogueTreeMain = null;
+        public DialogueTree dialogueTreeAlternate = null;
+        // CardProgression progression = null;
         
 
         // this should go to dialogue choices

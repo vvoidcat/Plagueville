@@ -20,3 +20,5 @@ MonoBehaviour:
   locations: 10000000
   hasClassTrees: 0
   useMainTree: 1
+  dialogueTreeMain: {fileID: 0}
+  dialogueTreeAlternate: {fileID: 0}

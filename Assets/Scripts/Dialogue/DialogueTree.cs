@@ -13,6 +13,7 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
 
         bool isPlot = false;
+        // bool allCleared = false;
         string characterName;
 
 #if UNITY_EDITOR
