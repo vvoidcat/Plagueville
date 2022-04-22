@@ -10,6 +10,8 @@ namespace PLAGUEV.Dialogue.Editor {
     public class DialogueEditor : EditorWindow {
 
         DialogueTree selectedDialogue = null;
+        DialogueNode draggingNode = null;
+        Vector2 draggingOffset;
         const float backgroundTextureSize = 100f;
 
 
@@ -54,6 +56,8 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DrawDialogueSettings();
+                EditorGUI.BeginChangeCheck();
+                ProcessEvents();
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
@@ -61,6 +65,55 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
+
+        private void ProcessEvents() {
+            if (Event.current.type == EventType.MouseDown && draggingNode == null) {
+                draggingNode = GetNodeAtPoint(Event.current.mousePosition);
+                
+                if (draggingNode != null) {
+                    draggingOffset = draggingNode.GetRect().position - Event.current.mousePosition;
+                }
+            } else if (Event.current.type == EventType.MouseDrag && draggingNode != null) {
+                Undo.RecordObject(selectedDialogue, "Undo Reposition Node");
+
+                Rect newRect = draggingNode.GetRect();
+                newRect.position = Event.current.mousePosition + draggingOffset;
+                draggingNode.SetRect(newRect);
+
+                Repaint();
+            } else if (Event.current.type == EventType.MouseUp && draggingNode != null) {
+                draggingNode = null;
+            }
+
+
+
+            // if clicked on node = change selection to node
+            // if clicked on bg = change selection to dialogue
+
+            // Selection.activeObject = 
+        }
+
+        private DialogueNode GetNodeAtPoint(Vector2 mousePosition) {
+            DialogueNode foundNode = null;
+
+            foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
+                if (node.GetRect().Contains(mousePosition)) {
+                    foundNode = node;
+                }
+            }
+
+            return foundNode;
+        }
+
+        private void ResetNodes() {
+
+        }
+
+
+
+
+
+        // DRAWING NODES AND THINGS
 
         private void DrawDialogueSettings() {
             EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel);
@@ -94,7 +147,7 @@ namespace PLAGUEV.Dialogue.Editor {
             // if node == root
             // DrawRootNode(node);
 
-            EditorGUI.BeginChangeCheck();
+            // EditorGUI.BeginChangeCheck();
 
             SpeakerType newSpeaker = (SpeakerType)EditorGUILayout.EnumPopup(node.GetSpeaker());
             string newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(100));
@@ -111,24 +164,6 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void DrawRootNode(DialogueNode node) {
 
-        }
-
-
-
-
-        private void ResetNodes() {
-
-        }
-
-
-
-
-        private void ProcessEvents() {
-
-            // if clicked on node = change selection to node
-            // if clicked on bg = change selection to dialogue
-
-            // Selection.activeObject = 
         }
     }
 }

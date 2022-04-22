@@ -41,6 +41,10 @@ namespace PLAGUEV.Dialogue {
             return nodes;
         }
 
+        public DialogueNode GetRootNode() {
+            return nodes[0];
+        }
+
         public bool IsPlot() {
             return isPlot;
         }
