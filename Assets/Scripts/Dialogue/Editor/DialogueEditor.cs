@@ -68,10 +68,10 @@ namespace PLAGUEV.Dialogue.Editor {
             GUILayout.BeginVertical();
             EditorGUI.BeginChangeCheck();
 
-            bool newState = EditorGUILayout.Toggle("Is Plot", selectedDialogue.IsPlot());
+            bool isPlot = EditorGUILayout.Toggle("Is Plot", selectedDialogue.IsPlot());
             string newName = "";
 
-            if (!newState) {
+            if (!isPlot) {
                 newName = EditorGUILayout.TextField("Character Name", selectedDialogue.GetCharacterName());
             } else {
                 // display customizable speaker name and assignable card sprite for every node
@@ -79,7 +79,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(selectedDialogue, "Undo Update Dialogue Settings");
-                selectedDialogue.SetPlotRelation(newState);
+                selectedDialogue.SetPlotRelation(isPlot);
                 selectedDialogue.SetCharacterName(newName);
             }
 

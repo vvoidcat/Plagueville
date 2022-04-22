@@ -57,6 +57,7 @@ namespace PLAGUEV.Control {
             // call location manager and update background
         }
 
+
         private void ChooseCard() {
             // if child of the card's current dialogue node is chained to the next one -> choose this card again and make it so that the chained node appears
             // else below

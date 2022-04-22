@@ -7,6 +7,10 @@ using PLAGUEV.Core;
 namespace PLAGUEV.Control {
 
     public class PlayerController : MonoBehaviour {
+        
+        StatManager statManager;
+        PlayerSettings playerSettings;
+        [SerializeField] PlayerClass playerClass;
 
         [System.Serializable] struct CursorMapping {
             public CursorType type;
@@ -17,7 +21,11 @@ namespace PLAGUEV.Control {
 
 
         void Awake() {
-            
+            statManager = transform.GetComponent<StatManager>();
+            playerSettings = transform.GetComponent<PlayerSettings>();
+
+            statManager.InitializeStats();
+            playerSettings.InitializePlayer(playerClass);          // REMOVE WHEN THE MAIN MENU IS READY
         }
 
         void Start() {

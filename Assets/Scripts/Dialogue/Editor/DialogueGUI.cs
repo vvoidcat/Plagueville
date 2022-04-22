@@ -14,6 +14,19 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] static GUIStyle rootLabelStyle;
         [NonSerialized] static GUIStyle textStyle;
 
+
+        public static GUIStyle GetNodeStyle() {
+            return style;
+        }
+
+        public static GUIStyle GetTextStyle() {
+            return textStyle;
+        }
+
+        public static GUIStyle GetRootLabelStyle() {
+            return rootLabelStyle;
+        }
+
         public static void SetGUIStyles() {
             style = new GUIStyle();
 
@@ -47,18 +60,6 @@ namespace PLAGUEV.Dialogue.Editor {
             } else {
                 style = defaultNodeStyle;
             }
-        }
-
-        public static GUIStyle GetNodeStyle() {
-            return style;
-        }
-    
-        public static GUIStyle GetTextStyle() {
-            return textStyle;
-        }
-
-        public static GUIStyle GetRootLabelStyle() {
-            return rootLabelStyle;
         }
     }
 }

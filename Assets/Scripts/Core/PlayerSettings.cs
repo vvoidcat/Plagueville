@@ -13,12 +13,12 @@ namespace PLAGUEV.Core {
             public bool isMale;
             public bool isNull;         // do i need this?.. for what?
         }
-        
-        [SerializeField] PlayerClass playerClass;
+
         Player player = new Player();
 
-        void Awake() {
-            InitializePlayer(playerClass);          // REMOVE WHEN THE MAIN MENU IS READY
+
+        public PlayerClass GetPlayerClass() {
+            return player.playerClass;
         }
 
         public void InitializePlayer(PlayerClass choiceClass) {
@@ -43,10 +43,6 @@ namespace PLAGUEV.Core {
                     player.isMale = false;
                     break;       
             }
-        }
-
-        public PlayerClass GetPlayerClass() {
-            return player.playerClass;
         }
     }
 }

@@ -22,16 +22,7 @@ namespace PLAGUEV.Core {
         [SerializeField] Stat[] stats = new Stat[statsSize];
 
 
-        void Awake() {
-            InitializeStats();
-        }
-
-        void FixedUpdate() {
-
-        }
-
-
-        private void InitializeStats() {
+        public void InitializeStats() {
             int i = 0;
 
             foreach (StatType type in Enum.GetValues(typeof(StatType))) {
@@ -81,11 +72,11 @@ namespace PLAGUEV.Core {
             return CalculateFraction(GetValue(stat));
         }
 
-        private float CalculateFraction(int stat) {
+        private static float CalculateFraction(int stat) {
             return (float)stat / statMax;
         }
 
-        private float CalculatePercentage(int stat) {
+        private static float CalculatePercentage(int stat) {
             return (float)stat / statMax * 100;
         }
     }
