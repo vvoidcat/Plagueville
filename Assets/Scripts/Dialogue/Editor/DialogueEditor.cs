@@ -10,14 +10,6 @@ namespace PLAGUEV.Dialogue.Editor {
     public class DialogueEditor : EditorWindow {
 
         DialogueTree selectedDialogue = null;
-
-        [NonSerialized] GUIStyle style;
-        [NonSerialized] GUIStyle defaultNodeStyle;
-        [NonSerialized] GUIStyle playerNodeStyle;
-        [NonSerialized] GUIStyle rootLabelStyle;
-        [NonSerialized] GUIStyle textStyle;
-
-        bool stylesOn = false;
         const float backgroundTextureSize = 100f;
 
 
@@ -56,9 +48,7 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void OnGUI() {
-            if (!stylesOn) {
-                SetGUIStyles();
-            }
+            DialogueGUI.SetGUIStyles();
 
             if (selectedDialogue == null) {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
@@ -97,9 +87,9 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void DrawNode(DialogueNode node) {
-            SetNodeStyle(node.GetSpeaker());
+            DialogueGUI.SetNodeStyle(node.GetSpeaker());
 
-            GUILayout.BeginArea(node.GetRect(), style);
+            GUILayout.BeginArea(node.GetRect(), DialogueGUI.GetNodeStyle());
 
             // if node == root
             // DrawRootNode(node);
@@ -107,7 +97,7 @@ namespace PLAGUEV.Dialogue.Editor {
             EditorGUI.BeginChangeCheck();
 
             SpeakerType newSpeaker = (SpeakerType)EditorGUILayout.EnumPopup(node.GetSpeaker());
-            string newText = EditorGUILayout.TextField(node.GetText(), textStyle, GUILayout.Height(100));
+            string newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(100));
 
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
@@ -139,48 +129,6 @@ namespace PLAGUEV.Dialogue.Editor {
             // if clicked on bg = change selection to dialogue
 
             // Selection.activeObject = 
-        }
-
-
-
-
-        // GUI
-
-        private void SetGUIStyles() {
-            style = new GUIStyle();
-
-            // card nodes
-            defaultNodeStyle = new GUIStyle();
-            defaultNodeStyle.normal.background = EditorGUIUtility.Load("node0") as Texture2D;
-            defaultNodeStyle.padding = new RectOffset(20, 20, 20, 20);
-            defaultNodeStyle.border = new RectOffset(12, 12, 12, 12);
-
-            // player nodes
-            playerNodeStyle = new GUIStyle();
-            playerNodeStyle.normal.background = EditorGUIUtility.Load("node1") as Texture2D;
-            playerNodeStyle.padding = new RectOffset(20, 20, 20, 20);
-            playerNodeStyle.border = new RectOffset(12, 12, 12, 12);
-
-            // <START> node
-            rootLabelStyle = new GUIStyle(GUI.skin.label);
-            rootLabelStyle.alignment = TextAnchor.MiddleCenter;
-            rootLabelStyle.fontStyle = FontStyle.Bold;
-
-            // text blocks
-            textStyle = new GUIStyle(GUI.skin.textField);
-            textStyle.clipping = TextClipping.Clip;
-            textStyle.wordWrap = true;
-            textStyle.padding = new RectOffset(8, 8, 8, 8);
-
-            stylesOn = true;
-        }
-
-        private void SetNodeStyle(SpeakerType speaker) {
-            if (speaker == SpeakerType.PLAYER) {
-                style = playerNodeStyle;
-            } else {
-                style = defaultNodeStyle;
-            }
         }
     }
 }

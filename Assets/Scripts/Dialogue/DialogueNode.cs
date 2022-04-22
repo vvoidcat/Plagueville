@@ -13,6 +13,7 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] string text;
         [SerializeField] string[] children;
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
+        [SerializeField] bool isCleared = false;
         [SerializeField] bool isChained;
         bool hasChainedChildren = false;            // set it somewhere
         bool isRoot = false;
