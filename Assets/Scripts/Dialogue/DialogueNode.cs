@@ -99,6 +99,14 @@ namespace PLAGUEV.Dialogue {
         public void SetRootNode(bool state) {
             isRoot = state;
         }
+
+        public void AddChild(string childID) {
+            children.Add(childID);
+        }
+
+        public void RemoveChild(string childID) {
+            children.Remove(childID);
+        }
 #endif
 
         public void SetCleared(bool state) {

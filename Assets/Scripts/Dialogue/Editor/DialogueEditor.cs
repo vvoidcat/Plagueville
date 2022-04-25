@@ -13,7 +13,7 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] DialogueNode draggingNode = null;
         [NonSerialized] DialogueNode parentNode = null;
         [NonSerialized] DialogueNode deadNode = null;
-        [NonSerialized] DialogueNode linkedParentNode = null;
+        [NonSerialized] DialogueNode linkingParentNode = null;
         
         [NonSerialized] Vector2 draggingOffset;
         [NonSerialized] Vector3 controlPointOffset = new Vector2(20, 0);
@@ -127,7 +127,7 @@ namespace PLAGUEV.Dialogue.Editor {
             draggingNode = null;
             parentNode = null;
             deadNode = null;
-            linkedParentNode = null;
+            linkingParentNode = null;
         }
 
 
@@ -208,6 +208,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
             EditorGUILayout.BeginHorizontal();
             DrawAddChildButton(node);
+            DrawLinkButtons(node);
             DrawDeleteButton(node);
             EditorGUILayout.EndHorizontal();
 
@@ -294,26 +295,36 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
-        // private void DrawLinkButtons(DialogueNode node) {
-        //     if (linkNode_parent == null) {
-        //         if (GUILayout.Button("link")) {
-        //             linkNode_parent = node;
-        //         }
-        //     } else if (linkNode_parent == node) {
-        //         if (GUILayout.Button("cancel")) {
-        //             linkNode_parent = null;
-        //         }
-        //     } else if (linkNode_parent.GetChildren().Contains(node.name)) {
-        //         if (GUILayout.Button("unchild")) {
-        //             linkNode_parent.RemoveChild(node.name);
-        //             linkNode_parent = null;
-        //         }
-        //     } else {
-        //         if (GUILayout.Button("child")) {
-        //             linkNode_parent.AddChild(node.name);
-        //             linkNode_parent = null;
-        //         }
-        //     }
-        // }
+        private void DrawLinkButtons(DialogueNode node) {
+            bool isLinkable = true;
+
+            if (linkingParentNode == null) {
+                if (GUILayout.Button("link")) {
+                    linkingParentNode = node;
+                }
+            } else if (linkingParentNode == node) {
+                if (GUILayout.Button("cancel")) {
+                    linkingParentNode = null;
+                }
+            } else if (linkingParentNode.GetChildren().Contains(node.GetID())) {
+                if (GUILayout.Button("unchild")) {
+                    linkingParentNode.RemoveChild(node.GetID());
+                    linkingParentNode = null;
+                }
+            } else {
+                if (node.GetChildren().Contains(linkingParentNode.GetID())) {
+                    isLinkable = false;
+                }
+
+                GUI.enabled = isLinkable;
+
+                if (GUILayout.Button("child")) {
+                    linkingParentNode.AddChild(node.GetID());
+                    linkingParentNode = null;
+                }
+                
+                GUI.enabled = true;
+            }
+        }
     }
 }
