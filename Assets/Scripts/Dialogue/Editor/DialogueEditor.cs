@@ -12,6 +12,8 @@ namespace PLAGUEV.Dialogue.Editor {
         DialogueTree selectedDialogue = null;
         DialogueNode draggingNode = null;
         Vector2 draggingOffset;
+        Vector3 controlPointOffset = new Vector2(20, 0);
+        Color chainColor = new Color(0.3f, 0.5f, 1f);
         const float backgroundTextureSize = 100f;
 
 
@@ -57,16 +59,17 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DrawDialogueSettings();
-                ProcessEvents();
+                ProcessNodeDragging();
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
+                    DrawConnections(node);
                 }
             }
         }
 
 
-        private void ProcessEvents() {
+        private void ProcessNodeDragging() {
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
                 draggingNode = GetNodeAtPoint(Event.current.mousePosition);
 
@@ -184,6 +187,24 @@ namespace PLAGUEV.Dialogue.Editor {
 
         }
 
+        private void DrawConnections(DialogueNode node) {
+            Vector3 startPosition = new Vector2(node.GetRect().xMax, node.GetRect().center.y);
+
+            foreach (DialogueNode childNode in selectedDialogue.GetAllChildren(node)) {
+                Vector3 endPosition = new Vector2(childNode.GetRect().xMin, childNode.GetRect().center.y);
+                Color lineColor = Color.white;
+
+                if (childNode.IsChained()) {
+                    lineColor = chainColor;
+                }
+
+                Handles.DrawBezier(startPosition, endPosition,
+                                   startPosition + controlPointOffset,
+                                   endPosition - controlPointOffset,
+                                   lineColor, null, 4f);
+            }
+        }
+
         private void DrawAdditionalNodeFields(DialogueNode node) {
             GUILayout.BeginHorizontal();
 
@@ -197,20 +218,6 @@ namespace PLAGUEV.Dialogue.Editor {
 
             DrawLabel("Sprite", 80);
             EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
-            // set
-
-            GUILayout.EndHorizontal();
-        }
-
-        private void DrawToggles(DialogueNode node) {
-            GUILayout.BeginHorizontal();
-
-            DrawLabel("Is Chained", 80);
-            bool newState = EditorGUILayout.Toggle(node.IsChained());
-            //node.SetChained(newState);
-
-            // DrawLabel("Chain Starter", 100);
-            // EditorGUILayout.Toggle(node.IsChainStarter());
             // set
 
             GUILayout.EndHorizontal();

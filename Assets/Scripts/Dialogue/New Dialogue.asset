@@ -14,24 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - speaker: 1
-    uniqueID: 
+    sprite: {fileID: 0}
+    characterName: 
     text: 3wwwwwwqqqsss
-    children: []
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 99.1
-      width: 300
-      height: 250
     isChained: 0
-  - speaker: 0
+    isCleared: 0
     uniqueID: 
+    children:
+    - 
+    rect:
+      serializedVersion: 2
+      x: 70.999985
+      y: 150.1
+      width: 300
+      height: 250
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
     text: 3wwwwwssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+    isChained: 1
+    isCleared: 0
+    uniqueID: 
     children: []
     rect:
       serializedVersion: 2
-      x: 0
-      y: 354.8
+      x: 425
+      y: 41.80002
       width: 300
       height: 250
-    isChained: 0

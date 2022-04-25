@@ -9,7 +9,6 @@ namespace PLAGUEV.Dialogue {
     [CreateAssetMenu(fileName = "New Dialogue", menuName = "Dialogue/New Dialogue", order = 0)]
     public class DialogueTree : ScriptableObject {
 
-        //
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
 
