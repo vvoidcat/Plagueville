@@ -11,17 +11,30 @@ namespace PLAGUEV.Dialogue {
 
         //
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
+        Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
 
         bool isPlot = false;
         // bool allCleared = false;
         string characterName;
+
+
+        private void OnValidate() {
+            nodeLookup.Clear();
+
+            foreach (DialogueNode node in GetAllNodes()) {
+                nodeLookup[node.GetID()] = node;
+            }
+        }
 
 #if UNITY_EDITOR
         private void Awake() {
             if (nodes.Count == 0) {
                 AddRootNode();
             }
+
+            OnValidate();
         }
+
 
         private void AddRootNode() {
             DialogueNode rootNode = new DialogueNode();  //CreateInstance<DialogueNode>();
@@ -38,12 +51,21 @@ namespace PLAGUEV.Dialogue {
         }
 #endif
 
+
         public IEnumerable<DialogueNode> GetAllNodes() {
             return nodes;
         }
 
         public DialogueNode GetRootNode() {
             return nodes[0];
+        }
+
+        public IEnumerable<DialogueNode> GetAllChildren(DialogueNode parentNode) {
+            foreach (string childID in parentNode.GetChildren()) {
+                if (nodeLookup.ContainsKey(childID)) {
+                    yield return nodeLookup[childID];
+                }
+            }
         }
 
         public bool IsPlot() {

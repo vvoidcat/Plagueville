@@ -9,25 +9,28 @@ namespace PLAGUEV.Dialogue {
     public class DialogueNode { //: ScriptableObject {
 
         [SerializeField] SpeakerType speaker;
-        [SerializeField] string characterName;
-        [SerializeField] string uniqueID;
-        [SerializeField] string text;
-        [SerializeField] string[] children;
-        [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
         [SerializeField] Sprite sprite = null;
+        [SerializeField] string characterName;
+        [SerializeField] string text;
+        [SerializeField] bool isChained;
+
 
         // stats
         // bool isNegative for each
-
         [SerializeField] bool isCleared = false;    // implement
-        [SerializeField] bool isChained;
-        [SerializeField] bool isChainStarter = false;
 
+        [SerializeField] string uniqueID;
+        [SerializeField] string[] children;
+        [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
         bool isRoot = false;
 
 
         public SpeakerType GetSpeaker() {
             return speaker;
+        }
+
+        public Sprite GetSprite() {
+            return sprite;
         }
 
         public string GetCharacterName() {
@@ -38,29 +41,30 @@ namespace PLAGUEV.Dialogue {
             return text;
         }
 
-        public Sprite GetSprite() {
-            return sprite;
-        }
-
-        public Rect GetRect() {
-            return rect;
+        public bool IsChained() {
+            return isChained;
         }
 
         public bool IsCleared() {
             return isCleared;
         }
 
-        public bool IsChained() {
-            return isChained;
+        public string GetID() {
+            return uniqueID;
+        }
+        
+        public IEnumerable GetChildren() {
+            return children;
         }
 
-        public bool IsChainStarter() {
-            return isChainStarter;
+        public Rect GetRect() {
+            return rect;
         }
 
-        public bool IsRootNode() {
+        public bool IsRoot() {
             return isRoot;
         }
+
 
 
 #if UNITY_EDITOR
@@ -76,10 +80,18 @@ namespace PLAGUEV.Dialogue {
             rect = newRect;
         }
 
+        public void SetChained(bool state) {
+            isChained = state;
+        }
+
         public void SetRootNode(bool state) {
             isRoot = state;
         }
 #endif
+
+        public void SetCleared(bool state) {
+            isCleared = state;
+        }
 
     }
 }

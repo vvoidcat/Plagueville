@@ -138,30 +138,43 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void DrawNode(DialogueNode node) {
             DialogueGUI.SetNodeStyle(node.GetSpeaker());
-
             GUILayout.BeginArea(node.GetRect(), DialogueGUI.GetNodeStyle());
 
             // if node == root
             // DrawRootNode(node);
 
+            bool newState = node.IsChained();
+            string newText = node.GetText();
+            SpeakerType newSpeaker = node.GetSpeaker();
 
-            SpeakerType newSpeaker = DrawSpeakerPopup(node);
+            newSpeaker = DrawSpeakerPopup(node);
 
-            if (node.GetSpeaker() == SpeakerType.CARD) {
+            if (newSpeaker == SpeakerType.CARD) {
                 if (selectedDialogue.IsPlot()) {
                     DrawAdditionalNodeFields(node);
                 }
-                DrawToggles(node);
             }
 
             DrawLabel("Text", 80);
-            string newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(70));
+            newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(70));
+
+            if (newSpeaker == SpeakerType.CARD) {
+                GUILayout.BeginHorizontal();
+                DrawLabel("Is Chained", 80);
+                newState = EditorGUILayout.Toggle(node.IsChained());
+                GUILayout.EndHorizontal();
+            }
 
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
 
                 node.SetText(newText);
                 node.SetSpeaker(newSpeaker);
+                node.SetChained(newState);
+            }
+
+            if (selectedDialogue.GetAllChildren(node) != null) {
+                //Debug.Log("node has children");
             }
 
             GUILayout.EndArea();
@@ -193,11 +206,11 @@ namespace PLAGUEV.Dialogue.Editor {
             GUILayout.BeginHorizontal();
 
             DrawLabel("Is Chained", 80);
-            EditorGUILayout.Toggle(node.IsChained());
-            // set
+            bool newState = EditorGUILayout.Toggle(node.IsChained());
+            //node.SetChained(newState);
 
-            DrawLabel("Chain Starter", 100);
-            EditorGUILayout.Toggle(node.IsChainStarter());
+            // DrawLabel("Chain Starter", 100);
+            // EditorGUILayout.Toggle(node.IsChainStarter());
             // set
 
             GUILayout.EndHorizontal();
