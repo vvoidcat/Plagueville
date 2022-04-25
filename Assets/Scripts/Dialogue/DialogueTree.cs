@@ -37,8 +37,27 @@ namespace PLAGUEV.Dialogue {
 
         private void AddRootNode() {
             DialogueNode rootNode = new DialogueNode();  //CreateInstance<DialogueNode>();
+            rootNode.SetID(Guid.NewGuid().ToString());
 
             nodes.Add(rootNode);
+        }
+
+        public void CreateNode(DialogueNode parent) {
+            DialogueNode newNode = new DialogueNode();
+            newNode.SetID(Guid.NewGuid().ToString());
+            parent.GetChildren().Add(newNode.GetID());
+            nodes.Add(newNode);
+            OnValidate();
+        }
+
+        public void DeleteNode(DialogueNode deadNode) {
+            nodes.Remove(deadNode);
+
+            foreach (DialogueNode node in GetAllNodes()) {
+                node.GetChildren().Remove(deadNode.GetID());
+            }
+
+            OnValidate();
         }
 
         public void SetPlotRelation(bool state) {

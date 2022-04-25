@@ -10,10 +10,14 @@ namespace PLAGUEV.Dialogue.Editor {
     public class DialogueEditor : EditorWindow {
 
         DialogueTree selectedDialogue = null;
-        DialogueNode draggingNode = null;
-        Vector2 draggingOffset;
-        Vector3 controlPointOffset = new Vector2(20, 0);
-        Color chainColor = new Color(0.3f, 0.5f, 1f);
+        [NonSerialized] DialogueNode draggingNode = null;
+        [NonSerialized] DialogueNode parentNode = null;
+        [NonSerialized] DialogueNode deadNode = null;
+        [NonSerialized] DialogueNode linkedParentNode = null;
+        
+        [NonSerialized] Vector2 draggingOffset;
+        [NonSerialized] Vector3 controlPointOffset = new Vector2(20, 0);
+        [NonSerialized] Color chainColor = new Color(0.3f, 0.5f, 1f);       // move to DialogueGUI
         const float backgroundTextureSize = 100f;
 
 
@@ -41,7 +45,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (newDialogue != null) {
                 selectedDialogue = newDialogue;
-                ResetNodes();
+                // ResetNodes();
                 Repaint();
             }
         }
@@ -64,6 +68,17 @@ namespace PLAGUEV.Dialogue.Editor {
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
                     DrawConnections(node);
+                }
+
+                if (parentNode != null) {
+                    Undo.RecordObject(selectedDialogue, "Undo Add Node");
+                    selectedDialogue.CreateNode(parentNode);
+                    parentNode = null;
+                }
+                if (deadNode != null) {
+                    Undo.RecordObject(selectedDialogue, "Undo Delete Node");
+                    selectedDialogue.DeleteNode(deadNode);
+                    deadNode = null;
                 }
             }
         }
@@ -88,7 +103,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 draggingNode = null;
             }
 
-
+            // deadzone rect
 
             // if clicked on node = change selection to node
             // if clicked on bg = change selection to dialogue
@@ -109,8 +124,19 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void ResetNodes() {
-
+            draggingNode = null;
+            parentNode = null;
+            deadNode = null;
+            linkedParentNode = null;
         }
+
+
+
+
+
+
+
+
 
 
 
@@ -180,11 +206,26 @@ namespace PLAGUEV.Dialogue.Editor {
                 //Debug.Log("node has children");
             }
 
+            EditorGUILayout.BeginHorizontal();
+            DrawAddChildButton(node);
+            DrawDeleteButton(node);
+            EditorGUILayout.EndHorizontal();
+
             GUILayout.EndArea();
         }
 
         private void DrawRootNode(DialogueNode node) {
+            // GUILayout.BeginArea(node.GetRect(), DialogueGUI.GetNodeStyle());
 
+            // EditorGUILayout.LabelField("<START>", rootLabelStyle);
+
+            // GUILayout.FlexibleSpace();
+            // GUILayout.BeginHorizontal();
+            // DrawLinkButtons(node);
+            // DrawAddChildButton(node);
+            // GUILayout.EndHorizontal();
+            
+            // GUILayout.EndArea();
         }
 
         private void DrawConnections(DialogueNode node) {
@@ -207,18 +248,15 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void DrawAdditionalNodeFields(DialogueNode node) {
             GUILayout.BeginHorizontal();
-
             DrawLabel("Character", 80);
-            EditorGUILayout.TextField(node.GetCharacterName());
-            // set
-
+            string newName = EditorGUILayout.TextField(node.GetCharacterName());
+            node.SetCharacterName(newName);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-
             DrawLabel("Sprite", 80);
-            EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
-            // set
+            Sprite newSprite = (Sprite)EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
+            node.SetSprite(newSprite);
 
             GUILayout.EndHorizontal();
         }
@@ -228,11 +266,9 @@ namespace PLAGUEV.Dialogue.Editor {
             SpeakerType speaker;
 
             GUILayout.BeginHorizontal();
-
             DrawLabel("Speaker", 80);
             speaker = (SpeakerType)EditorGUILayout.EnumPopup(node.GetSpeaker());
             node.SetSpeaker(speaker);
-
             GUILayout.EndHorizontal();
 
             return speaker;
@@ -241,5 +277,43 @@ namespace PLAGUEV.Dialogue.Editor {
         private void DrawLabel(string labelText, float width) {
             EditorGUILayout.LabelField(labelText + ":", EditorStyles.boldLabel, GUILayout.Width(width));
         }
+
+
+
+
+
+        private void DrawAddChildButton(DialogueNode node) {
+            if (GUILayout.Button("+")) {
+                parentNode = node;
+            }
+        }
+
+        private void DrawDeleteButton(DialogueNode node) {
+            if (GUILayout.Button("x")) {
+                deadNode = node;
+            }
+        }
+
+        // private void DrawLinkButtons(DialogueNode node) {
+        //     if (linkNode_parent == null) {
+        //         if (GUILayout.Button("link")) {
+        //             linkNode_parent = node;
+        //         }
+        //     } else if (linkNode_parent == node) {
+        //         if (GUILayout.Button("cancel")) {
+        //             linkNode_parent = null;
+        //         }
+        //     } else if (linkNode_parent.GetChildren().Contains(node.name)) {
+        //         if (GUILayout.Button("unchild")) {
+        //             linkNode_parent.RemoveChild(node.name);
+        //             linkNode_parent = null;
+        //         }
+        //     } else {
+        //         if (GUILayout.Button("child")) {
+        //             linkNode_parent.AddChild(node.name);
+        //             linkNode_parent = null;
+        //         }
+        //     }
+        // }
     }
 }

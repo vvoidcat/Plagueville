@@ -16,29 +16,89 @@ MonoBehaviour:
   - speaker: 1
     sprite: {fileID: 0}
     characterName: 
-    text: 3wwwwwwqqqsss
+    text: 
     isChained: 0
     isCleared: 0
-    uniqueID: 
+    uniqueID: 4e202716-2118-4e37-a7de-e74484665550
     children:
-    - 
+    - 4e202716-2118-4e37-a7de-e74484665550
     rect:
       serializedVersion: 2
-      x: 70.999985
-      y: 150.1
+      x: -12
+      y: 124.999985
       width: 300
       height: 250
   - speaker: 0
     sprite: {fileID: 0}
     characterName: 
-    text: 3wwwwwssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-    isChained: 1
+    text: 
+    isChained: 0
     isCleared: 0
-    uniqueID: 
+    uniqueID: 4e202716-2118-4e37-a7de-e74484665550
+    children:
+    - 
+    rect:
+      serializedVersion: 2
+      x: 787.99994
+      y: -4
+      width: 300
+      height: 250
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCleared: 0
+    uniqueID: 4e202716-2118-4e37-a7de-e74484665550
+    children:
+    - 
+    - 40b3a52d-35ec-4c40-8b82-6ec0ba544bff
+    rect:
+      serializedVersion: 2
+      x: 91.999985
+      y: 293.99997
+      width: 300
+      height: 250
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCleared: 0
+    uniqueID: 23f0d703-a641-43b9-81d7-55432998d901
     children: []
     rect:
       serializedVersion: 2
-      x: 425
-      y: 41.80002
+      x: 991
+      y: 253.99998
+      width: 300
+      height: 250
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCleared: 0
+    uniqueID: 40b3a52d-35ec-4c40-8b82-6ec0ba544bff
+    children:
+    - 17a8090b-343e-423c-ab3c-365e0bd5cc18
+    rect:
+      serializedVersion: 2
+      x: 434
+      y: 307
+      width: 300
+      height: 250
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCleared: 0
+    uniqueID: 17a8090b-343e-423c-ab3c-365e0bd5cc18
+    children: []
+    rect:
+      serializedVersion: 2
+      x: 773
+      y: 315
       width: 300
       height: 250

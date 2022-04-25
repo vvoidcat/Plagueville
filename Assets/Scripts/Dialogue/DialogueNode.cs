@@ -20,7 +20,7 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] bool isCleared = false;    // implement
 
         [SerializeField] string uniqueID;
-        [SerializeField] string[] children;
+        [SerializeField] List<string> children = new List<string>();
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
         bool isRoot = false;
 
@@ -52,8 +52,8 @@ namespace PLAGUEV.Dialogue {
         public string GetID() {
             return uniqueID;
         }
-        
-        public IEnumerable GetChildren() {
+
+        public List<string> GetChildren() {
             return children;
         }
 
@@ -72,16 +72,28 @@ namespace PLAGUEV.Dialogue {
             speaker = newSpeaker;
         }
 
+        public void SetSprite(Sprite newSprite) {
+            sprite = newSprite;
+        }
+
+        public void SetCharacterName(string newName) {
+            characterName = newName;
+        }
+
         public void SetText(string newText) {
             text = newText;
         }
 
-        public void SetRect(Rect newRect) {
-            rect = newRect;
-        }
-
         public void SetChained(bool state) {
             isChained = state;
+        }
+
+        public void SetID(string id) {
+            uniqueID = id;
+        }
+
+        public void SetRect(Rect newRect) {
+            rect = newRect;
         }
 
         public void SetRootNode(bool state) {
