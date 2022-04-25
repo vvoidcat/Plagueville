@@ -2682,6 +2682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc3f258db5daa49418d39d05d1072d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerClass: 0
   cursorMappings:
   - type: 0
     texture: {fileID: 2800000, guid: e97809e084f7eaf4bb7b3ba964e99832, type: 3}
@@ -2707,7 +2708,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56dd0e7f427c3c4eb2da1a8ab474882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerClass: 0
 --- !u!114 &1979000584
 MonoBehaviour:
   m_ObjectHideFlags: 0
