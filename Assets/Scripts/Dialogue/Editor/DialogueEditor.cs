@@ -317,7 +317,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 }
 
                 GUI.enabled = isLinkable;
-
+                
                 if (GUILayout.Button("child")) {
                     linkingParentNode.AddChild(node.GetID());
                     linkingParentNode = null;
