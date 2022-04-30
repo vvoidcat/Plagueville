@@ -13,7 +13,7 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] DialogueNode draggingNode = null;
         [NonSerialized] DialogueNode parentNode = null;
         [NonSerialized] DialogueNode deadNode = null;
-        [NonSerialized] DialogueNode linkingParentNode = null;
+        [NonSerialized] DialogueNode linkerNode = null;
         
         [NonSerialized] Vector2 draggingOffset;
         [NonSerialized] Vector3 controlPointOffset = new Vector2(20, 0);
@@ -127,7 +127,7 @@ namespace PLAGUEV.Dialogue.Editor {
             draggingNode = null;
             parentNode = null;
             deadNode = null;
-            linkingParentNode = null;
+            linkerNode = null;
         }
 
 
@@ -172,16 +172,19 @@ namespace PLAGUEV.Dialogue.Editor {
             // if node == root
             // DrawRootNode(node);
 
-            bool newState = node.IsChained();
+            bool newChainedState = node.GetChainedState();
+            bool newCustomState = node.GetCustomState();
             string newText = node.GetText();
             SpeakerType newSpeaker = node.GetSpeaker();
 
-            newSpeaker = DrawSpeakerPopup(node);
+            newSpeaker = DrawSpeakerField(node);
 
             if (newSpeaker == SpeakerType.CARD) {
-                if (selectedDialogue.IsPlot()) {
-                    DrawAdditionalNodeFields(node);
+                if (selectedDialogue.IsPlot() || newCustomState) {
+                    DrawCharacterField(node);
+                    DrawSpriteField(node);
                 }
+                DrawStats(node);
             }
 
             DrawLabel("Text", 80);
@@ -189,8 +192,11 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (newSpeaker == SpeakerType.CARD) {
                 GUILayout.BeginHorizontal();
-                DrawLabel("Is Chained", 80);
-                newState = EditorGUILayout.Toggle(node.IsChained());
+                DrawLabel("Chained", 80);
+                newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
+
+                DrawLabel("Custom", 80);
+                newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
                 GUILayout.EndHorizontal();
             }
 
@@ -199,7 +205,8 @@ namespace PLAGUEV.Dialogue.Editor {
 
                 node.SetText(newText);
                 node.SetSpeaker(newSpeaker);
-                node.SetChained(newState);
+                node.SetChained(newChainedState);
+                node.SetCustom(newCustomState);
             }
 
             if (selectedDialogue.GetAllChildren(node) != null) {
@@ -236,7 +243,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 Vector3 endPosition = new Vector2(childNode.GetRect().xMin, childNode.GetRect().center.y);
                 Color lineColor = Color.white;
 
-                if (childNode.IsChained()) {
+                if (childNode.GetChainedState()) {
                     lineColor = chainColor;
                 }
 
@@ -247,22 +254,11 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
-        private void DrawAdditionalNodeFields(DialogueNode node) {
-            GUILayout.BeginHorizontal();
-            DrawLabel("Character", 80);
-            string newName = EditorGUILayout.TextField(node.GetCharacterName());
-            node.SetCharacterName(newName);
-            GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            DrawLabel("Sprite", 80);
-            Sprite newSprite = (Sprite)EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
-            node.SetSprite(newSprite);
 
-            GUILayout.EndHorizontal();
-        }
 
-        private SpeakerType DrawSpeakerPopup(DialogueNode node)
+
+        private SpeakerType DrawSpeakerField(DialogueNode node)
         {
             SpeakerType speaker;
 
@@ -275,9 +271,44 @@ namespace PLAGUEV.Dialogue.Editor {
             return speaker;
         }
 
+        private void DrawCharacterField(DialogueNode node) {
+            GUILayout.BeginHorizontal();
+            DrawLabel("Character", 80);
+            string newName = EditorGUILayout.TextField(node.GetCharacterName());
+            node.SetCharacterName(newName);
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawSpriteField(DialogueNode node) {
+            GUILayout.BeginHorizontal();
+            DrawLabel("Sprite", 80);
+            Sprite newSprite = (Sprite)EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
+            node.SetSprite(newSprite);
+            GUILayout.EndHorizontal();
+        }
+
+        private void DrawStats(DialogueNode node) {
+            int[] nodeValues = node.GetStatValues();
+            int[] newValues = new int[nodeValues.Length];
+            string[] labels = new string[] {"Money", "Knowledge", "Glory", "Faith"};
+
+            for (int i = 0; i < nodeValues.Length; i++) {
+                GUILayout.BeginHorizontal();
+                DrawLabel(labels[i], 80);
+                newValues[i] = EditorGUILayout.IntSlider(nodeValues[i], -100, 100);
+                GUILayout.EndHorizontal();
+            }
+
+            node.SetStatValues(newValues);
+        }
+
         private void DrawLabel(string labelText, float width) {
             EditorGUILayout.LabelField(labelText + ":", EditorStyles.boldLabel, GUILayout.Width(width));
         }
+
+
+
+
 
 
 
@@ -298,29 +329,29 @@ namespace PLAGUEV.Dialogue.Editor {
         private void DrawLinkButtons(DialogueNode node) {
             bool isLinkable = true;
 
-            if (linkingParentNode == null) {
+            if (linkerNode == null) {
                 if (GUILayout.Button("link")) {
-                    linkingParentNode = node;
+                    linkerNode = node;
                 }
-            } else if (linkingParentNode == node) {
+            } else if (linkerNode == node) {
                 if (GUILayout.Button("cancel")) {
-                    linkingParentNode = null;
+                    linkerNode = null;
                 }
-            } else if (linkingParentNode.GetChildren().Contains(node.GetID())) {
+            } else if (linkerNode.GetChildren().Contains(node.GetID())) {
                 if (GUILayout.Button("unchild")) {
-                    linkingParentNode.RemoveChild(node.GetID());
-                    linkingParentNode = null;
+                    linkerNode.RemoveChild(node.GetID());
+                    linkerNode = null;
                 }
             } else {
-                if (node.GetChildren().Contains(linkingParentNode.GetID())) {
+                if (node.GetChildren().Contains(linkerNode.GetID())) {
                     isLinkable = false;
                 }
 
                 GUI.enabled = isLinkable;
                 
                 if (GUILayout.Button("child")) {
-                    linkingParentNode.AddChild(node.GetID());
-                    linkingParentNode = null;
+                    linkerNode.AddChild(node.GetID());
+                    linkerNode = null;
                 }
                 
                 GUI.enabled = true;

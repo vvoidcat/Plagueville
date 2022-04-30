@@ -13,15 +13,20 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] string characterName;
         [SerializeField] string text;
         [SerializeField] bool isChained;
+        [SerializeField] bool isCustom;
 
+        [Range(-100, 100)] [SerializeField] int money = 0;
+        [Range(-100, 100)] [SerializeField] int knowledge = 0;
+        [Range(-100, 100)] [SerializeField] int glory = 0;
+        [Range(-100, 100)] [SerializeField] int faith = 0;
 
-        // stats
-        // bool isNegative for each
         [SerializeField] bool isCleared = false;    // implement
+        // set timer
 
         [SerializeField] string uniqueID;
         [SerializeField] List<string> children = new List<string>();
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
+        
         bool isRoot = false;
 
 
@@ -41,13 +46,24 @@ namespace PLAGUEV.Dialogue {
             return text;
         }
 
-        public bool IsChained() {
+        public bool GetChainedState() {
             return isChained;
         }
 
-        public bool IsCleared() {
+        public bool GetCustomState() {
+            return isCustom;
+        }
+
+
+        public int[] GetStatValues() {
+            int[] values = new int[] {money, knowledge, glory, faith};
+            return values; 
+        }
+
+        public bool GetClearedState() {
             return isCleared;
         }
+
 
         public string GetID() {
             return uniqueID;
@@ -61,7 +77,7 @@ namespace PLAGUEV.Dialogue {
             return rect;
         }
 
-        public bool IsRoot() {
+        public bool GetRootState() {
             return isRoot;
         }
 
@@ -88,6 +104,10 @@ namespace PLAGUEV.Dialogue {
             isChained = state;
         }
 
+        public void SetCustom(bool state) {
+            isCustom = state;
+        }
+
         public void SetID(string id) {
             uniqueID = id;
         }
@@ -96,7 +116,7 @@ namespace PLAGUEV.Dialogue {
             rect = newRect;
         }
 
-        public void SetRootNode(bool state) {
+        public void SetRoot(bool state) {
             isRoot = state;
         }
 
@@ -106,6 +126,14 @@ namespace PLAGUEV.Dialogue {
 
         public void RemoveChild(string childID) {
             children.Remove(childID);
+        }
+
+
+        public void SetStatValues(int[] newValues) {
+            money = newValues[0];
+            knowledge = newValues[1];
+            glory = newValues[2];
+            faith = newValues[3];
         }
 #endif
 
