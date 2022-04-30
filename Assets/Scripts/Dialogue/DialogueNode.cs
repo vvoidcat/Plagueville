@@ -12,8 +12,8 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] Sprite sprite = null;
         [SerializeField] string characterName;
         [SerializeField] string text;
-        [SerializeField] bool isChained;
-        [SerializeField] bool isCustom;
+        [SerializeField] bool isChained = false;
+        [SerializeField] bool isCustom = false;
 
         [Range(-100, 100)] [SerializeField] int money = 0;
         [Range(-100, 100)] [SerializeField] int knowledge = 0;
@@ -127,7 +127,6 @@ namespace PLAGUEV.Dialogue {
         public void RemoveChild(string childID) {
             children.Remove(childID);
         }
-
 
         public void SetStatValues(int[] newValues) {
             money = newValues[0];

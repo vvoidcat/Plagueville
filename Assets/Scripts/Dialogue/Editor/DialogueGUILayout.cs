@@ -7,11 +7,13 @@ using UnityEditor;
 
 namespace PLAGUEV.Dialogue.Editor {
 
-    public static class DialogueGUILayout
-    {
+    public static class DialogueGUILayout {
 
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
         [NonSerialized] static Color chainColor = new Color(0.3f, 0.5f, 1f);
+        private const float playerHeight = 180;
+        private const float cardHeight = 280;
+        private const float customHeight = 320;
 
 
         public static void DrawConnections(DialogueTree selectedDialogue, DialogueNode node) {
@@ -30,6 +32,22 @@ namespace PLAGUEV.Dialogue.Editor {
                                    endPosition - controlPointOffset,
                                    lineColor, null, 4f);
             }
+        }
+
+        public static void ResetNodeHeight(DialogueNode node, SpeakerType speaker) {
+            Rect newRect = node.GetRect();
+
+            if (speaker == SpeakerType.CARD) {
+                if (node.GetCustomState()) {
+                    newRect.height = customHeight;
+                } else {
+                    newRect.height = cardHeight;
+                }
+            } else {
+                newRect.height = playerHeight;
+            }
+
+            node.SetRect(newRect);
         }
 
 

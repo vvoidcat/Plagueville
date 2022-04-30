@@ -10,6 +10,7 @@ namespace PLAGUEV.Dialogue.Editor {
     public class DialogueEditor : EditorWindow {
 
         DialogueTree selectedDialogue = null;
+
         [NonSerialized] DialogueNode draggingNode = null;
         [NonSerialized] DialogueNode parentNode = null;
         [NonSerialized] DialogueNode deadNode = null;
@@ -193,6 +194,8 @@ namespace PLAGUEV.Dialogue.Editor {
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
             }
+
+            DialogueGUILayout.ResetNodeHeight(node, newSpeaker);
         }
 
         private void DrawRootNode(DialogueNode node) {
