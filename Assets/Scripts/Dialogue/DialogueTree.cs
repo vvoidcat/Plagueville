@@ -86,7 +86,7 @@ namespace PLAGUEV.Dialogue {
             }
         }
 
-        public bool IsPlot() {
+        public bool GetPlotState() {
             return isPlot;
         }
 

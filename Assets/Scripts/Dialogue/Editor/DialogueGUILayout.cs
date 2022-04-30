@@ -11,6 +11,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
         [NonSerialized] static Color chainColor = new Color(0.3f, 0.5f, 1f);
+
         private const float playerHeight = 180;
         private const float cardHeight = 280;
         private const float customHeight = 320;
@@ -34,11 +35,12 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
-        public static void ResetNodeHeight(DialogueNode node, SpeakerType speaker) {
+        public static void ResetNodeHeight(DialogueTree selectedDialogue, DialogueNode node) {
+            SpeakerType speaker = node.GetSpeaker();
             Rect newRect = node.GetRect();
 
             if (speaker == SpeakerType.CARD) {
-                if (node.GetCustomState()) {
+                if (node.GetCustomState() || selectedDialogue.GetPlotState()) {
                     newRect.height = customHeight;
                 } else {
                     newRect.height = cardHeight;
@@ -113,9 +115,11 @@ namespace PLAGUEV.Dialogue.Editor {
             return speaker;
         }
 
-        public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node, SpeakerType speaker) {
+        public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
+            SpeakerType speaker = node.GetSpeaker();
+
             if (speaker == SpeakerType.CARD) {
-                if (selectedDialogue.IsPlot() || node.GetCustomState()) {
+                if (selectedDialogue.GetPlotState() || node.GetCustomState()) {
                     DialogueGUILayout.DrawCharacterField(node);
                     DialogueGUILayout.DrawSpriteField(node);
                 }
@@ -169,14 +173,18 @@ namespace PLAGUEV.Dialogue.Editor {
             node.SetText(newText);
         }
 
-        public static void DrawToggles(DialogueNode node, SpeakerType speaker) {
+        public static void DrawToggles(DialogueTree selectedDialogue, DialogueNode node) {
+            SpeakerType speaker = node.GetSpeaker();
             bool newChainedState = node.GetChainedState();
             bool newCustomState = node.GetCustomState();
+            bool isEnabled = !selectedDialogue.GetPlotState();
 
             if (speaker == SpeakerType.CARD) {
                 GUILayout.BeginHorizontal();
+                GUI.enabled = isEnabled;
                 DialogueGUILayout.DrawLabel("Customizable", 95);
                 newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
+                GUI.enabled = true;
 
                 DialogueGUILayout.DrawLabel("Chained", 60);
                 newChainedState = EditorGUILayout.Toggle(node.GetChainedState());

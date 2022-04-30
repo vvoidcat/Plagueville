@@ -148,7 +148,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
             GUILayout.BeginVertical();
 
-            bool isPlot = EditorGUILayout.Toggle("Is Plot", selectedDialogue.IsPlot());
+            bool isPlot = EditorGUILayout.Toggle("Is Plot", selectedDialogue.GetPlotState());
             string newName = "";
 
             if (!isPlot) {
@@ -181,8 +181,8 @@ namespace PLAGUEV.Dialogue.Editor {
         private void DrawRegularNode(DialogueNode node) {
             SpeakerType newSpeaker = DialogueGUILayout.DrawSpeakerField(node);
 
-            DialogueGUILayout.DrawToggles(node, newSpeaker);
-            DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node, newSpeaker);
+            DialogueGUILayout.DrawToggles(selectedDialogue, node);
+            DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node);
             DialogueGUILayout.DrawText(node);
 
             EditorGUILayout.BeginHorizontal();
@@ -195,7 +195,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
             }
 
-            DialogueGUILayout.ResetNodeHeight(node, newSpeaker);
+            DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
         }
 
         private void DrawRootNode(DialogueNode node) {
