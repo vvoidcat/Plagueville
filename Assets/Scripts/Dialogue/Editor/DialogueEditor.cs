@@ -16,9 +16,7 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] DialogueNode linkerNode = null;
         
         [NonSerialized] Vector2 draggingOffset;
-        [NonSerialized] Vector3 controlPointOffset = new Vector2(20, 0);
-        [NonSerialized] Color chainColor = new Color(0.3f, 0.5f, 1f);       // move to DialogueGUI
-        const float backgroundTextureSize = 100f;
+
 
 
         [MenuItem("Window/Dialogue Editor")]
@@ -56,7 +54,7 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void OnGUI() {
-            DialogueGUI.SetGUIStyles();
+            DialogueGUIStyles.SetGUIStyles();
             EditorGUI.BeginChangeCheck();
 
             if (selectedDialogue == null) {
@@ -67,7 +65,8 @@ namespace PLAGUEV.Dialogue.Editor {
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
-                    DrawConnections(node);
+                    //DrawConnections(node);
+                    DialogueGUILayout.DrawConnections(selectedDialogue, node);
                 }
 
                 if (parentNode != null) {
@@ -142,7 +141,6 @@ namespace PLAGUEV.Dialogue.Editor {
 
 
 
-        // DRAWING NODES AND THINGS
 
         private void DrawDialogueSettings() {
             EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel);
@@ -166,196 +164,45 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void DrawNode(DialogueNode node) {
-            DialogueGUI.SetNodeStyle(node.GetSpeaker());
-            GUILayout.BeginArea(node.GetRect(), DialogueGUI.GetNodeStyle());
+            DialogueGUIStyles.SetNodeStyle(node.GetSpeaker());
 
-            // if node == root
-            // DrawRootNode(node);
+            GUILayout.BeginArea(node.GetRect(), DialogueGUIStyles.GetNodeStyle());
 
-            bool newChainedState = node.GetChainedState();
-            bool newCustomState = node.GetCustomState();
-            string newText = node.GetText();
-            SpeakerType newSpeaker = node.GetSpeaker();
-
-            newSpeaker = DrawSpeakerField(node);
-
-            if (newSpeaker == SpeakerType.CARD) {
-                if (selectedDialogue.IsPlot() || newCustomState) {
-                    DrawCharacterField(node);
-                    DrawSpriteField(node);
-                }
-                DrawStats(node);
+            if (!node.GetRootState()) {
+                DrawRegularNode(node);
+            } else {
+                DrawRootNode(node);
             }
-
-            DrawLabel("Text", 80);
-            newText = EditorGUILayout.TextField(node.GetText(), DialogueGUI.GetTextStyle(), GUILayout.Height(70));
-
-            if (newSpeaker == SpeakerType.CARD) {
-                GUILayout.BeginHorizontal();
-                DrawLabel("Chained", 80);
-                newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
-
-                DrawLabel("Custom", 80);
-                newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
-                GUILayout.EndHorizontal();
-            }
-
-            if (EditorGUI.EndChangeCheck()) {
-                Undo.RecordObject(selectedDialogue, "Update Node Settings");
-
-                node.SetText(newText);
-                node.SetSpeaker(newSpeaker);
-                node.SetChained(newChainedState);
-                node.SetCustom(newCustomState);
-            }
-
-            if (selectedDialogue.GetAllChildren(node) != null) {
-                //Debug.Log("node has children");
-            }
-
-            EditorGUILayout.BeginHorizontal();
-            DrawAddChildButton(node);
-            DrawLinkButtons(node);
-            DrawDeleteButton(node);
-            EditorGUILayout.EndHorizontal();
 
             GUILayout.EndArea();
         }
 
+        private void DrawRegularNode(DialogueNode node) {
+            SpeakerType newSpeaker = DialogueGUILayout.DrawSpeakerField(node);
+
+            DialogueGUILayout.DrawToggles(node, newSpeaker);
+            DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node, newSpeaker);
+            DialogueGUILayout.DrawText(node);
+
+            EditorGUILayout.BeginHorizontal();
+            parentNode = DialogueGUILayout.DrawAddChildButton(node, parentNode);
+            linkerNode = DialogueGUILayout.DrawLinkButtons(node, linkerNode);
+            deadNode = DialogueGUILayout.DrawDeleteButton(node, deadNode);
+            EditorGUILayout.EndHorizontal();
+
+            if (EditorGUI.EndChangeCheck()) {
+                Undo.RecordObject(selectedDialogue, "Update Node Settings");
+            }
+        }
+
         private void DrawRootNode(DialogueNode node) {
-            // GUILayout.BeginArea(node.GetRect(), DialogueGUI.GetNodeStyle());
+            EditorGUILayout.LabelField("<START>", DialogueGUIStyles.GetRootLabelStyle());
 
-            // EditorGUILayout.LabelField("<START>", rootLabelStyle);
-
-            // GUILayout.FlexibleSpace();
-            // GUILayout.BeginHorizontal();
-            // DrawLinkButtons(node);
-            // DrawAddChildButton(node);
-            // GUILayout.EndHorizontal();
-            
-            // GUILayout.EndArea();
-        }
-
-        private void DrawConnections(DialogueNode node) {
-            Vector3 startPosition = new Vector2(node.GetRect().xMax, node.GetRect().center.y);
-
-            foreach (DialogueNode childNode in selectedDialogue.GetAllChildren(node)) {
-                Vector3 endPosition = new Vector2(childNode.GetRect().xMin, childNode.GetRect().center.y);
-                Color lineColor = Color.white;
-
-                if (childNode.GetChainedState()) {
-                    lineColor = chainColor;
-                }
-
-                Handles.DrawBezier(startPosition, endPosition,
-                                   startPosition + controlPointOffset,
-                                   endPosition - controlPointOffset,
-                                   lineColor, null, 4f);
-            }
-        }
-
-
-
-
-
-        private SpeakerType DrawSpeakerField(DialogueNode node)
-        {
-            SpeakerType speaker;
-
+            GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
-            DrawLabel("Speaker", 80);
-            speaker = (SpeakerType)EditorGUILayout.EnumPopup(node.GetSpeaker());
-            node.SetSpeaker(speaker);
+            parentNode = DialogueGUILayout.DrawAddChildButton(node, parentNode);
+            linkerNode = DialogueGUILayout.DrawLinkButtons(node, linkerNode);
             GUILayout.EndHorizontal();
-
-            return speaker;
-        }
-
-        private void DrawCharacterField(DialogueNode node) {
-            GUILayout.BeginHorizontal();
-            DrawLabel("Character", 80);
-            string newName = EditorGUILayout.TextField(node.GetCharacterName());
-            node.SetCharacterName(newName);
-            GUILayout.EndHorizontal();
-        }
-
-        private void DrawSpriteField(DialogueNode node) {
-            GUILayout.BeginHorizontal();
-            DrawLabel("Sprite", 80);
-            Sprite newSprite = (Sprite)EditorGUILayout.ObjectField(node.GetSprite(), typeof(Sprite), false);
-            node.SetSprite(newSprite);
-            GUILayout.EndHorizontal();
-        }
-
-        private void DrawStats(DialogueNode node) {
-            int[] nodeValues = node.GetStatValues();
-            int[] newValues = new int[nodeValues.Length];
-            string[] labels = new string[] {"Money", "Knowledge", "Glory", "Faith"};
-
-            for (int i = 0; i < nodeValues.Length; i++) {
-                GUILayout.BeginHorizontal();
-                DrawLabel(labels[i], 80);
-                newValues[i] = EditorGUILayout.IntSlider(nodeValues[i], -100, 100);
-                GUILayout.EndHorizontal();
-            }
-
-            node.SetStatValues(newValues);
-        }
-
-        private void DrawLabel(string labelText, float width) {
-            EditorGUILayout.LabelField(labelText + ":", EditorStyles.boldLabel, GUILayout.Width(width));
-        }
-
-
-
-
-
-
-
-
-
-        private void DrawAddChildButton(DialogueNode node) {
-            if (GUILayout.Button("+")) {
-                parentNode = node;
-            }
-        }
-
-        private void DrawDeleteButton(DialogueNode node) {
-            if (GUILayout.Button("x")) {
-                deadNode = node;
-            }
-        }
-
-        private void DrawLinkButtons(DialogueNode node) {
-            bool isLinkable = true;
-
-            if (linkerNode == null) {
-                if (GUILayout.Button("link")) {
-                    linkerNode = node;
-                }
-            } else if (linkerNode == node) {
-                if (GUILayout.Button("cancel")) {
-                    linkerNode = null;
-                }
-            } else if (linkerNode.GetChildren().Contains(node.GetID())) {
-                if (GUILayout.Button("unchild")) {
-                    linkerNode.RemoveChild(node.GetID());
-                    linkerNode = null;
-                }
-            } else {
-                if (node.GetChildren().Contains(linkerNode.GetID())) {
-                    isLinkable = false;
-                }
-
-                GUI.enabled = isLinkable;
-                
-                if (GUILayout.Button("child")) {
-                    linkerNode.AddChild(node.GetID());
-                    linkerNode = null;
-                }
-                
-                GUI.enabled = true;
-            }
         }
     }
 }
