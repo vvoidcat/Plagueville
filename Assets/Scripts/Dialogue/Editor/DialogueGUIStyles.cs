@@ -9,11 +9,11 @@ namespace PLAGUEV.Dialogue.Editor {
     public static class DialogueGUIStyles {
 
         [NonSerialized] static GUIStyle style;
-        [NonSerialized] static GUIStyle defaultNodeStyle;
-        [NonSerialized] static GUIStyle playerNodeStyle;
-        [NonSerialized] static GUIStyle rootLabelStyle;
-        [NonSerialized] static GUIStyle textStyle;
-        public const float backgroundTextureSize = 100f;
+        static GUIStyle defaultNodeStyle;
+        static GUIStyle playerNodeStyle;
+        static GUIStyle rootLabelStyle;
+        static GUIStyle textStyle;
+        public const float bgTextureSize = 100f;
 
 
         public static GUIStyle GetNodeStyle() {

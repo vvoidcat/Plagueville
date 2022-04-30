@@ -20,15 +20,115 @@ MonoBehaviour:
     isChained: 0
     isCustom: 0
     money: 0
+    knowledge: -1
+    glory: -16
+    faith: -5
+    isCleared: 0
+    uniqueID: 0a9b2d44-c389-4cb1-aa4e-6173efacffad
+    children:
+    - 8b3cf33e-5355-4f98-bf59-509a67888ba2
+    - 5c6fd818-ead6-467d-b8ca-3276a3a54f10
+    rect:
+      serializedVersion: 2
+      x: 95
+      y: 112
+      width: 300
+      height: 320
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 1
+    isCustom: 0
+    money: 0
     knowledge: 0
     glory: 0
     faith: 0
     isCleared: 0
-    uniqueID: 0a9b2d44-c389-4cb1-aa4e-6173efacffad
+    uniqueID: 8b3cf33e-5355-4f98-bf59-509a67888ba2
+    children:
+    - 02302953-cf7f-4ba3-8e21-2b1267b57b0a
+    rect:
+      serializedVersion: 2
+      x: 430
+      y: 184
+      width: 300
+      height: 320
+  - speaker: 1
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCustom: 0
+    money: 0
+    knowledge: 0
+    glory: 0
+    faith: 0
+    isCleared: 0
+    uniqueID: 5c6fd818-ead6-467d-b8ca-3276a3a54f10
+    children:
+    - a2e7c9a9-843e-4b51-82f9-66d98fc9359a
+    - 6140afc8-73d8-4dbb-8952-b765b26f8f6d
+    rect:
+      serializedVersion: 2
+      x: 770.99994
+      y: 34.000034
+      width: 300
+      height: 180
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 1
+    isCustom: 0
+    money: 0
+    knowledge: 0
+    glory: 0
+    faith: 0
+    isCleared: 0
+    uniqueID: a2e7c9a9-843e-4b51-82f9-66d98fc9359a
     children: []
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
+      x: 1370
+      y: 14
       width: 300
-      height: 250
+      height: 320
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCustom: 0
+    money: 0
+    knowledge: 0
+    glory: 0
+    faith: 0
+    isCleared: 0
+    uniqueID: 02302953-cf7f-4ba3-8e21-2b1267b57b0a
+    children: []
+    rect:
+      serializedVersion: 2
+      x: 802
+      y: 236
+      width: 300
+      height: 320
+  - speaker: 0
+    sprite: {fileID: 0}
+    characterName: 
+    text: 
+    isChained: 0
+    isCustom: 0
+    money: 0
+    knowledge: 0
+    glory: 0
+    faith: 0
+    isCleared: 0
+    uniqueID: 6140afc8-73d8-4dbb-8952-b765b26f8f6d
+    children: []
+    rect:
+      serializedVersion: 2
+      x: 1209
+      y: 240.99998
+      width: 300
+      height: 320

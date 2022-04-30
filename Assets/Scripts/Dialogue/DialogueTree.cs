@@ -15,6 +15,8 @@ namespace PLAGUEV.Dialogue {
         bool isPlot = false;
         // bool allCleared = false;
         string characterName;
+        float canvasWidth = 5000;
+        float canvasHeight = 5000;
 
 
         private void OnValidate() {
@@ -67,6 +69,11 @@ namespace PLAGUEV.Dialogue {
         public void SetCharacterName(string newName) {
             characterName = newName;
         }
+
+        public void SetCanvasSize(float width, float height) {
+            canvasWidth = width;
+            canvasHeight = height;
+        }
 #endif
 
 
@@ -92,6 +99,14 @@ namespace PLAGUEV.Dialogue {
 
         public string GetCharacterName() {
             return characterName;
+        }
+
+        public float GetCanvasWidth() {
+            return canvasWidth;
+        }
+
+        public float GetCanvasHeight() {
+            return canvasHeight;
         }
     }
 }

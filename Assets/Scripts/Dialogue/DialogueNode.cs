@@ -56,8 +56,7 @@ namespace PLAGUEV.Dialogue {
 
 
         public int[] GetStatValues() {
-            int[] values = new int[] {money, knowledge, glory, faith};
-            return values; 
+            return new int[] {money, knowledge, glory, faith};
         }
 
         public bool GetClearedState() {
@@ -139,6 +138,5 @@ namespace PLAGUEV.Dialogue {
         public void SetCleared(bool state) {
             isCleared = state;
         }
-
     }
 }

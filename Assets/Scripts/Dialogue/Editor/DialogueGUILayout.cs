@@ -10,7 +10,7 @@ namespace PLAGUEV.Dialogue.Editor {
     public static class DialogueGUILayout {
 
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
-        [NonSerialized] static Color chainColor = new Color(0.3f, 0.5f, 1f);
+        static Color chainColor = new Color(0.3f, 0.5f, 1f);
 
         private const float playerHeight = 180;
         private const float cardHeight = 280;
@@ -36,10 +36,9 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static void ResetNodeHeight(DialogueTree selectedDialogue, DialogueNode node) {
-            SpeakerType speaker = node.GetSpeaker();
             Rect newRect = node.GetRect();
 
-            if (speaker == SpeakerType.CARD) {
+            if (node.GetSpeaker() == SpeakerType.CARD) {
                 if (node.GetCustomState() || selectedDialogue.GetPlotState()) {
                     newRect.height = customHeight;
                 } else {
@@ -116,9 +115,7 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
-            SpeakerType speaker = node.GetSpeaker();
-
-            if (speaker == SpeakerType.CARD) {
+            if (node.GetSpeaker() == SpeakerType.CARD) {
                 if (selectedDialogue.GetPlotState() || node.GetCustomState()) {
                     DialogueGUILayout.DrawCharacterField(node);
                     DialogueGUILayout.DrawSpriteField(node);
@@ -174,14 +171,12 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static void DrawToggles(DialogueTree selectedDialogue, DialogueNode node) {
-            SpeakerType speaker = node.GetSpeaker();
             bool newChainedState = node.GetChainedState();
             bool newCustomState = node.GetCustomState();
-            bool isEnabled = !selectedDialogue.GetPlotState();
 
-            if (speaker == SpeakerType.CARD) {
+            if (node.GetSpeaker() == SpeakerType.CARD) {
                 GUILayout.BeginHorizontal();
-                GUI.enabled = isEnabled;
+                GUI.enabled = !selectedDialogue.GetPlotState();
                 DialogueGUILayout.DrawLabel("Customizable", 95);
                 newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
                 GUI.enabled = true;
@@ -195,7 +190,7 @@ namespace PLAGUEV.Dialogue.Editor {
             node.SetCustom(newCustomState);
         }
 
-        private static void DrawLabel(string labelText, float width) {
+        public static void DrawLabel(string labelText, float width) {
             EditorGUILayout.LabelField(labelText + ":", EditorStyles.boldLabel, GUILayout.Width(width));
         }
     }

@@ -15,9 +15,13 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] DialogueNode parentNode = null;
         [NonSerialized] DialogueNode deadNode = null;
         [NonSerialized] DialogueNode linkerNode = null;
-        
-        [NonSerialized] Vector2 draggingOffset;
 
+        [NonSerialized] bool draggingCanvas = false;
+
+        [NonSerialized] Vector2 draggingNodeOffset;
+        [NonSerialized] Vector2 draggingCanvasOffset;
+        [NonSerialized] Vector2 dlgSettingsOffset = new Vector2(0, -44);
+        Vector2 scrollPosition;
 
 
         [MenuItem("Window/Dialogue Editor")]
@@ -62,13 +66,23 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DrawDialogueSettings();
-                ProcessNodeDragging();
+                ProcessDragging();
+
+                scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+                Rect canvas = GUILayoutUtility.GetRect(selectedDialogue.GetCanvasWidth(), selectedDialogue.GetCanvasHeight());
+                Texture2D bgTexture = Resources.Load("background") as Texture2D;
+                Rect bgTextureCoords = new Rect(0, 0, selectedDialogue.GetCanvasWidth() / DialogueGUIStyles.bgTextureSize,
+                                                      selectedDialogue.GetCanvasHeight() / DialogueGUIStyles.bgTextureSize);
+                GUI.DrawTextureWithTexCoords(canvas, bgTexture, bgTextureCoords);
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
                     //DrawConnections(node);
                     DialogueGUILayout.DrawConnections(selectedDialogue, node);
                 }
+
+                EditorGUILayout.EndScrollView();
+
 
                 if (parentNode != null) {
                     Undo.RecordObject(selectedDialogue, "Undo Add Node");
@@ -84,23 +98,30 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
 
-        private void ProcessNodeDragging() {
+        private void ProcessDragging() {
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
-                draggingNode = GetNodeAtPoint(Event.current.mousePosition);
+                draggingNode = GetNodeAtPoint(Event.current.mousePosition + scrollPosition + dlgSettingsOffset);
 
                 if (draggingNode != null) {
-                    draggingOffset = draggingNode.GetRect().position - Event.current.mousePosition;
+                    draggingNodeOffset = draggingNode.GetRect().position - Event.current.mousePosition;
+                } else {
+                    draggingCanvas = true;
+                    draggingCanvasOffset = Event.current.mousePosition + scrollPosition;
                 }
             } else if (Event.current.type == EventType.MouseDrag && draggingNode != null) {
                 Undo.RecordObject(selectedDialogue, "Undo Reposition Node");
 
                 Rect newRect = draggingNode.GetRect();
-                newRect.position = Event.current.mousePosition + draggingOffset;
+                newRect.position = Event.current.mousePosition + draggingNodeOffset;
                 draggingNode.SetRect(newRect);
-
+                Repaint();
+            } else if (Event.current.type == EventType.MouseDrag && draggingCanvas) {
+                scrollPosition = draggingCanvasOffset - Event.current.mousePosition;
                 Repaint();
             } else if (Event.current.type == EventType.MouseUp && draggingNode != null) {
                 draggingNode = null;
+            } else if (Event.current.type == EventType.MouseUp && draggingCanvas) {
+                draggingCanvas = false;
             }
 
             // deadzone rect
@@ -146,22 +167,28 @@ namespace PLAGUEV.Dialogue.Editor {
         private void DrawDialogueSettings() {
             EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel);
 
-            GUILayout.BeginVertical();
+            GUILayout.BeginHorizontal(GUILayout.Width(600));
+            DialogueGUILayout.DrawLabel("Is Plot", 50);
+            bool isPlot = EditorGUILayout.Toggle(selectedDialogue.GetPlotState());
 
-            bool isPlot = EditorGUILayout.Toggle("Is Plot", selectedDialogue.GetPlotState());
-            string newName = "";
+            GUI.enabled = !selectedDialogue.GetPlotState();
+            DialogueGUILayout.DrawLabel("Character Name", 115);
+            string newName = EditorGUILayout.TextField(selectedDialogue.GetCharacterName(), GUILayout.Width(200));
+            GUI.enabled = true;
 
-            if (!isPlot) {
-                newName = EditorGUILayout.TextField("Character Name", selectedDialogue.GetCharacterName(), GUILayout.Width(400));
-            }
+            DialogueGUILayout.DrawLabel("   Canvas", 70);
+            float newWidth = EditorGUILayout.FloatField(selectedDialogue.GetCanvasWidth(), GUILayout.Width(50));
+            float newHeight = EditorGUILayout.FloatField(selectedDialogue.GetCanvasHeight(), GUILayout.Width(50));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(4);
 
             if (EditorGUI.EndChangeCheck()) {
                 Undo.RecordObject(selectedDialogue, "Undo Update Dialogue Settings");
                 selectedDialogue.SetPlotRelation(isPlot);
                 selectedDialogue.SetCharacterName(newName);
+                selectedDialogue.SetCanvasSize(newWidth, newHeight);
             }
-
-            GUILayout.EndVertical();
         }
 
         private void DrawNode(DialogueNode node) {
