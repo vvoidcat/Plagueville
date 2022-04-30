@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: for_witch
   m_EditorClassIdentifier: 
   characterName: 
-  sprite: {fileID: 21300000, guid: 3647d46a1c12ec9428c4a29e2dab12af, type: 3}
+  sprite: {fileID: 21300000, guid: 4a21faa2424b07941a08b65db7bb0ea2, type: 3}
   type: 0
   canAppearEverywhere: 0
   locations: 090000000a0000000b000000

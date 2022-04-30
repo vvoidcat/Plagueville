@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: dun_creep
   m_EditorClassIdentifier: 
   characterName: 
-  sprite: {fileID: 21300000, guid: 24ca7212384214e40989d5ad70b78b77, type: 3}
+  sprite: {fileID: 21300000, guid: 3ddd2ca9ed6c28f48a2b2fc4a9330544, type: 3}
   type: 0
   canAppearEverywhere: 0
   locations: 0d0000000f000000

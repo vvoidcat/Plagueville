@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: for_shooms
   m_EditorClassIdentifier: 
   characterName: 
-  sprite: {fileID: 21300000, guid: 55fdc85d77632754fa9bbfce108a0db1, type: 3}
+  sprite: {fileID: 21300000, guid: 02e614bba9f855d47871a63e65be537e, type: 3}
   type: 0
   canAppearEverywhere: 0
   locations: 090000000a0000000b000000

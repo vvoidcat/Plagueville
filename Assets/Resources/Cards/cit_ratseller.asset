@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: cit_ratseller
   m_EditorClassIdentifier: 
   characterName: 
-  sprite: {fileID: 21300000, guid: 8f828e3b5acf5824ea8548129c646d2d, type: 3}
+  sprite: {fileID: 21300000, guid: ff119eb98194b3240ba38940480c813a, type: 3}
   type: 0
   canAppearEverywhere: 0
   locations: 00000000010000000300000002000000
