@@ -5,13 +5,11 @@ using UnityEditor;
 
 namespace PLAGUEV.Dialogue {
 
-    [System.Serializable]
-    public class DialogueNode { //: ScriptableObject {
+    public class DialogueNode : ScriptableObject {
 
         // general
         [SerializeField] SpeakerType speaker;
         [SerializeField] string text;
-        [SerializeField] string uniqueID;
         [SerializeField] List<string> children = new List<string>();
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
         bool isRoot = false;
@@ -39,10 +37,6 @@ namespace PLAGUEV.Dialogue {
     
         public string GetText() {
             return text;
-        }
-
-        public string GetID() {
-            return uniqueID;
         }
 
         public List<string> GetChildren() {
@@ -101,10 +95,6 @@ namespace PLAGUEV.Dialogue {
             text = newText;
         }
 
-        public void SetID(string id) {
-            uniqueID = id;
-        }
-
         public void SetRect(Rect newRect) {
             rect = newRect;
         }
@@ -141,7 +131,7 @@ namespace PLAGUEV.Dialogue {
             action = newAction;
         }
 
-        public void SetLocationChangerState(bool state) {
+        public void SetLocationChanger(bool state) {
             isLocationChanger = state;
         }
 

@@ -48,7 +48,8 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (newDialogue != null) {
                 selectedDialogue = newDialogue;
-                // ResetNodes();
+                ResetNodes();
+                selectedDialogue.Initialize();
                 Repaint();
             }
         }
@@ -66,7 +67,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DrawDialogueSettings();
-                ProcessDragging();
+                ProcessEvents();
 
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
                 DrawBackground();
@@ -93,15 +94,17 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
 
-        private void ProcessDragging() {
+        private void ProcessEvents() {
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
                 draggingNode = GetNodeAtPoint(Event.current.mousePosition + scrollPosition + dlgSettingsOffset);
 
                 if (draggingNode != null) {
                     draggingNodeOffset = draggingNode.GetRect().position - Event.current.mousePosition;
+                    Selection.activeObject = draggingNode;
                 } else {
                     draggingCanvas = true;
                     draggingCanvasOffset = Event.current.mousePosition + scrollPosition;
+                    Selection.activeObject = selectedDialogue;
                 }
             } else if (Event.current.type == EventType.MouseDrag && draggingNode != null) {
                 Undo.RecordObject(selectedDialogue, "Undo Reposition Node");
@@ -120,12 +123,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 draggingCanvas = false;
             }
 
-            // deadzone rect
-
-            // if clicked on node = change selection to node
-            // if clicked on bg = change selection to dialogue
-
-            // Selection.activeObject = 
+            // deadzone rect ?
         }
 
         private DialogueNode GetNodeAtPoint(Vector2 mousePosition) {

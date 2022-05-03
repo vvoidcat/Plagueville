@@ -7,7 +7,7 @@ using UnityEditor;
 namespace PLAGUEV.Dialogue {
 
     [CreateAssetMenu(fileName = "New Dialogue", menuName = "Dialogue/New Dialogue", order = 0)]
-    public class DialogueTree : ScriptableObject {
+    public class DialogueTree : ScriptableObject, ISerializationCallbackReceiver {
 
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
@@ -19,62 +19,20 @@ namespace PLAGUEV.Dialogue {
         float canvasHeight = 5000;
 
 
+        // private void Awake() {
+        //     OnValidate();
+        // }
+
         private void OnValidate() {
             nodeLookup.Clear();
 
-            foreach (DialogueNode node in GetAllNodes()) {
-                nodeLookup[node.GetID()] = node;
+            if (nodes.Count > 0) {
+                foreach (DialogueNode node in nodes) {
+                    Debug.Log(node.name);                   // Null reference?
+                    nodeLookup[node.name] = node;
+                }
             }
         }
-
-#if UNITY_EDITOR
-        private void Awake() {
-            if (nodes.Count == 0) {
-                AddRootNode();
-            }
-
-            OnValidate();
-        }
-
-
-        private void AddRootNode() {
-            DialogueNode rootNode = new DialogueNode();  //CreateInstance<DialogueNode>();
-            rootNode.SetID(Guid.NewGuid().ToString());
-
-            nodes.Add(rootNode);
-        }
-
-        public void CreateNode(DialogueNode parent) {
-            DialogueNode newNode = new DialogueNode();
-            newNode.SetID(Guid.NewGuid().ToString());
-            parent.GetChildren().Add(newNode.GetID());
-            nodes.Add(newNode);
-            OnValidate();
-        }
-
-        public void DeleteNode(DialogueNode deadNode) {
-            nodes.Remove(deadNode);
-
-            foreach (DialogueNode node in GetAllNodes()) {
-                node.GetChildren().Remove(deadNode.GetID());
-            }
-
-            OnValidate();
-        }
-
-        public void SetPlotRelation(bool state) {
-            isPlot = state;
-        }
-
-        public void SetCharacterName(string newName) {
-            characterName = newName;
-        }
-
-        public void SetCanvasSize(float width, float height) {
-            canvasWidth = width;
-            canvasHeight = height;
-        }
-#endif
 
 
         public IEnumerable<DialogueNode> GetAllNodes() {
@@ -107,6 +65,97 @@ namespace PLAGUEV.Dialogue {
 
         public float GetCanvasHeight() {
             return canvasHeight;
+        }
+
+
+#if UNITY_EDITOR
+        public void Initialize() {
+            if (nodes.Count == 0) {
+                CreateRootNode();
+            }
+            OnValidate();
+        }
+
+        public void CreateRootNode() {
+            DialogueNode rootNode = CreateNodeMaker(null);
+            rootNode.SetRoot(true);
+            rootNode.SetRect(new Rect (0, 0, 150, 100));
+            CreateNodeAdder(rootNode);
+        }
+
+        public void CreateNode(DialogueNode parent) {
+            DialogueNode newNode = CreateNodeMaker(parent);
+
+            Undo.RegisterCreatedObjectUndo(newNode, "Undo Create Node");
+            Undo.RecordObject(this, "Undo Add Node");
+
+            CreateNodeAdder(newNode);
+        }
+
+        private DialogueNode CreateNodeMaker(DialogueNode parent) {
+            DialogueNode newNode = CreateInstance<DialogueNode>();
+
+            newNode.name = System.Guid.NewGuid().ToString();
+
+            if (parent != null) {
+                parent.AddChild(newNode.name);
+            }
+
+            return newNode;
+        }
+
+        private void CreateNodeAdder(DialogueNode newNode) {
+            nodes.Add(newNode);
+            OnValidate();
+        }
+
+        public void DeleteNode(DialogueNode deadNode) {
+            Undo.RecordObject(this, "Undo Delete Node");
+            nodes.Remove(deadNode);
+
+            foreach (DialogueNode node in GetAllNodes()) {
+                node.GetChildren().Remove(deadNode.name);
+            }
+
+            Undo.DestroyObjectImmediate(deadNode);
+            OnValidate();
+        }
+
+        public void SetPlotRelation(bool state) {
+            isPlot = state;
+        }
+
+        public void SetCharacterName(string newName) {
+            characterName = newName;
+        }
+
+        public void SetCanvasSize(float width, float height) {
+            canvasWidth = width;
+            canvasHeight = height;
+        }
+#endif
+
+
+
+        // ISerializationCallbackReceiver
+
+        public void OnBeforeSerialize() {
+#if UNITY_EDITOR
+            // if (nodes.Count == 0) {
+            //     CreateRootNode();
+            // }
+            if (AssetDatabase.GetAssetPath(this) != "") {
+                foreach (DialogueNode node in nodes) {
+                    if (AssetDatabase.GetAssetPath(node) == "") {
+                        AssetDatabase.AddObjectToAsset(node, this);
+                    }
+                }
+            }
+#endif
+        }
+
+        public void OnAfterDeserialize() {
+            // nothing to do
         }
     }
 }

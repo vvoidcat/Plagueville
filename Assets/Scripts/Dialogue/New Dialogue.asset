@@ -13,36 +13,4 @@ MonoBehaviour:
   m_Name: New Dialogue
   m_EditorClassIdentifier: 
   nodes:
-  - speaker: 0
-    text: 
-    uniqueID: d537d97a-d122-474a-8b3c-1845f009ff63
-    children: []
-    rect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 300
-      height: 250
-    deadzone:
-      serializedVersion: 2
-      x: 20
-      y: 30
-      width: 280
-      height: 125
-    deadzoneText:
-      serializedVersion: 2
-      x: 20
-      y: 30
-      width: 280
-      height: 125
-    sprite: {fileID: 0}
-    characterName: 
-    isChained: 0
-    isCustom: 0
-    isCleared: 0
-    action: 0
-    isLocationChanger: 0
-    money: 0
-    knowledge: 0
-    glory: 0
-    faith: 0
+  - {fileID: 0}

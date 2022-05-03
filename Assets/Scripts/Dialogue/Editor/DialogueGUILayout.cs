@@ -74,19 +74,19 @@ namespace PLAGUEV.Dialogue.Editor {
                 if (GUILayout.Button("cancel")) {
                     linkerNode = null;
                 }
-            } else if (linkerNode.GetChildren().Contains(node.GetID())) {
+            } else if (linkerNode.GetChildren().Contains(node.name)) {
                 if (GUILayout.Button("unchild")) {
-                    linkerNode.RemoveChild(node.GetID());
+                    linkerNode.RemoveChild(node.name);
                     linkerNode = null;
                 }
             } else {
-                if (node.GetChildren().Contains(linkerNode.GetID())) {
+                if (node.GetChildren().Contains(linkerNode.name)) {
                     isLinkable = false;
                 }
 
                 GUI.enabled = isLinkable;
                 if (GUILayout.Button("child")) {
-                    linkerNode.AddChild(node.GetID());
+                    linkerNode.AddChild(node.name);
                     linkerNode = null;
                 }
                 GUI.enabled = true;
@@ -142,7 +142,7 @@ namespace PLAGUEV.Dialogue.Editor {
             newState = EditorGUILayout.Toggle(node.GetLocationChangerState());
             GUILayout.EndHorizontal();
 
-            node.SetLocationChangerState(newState);
+            node.SetLocationChanger(newState);
         }
 
         public static void DrawCharacterField(DialogueNode node) {
