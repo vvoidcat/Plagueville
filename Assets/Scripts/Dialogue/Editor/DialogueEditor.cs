@@ -69,15 +69,10 @@ namespace PLAGUEV.Dialogue.Editor {
                 ProcessDragging();
 
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-                Rect canvas = GUILayoutUtility.GetRect(selectedDialogue.GetCanvasWidth(), selectedDialogue.GetCanvasHeight());
-                Texture2D bgTexture = Resources.Load("background") as Texture2D;
-                Rect bgTextureCoords = new Rect(0, 0, selectedDialogue.GetCanvasWidth() / DialogueGUIStyles.bgTextureSize,
-                                                      selectedDialogue.GetCanvasHeight() / DialogueGUIStyles.bgTextureSize);
-                GUI.DrawTextureWithTexCoords(canvas, bgTexture, bgTextureCoords);
+                DrawBackground();
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
-                    //DrawConnections(node);
                     DialogueGUILayout.DrawConnections(selectedDialogue, node);
                 }
 
@@ -113,6 +108,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
                 Rect newRect = draggingNode.GetRect();
                 newRect.position = Event.current.mousePosition + draggingNodeOffset;
+                
                 draggingNode.SetRect(newRect);
                 Repaint();
             } else if (Event.current.type == EventType.MouseDrag && draggingCanvas) {
@@ -189,6 +185,14 @@ namespace PLAGUEV.Dialogue.Editor {
                 selectedDialogue.SetCharacterName(newName);
                 selectedDialogue.SetCanvasSize(newWidth, newHeight);
             }
+        }
+
+        private void DrawBackground() {
+            Rect canvas = GUILayoutUtility.GetRect(selectedDialogue.GetCanvasWidth(), selectedDialogue.GetCanvasHeight());
+            Texture2D bgTexture = Resources.Load("background") as Texture2D;
+            Rect bgTextureCoords = new Rect(0, 0, selectedDialogue.GetCanvasWidth() / DialogueGUIStyles.bgTextureSize,
+                                                    selectedDialogue.GetCanvasHeight() / DialogueGUIStyles.bgTextureSize);
+            GUI.DrawTextureWithTexCoords(canvas, bgTexture, bgTextureCoords);
         }
 
         private void DrawNode(DialogueNode node) {

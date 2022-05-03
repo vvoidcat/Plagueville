@@ -37,7 +37,7 @@ namespace PLAGUEV.Dialogue.Editor {
         public static void ResetNodeHeight(DialogueTree selectedDialogue, DialogueNode node) {
             Rect newRect = node.GetRect();
 
-            if (node.GetSpeaker() == SpeakerType.CARD) {            // CHANGE
+            if (node.GetSpeaker() == SpeakerType.CARD) {
                 newRect.height = cardHeight;
             } else {
                 newRect.height = playerHeight;
@@ -138,7 +138,7 @@ namespace PLAGUEV.Dialogue.Editor {
             bool newState = node.GetLocationChangerState();
 
             GUILayout.BeginHorizontal();
-            DialogueGUILayout.DrawLabel("Location Changer", 117);
+            DrawLabel("Location Changer", 117);
             newState = EditorGUILayout.Toggle(node.GetLocationChangerState());
             GUILayout.EndHorizontal();
 
@@ -201,11 +201,11 @@ namespace PLAGUEV.Dialogue.Editor {
 
             GUILayout.BeginHorizontal();
             GUI.enabled = !selectedDialogue.GetPlotState();
-            DialogueGUILayout.DrawLabel("Customizable", 95);
+            DrawLabel("Customizable", 95);
             newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
             GUI.enabled = true;
 
-            DialogueGUILayout.DrawLabel("Chained", 60);
+            DrawLabel("Chained", 60);
             newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
             GUILayout.EndHorizontal();
 

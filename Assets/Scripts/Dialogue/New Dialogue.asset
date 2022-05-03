@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 590f0aab90260554d94deb56c8d62009, type: 3}
-  m_Name: New Dialogue 1
+  m_Name: New Dialogue
   m_EditorClassIdentifier: 
   nodes:
   - speaker: 0
     text: 
-    uniqueID: 81ad7578-ac3b-4539-91fc-489f9b37310b
+    uniqueID: d537d97a-d122-474a-8b3c-1845f009ff63
     children: []
     rect:
       serializedVersion: 2
@@ -27,14 +27,14 @@ MonoBehaviour:
       serializedVersion: 2
       x: 20
       y: 30
-      width: 166
-      height: 44
+      width: 280
+      height: 125
     deadzoneText:
       serializedVersion: 2
       x: 20
       y: 30
-      width: 166
-      height: 44
+      width: 280
+      height: 125
     sprite: {fileID: 0}
     characterName: 
     isChained: 0
