@@ -206,10 +206,17 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void DrawRegularNode(DialogueNode node) {
-            SpeakerType newSpeaker = DialogueGUILayout.DrawSpeakerField(node);
+            DialogueGUILayout.DrawSpeakerField(node);
 
-            DialogueGUILayout.DrawToggles(selectedDialogue, node);
-            DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node);
+            if (node.GetSpeaker() == SpeakerType.CARD) {
+                DialogueGUILayout.DrawCardToggles(selectedDialogue, node);
+                DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node);
+            } else {
+                DialogueGUILayout.DrawActionField(node);
+                DialogueGUILayout.DrawStats(node);
+                DialogueGUILayout.DrawLocationToggle(node);
+            }
+
             DialogueGUILayout.DrawText(node);
 
             EditorGUILayout.BeginHorizontal();
@@ -222,7 +229,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
             }
 
-            DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
+            // DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
         }
 
         private void DrawRootNode(DialogueNode node) {

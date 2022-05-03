@@ -38,7 +38,7 @@ namespace PLAGUEV.Dialogue.Editor {
         public static void ResetNodeHeight(DialogueTree selectedDialogue, DialogueNode node) {
             Rect newRect = node.GetRect();
 
-            if (node.GetSpeaker() == SpeakerType.CARD) {
+            if (node.GetSpeaker() == SpeakerType.CARD) {            // CHANGE
                 if (node.GetCustomState() || selectedDialogue.GetPlotState()) {
                     newRect.height = customHeight;
                 } else {
@@ -100,8 +100,14 @@ namespace PLAGUEV.Dialogue.Editor {
             return linkerNode;
         }
 
+        public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
+            if (selectedDialogue.GetPlotState() || node.GetCustomState()) {
+                DrawCharacterField(node);
+                DrawSpriteField(node);
+            }
+        }
 
-        public static SpeakerType DrawSpeakerField(DialogueNode node) {
+        public static void DrawSpeakerField(DialogueNode node) {
             SpeakerType speaker = node.GetSpeaker();
 
             GUILayout.BeginHorizontal();
@@ -110,18 +116,32 @@ namespace PLAGUEV.Dialogue.Editor {
             GUILayout.EndHorizontal();
 
             node.SetSpeaker(speaker);
-
-            return speaker;
         }
 
-        public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
-            if (node.GetSpeaker() == SpeakerType.CARD) {
-                if (selectedDialogue.GetPlotState() || node.GetCustomState()) {
-                    DialogueGUILayout.DrawCharacterField(node);
-                    DialogueGUILayout.DrawSpriteField(node);
-                }
-                DialogueGUILayout.DrawStats(node);
+        public static void DrawActionField(DialogueNode node) {
+            ActionType action = node.GetAction();
+
+            if (node.GetLocationChangerState()) {
+                GUI.enabled = false;
             }
+            GUILayout.BeginHorizontal();
+            DrawLabel("Action", 80);
+            action = (ActionType)EditorGUILayout.EnumPopup(node.GetAction());
+            GUILayout.EndHorizontal();
+            GUI.enabled = true;
+
+            node.SetAction(action);
+        }
+
+        public static void DrawLocationToggle(DialogueNode node) {
+            bool newState = node.GetLocationChangerState();
+
+            GUILayout.BeginHorizontal();
+            DialogueGUILayout.DrawLabel("Location Changer", 117);
+            newState = EditorGUILayout.Toggle(node.GetLocationChangerState());
+            GUILayout.EndHorizontal();
+
+            node.SetLocationChangerState(newState);
         }
 
         public static void DrawCharacterField(DialogueNode node) {
@@ -151,12 +171,16 @@ namespace PLAGUEV.Dialogue.Editor {
             int[] newValues = new int[nodeValues.Length];
             string[] labels = new string[] {"Money", "Knowledge", "Glory", "Faith"};
 
+            if (node.GetLocationChangerState() || node.GetAction() != ActionType.DEFAULT) {
+                GUI.enabled = false;
+            }
             for (int i = 0; i < nodeValues.Length; i++) {
                 GUILayout.BeginHorizontal();
                 DrawLabel(labels[i], 80);
                 newValues[i] = EditorGUILayout.IntSlider(nodeValues[i], -100, 100);
                 GUILayout.EndHorizontal();
             }
+            GUI.enabled = true;
 
             node.SetStatValues(newValues);
         }
@@ -170,21 +194,19 @@ namespace PLAGUEV.Dialogue.Editor {
             node.SetText(newText);
         }
 
-        public static void DrawToggles(DialogueTree selectedDialogue, DialogueNode node) {
+        public static void DrawCardToggles(DialogueTree selectedDialogue, DialogueNode node) {
             bool newChainedState = node.GetChainedState();
             bool newCustomState = node.GetCustomState();
 
-            if (node.GetSpeaker() == SpeakerType.CARD) {
-                GUILayout.BeginHorizontal();
-                GUI.enabled = !selectedDialogue.GetPlotState();
-                DialogueGUILayout.DrawLabel("Customizable", 95);
-                newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
-                GUI.enabled = true;
+            GUILayout.BeginHorizontal();
+            GUI.enabled = !selectedDialogue.GetPlotState();
+            DialogueGUILayout.DrawLabel("Customizable", 95);
+            newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
+            GUI.enabled = true;
 
-                DialogueGUILayout.DrawLabel("Chained", 60);
-                newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
-                GUILayout.EndHorizontal();
-            }
+            DialogueGUILayout.DrawLabel("Chained", 60);
+            newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
+            GUILayout.EndHorizontal();
 
             node.SetChained(newChainedState);
             node.SetCustom(newCustomState);

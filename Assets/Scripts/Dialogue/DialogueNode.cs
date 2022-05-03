@@ -8,61 +8,38 @@ namespace PLAGUEV.Dialogue {
     [System.Serializable]
     public class DialogueNode { //: ScriptableObject {
 
+        // general
         [SerializeField] SpeakerType speaker;
+        [SerializeField] string text;
+        [SerializeField] string uniqueID;
+        [SerializeField] List<string> children = new List<string>();
+        [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
+        bool isRoot = false;
+
+        // card node settings
         [SerializeField] Sprite sprite = null;
         [SerializeField] string characterName;
-        [SerializeField] string text;
         [SerializeField] bool isChained = false;
         [SerializeField] bool isCustom = false;
+        [SerializeField] bool isCleared = false;    // implement
+        // set timer
 
+        // player node settings
+        [SerializeField] ActionType action;
+        [SerializeField] bool isLocationChanger = false;
         [Range(-100, 100)] [SerializeField] int money = 0;
         [Range(-100, 100)] [SerializeField] int knowledge = 0;
         [Range(-100, 100)] [SerializeField] int glory = 0;
         [Range(-100, 100)] [SerializeField] int faith = 0;
 
-        [SerializeField] bool isCleared = false;    // implement
-        // set timer
-
-        [SerializeField] string uniqueID;
-        [SerializeField] List<string> children = new List<string>();
-        [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
-        
-        bool isRoot = false;
-
 
         public SpeakerType GetSpeaker() {
             return speaker;
         }
-
-        public Sprite GetSprite() {
-            return sprite;
-        }
-
-        public string GetCharacterName() {
-            return characterName;
-        }
-
+    
         public string GetText() {
             return text;
         }
-
-        public bool GetChainedState() {
-            return isChained;
-        }
-
-        public bool GetCustomState() {
-            return isCustom;
-        }
-
-
-        public int[] GetStatValues() {
-            return new int[] {money, knowledge, glory, faith};
-        }
-
-        public bool GetClearedState() {
-            return isCleared;
-        }
-
 
         public string GetID() {
             return uniqueID;
@@ -80,6 +57,39 @@ namespace PLAGUEV.Dialogue {
             return isRoot;
         }
 
+        public Sprite GetSprite() {
+            return sprite;
+        }
+
+        public string GetCharacterName() {
+            return characterName;
+        }
+
+        public bool GetChainedState() {
+            return isChained;
+        }
+
+        public bool GetCustomState() {
+            return isCustom;
+        }
+
+        public bool GetClearedState() {
+            return isCleared;
+        }
+
+        public ActionType GetAction() {
+            return action;
+        }
+
+        public bool GetLocationChangerState() {
+            return isLocationChanger;
+        }
+
+        public int[] GetStatValues() {
+            return new int[] {money, knowledge, glory, faith};
+        }
+
+
 
 
 #if UNITY_EDITOR
@@ -87,24 +97,8 @@ namespace PLAGUEV.Dialogue {
             speaker = newSpeaker;
         }
 
-        public void SetSprite(Sprite newSprite) {
-            sprite = newSprite;
-        }
-
-        public void SetCharacterName(string newName) {
-            characterName = newName;
-        }
-
         public void SetText(string newText) {
             text = newText;
-        }
-
-        public void SetChained(bool state) {
-            isChained = state;
-        }
-
-        public void SetCustom(bool state) {
-            isCustom = state;
         }
 
         public void SetID(string id) {
@@ -125,6 +119,30 @@ namespace PLAGUEV.Dialogue {
 
         public void RemoveChild(string childID) {
             children.Remove(childID);
+        }
+
+        public void SetSprite(Sprite newSprite) {
+            sprite = newSprite;
+        }
+
+        public void SetCharacterName(string newName) {
+            characterName = newName;
+        }
+
+        public void SetChained(bool state) {
+            isChained = state;
+        }
+
+        public void SetCustom(bool state) {
+            isCustom = state;
+        }
+
+        public void SetAction(ActionType newAction) {
+            action = newAction;
+        }
+
+        public void SetLocationChangerState(bool state) {
+            isLocationChanger = state;
         }
 
         public void SetStatValues(int[] newValues) {
