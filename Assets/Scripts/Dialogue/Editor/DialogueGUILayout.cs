@@ -12,9 +12,8 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
         static Color chainColor = new Color(0.3f, 0.5f, 1f);
 
-        private const float playerHeight = 180;
-        private const float cardHeight = 280;
-        private const float customHeight = 320;
+        private const float playerHeight = 310;
+        private const float cardHeight = 250;
 
 
         public static void DrawConnections(DialogueTree selectedDialogue, DialogueNode node) {
@@ -39,11 +38,7 @@ namespace PLAGUEV.Dialogue.Editor {
             Rect newRect = node.GetRect();
 
             if (node.GetSpeaker() == SpeakerType.CARD) {            // CHANGE
-                if (node.GetCustomState() || selectedDialogue.GetPlotState()) {
-                    newRect.height = customHeight;
-                } else {
-                    newRect.height = cardHeight;
-                }
+                newRect.height = cardHeight;
             } else {
                 newRect.height = playerHeight;
             }
@@ -101,10 +96,16 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
-            if (selectedDialogue.GetPlotState() || node.GetCustomState()) {
-                DrawCharacterField(node);
-                DrawSpriteField(node);
+            if (node.GetCustomState()) {
+                GUI.enabled = true;
+            } else if (!selectedDialogue.GetPlotState()) {
+                GUI.enabled = false;
             }
+
+            DrawCharacterField(node);
+            DrawSpriteField(node);
+
+            GUI.enabled = true;
         }
 
         public static void DrawSpeakerField(DialogueNode node) {

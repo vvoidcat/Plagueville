@@ -229,7 +229,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 Undo.RecordObject(selectedDialogue, "Update Node Settings");
             }
 
-            // DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
+            DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
         }
 
         private void DrawRootNode(DialogueNode node) {
