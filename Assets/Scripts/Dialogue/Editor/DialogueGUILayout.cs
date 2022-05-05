@@ -127,14 +127,10 @@ namespace PLAGUEV.Dialogue.Editor {
         public static void DrawActionField(DialogueNode node) {
             ActionType action = node.GetAction();
 
-            if (node.GetLocationChange() != LocationType.NONE) {
-                GUI.enabled = false;
-            }
             GUILayout.BeginHorizontal();
             DrawLabel("Action", 80);
             action = (ActionType)EditorGUILayout.EnumPopup(node.GetAction());
             GUILayout.EndHorizontal();
-            GUI.enabled = true;
 
             node.SetAction(action);
         }
@@ -142,10 +138,14 @@ namespace PLAGUEV.Dialogue.Editor {
         public static void DrawLocationField(DialogueNode node) {
             LocationType newLocation = node.GetLocationChange();
 
+            if (node.GetAction() != ActionType.MOVE) {
+                GUI.enabled = false;
+            }
             GUILayout.BeginHorizontal();
             DrawLabel("Move to", 80);
             newLocation = (LocationType)EditorGUILayout.EnumPopup(node.GetLocationChange());
             GUILayout.EndHorizontal();
+            GUI.enabled = true;
 
             node.SetLocationChange(newLocation);
         }
@@ -177,7 +177,7 @@ namespace PLAGUEV.Dialogue.Editor {
             int[] newValues = new int[nodeValues.Length];
             string[] labels = new string[] {"Money", "Knowledge", "Glory", "Faith"};
 
-            if (node.GetLocationChange() != LocationType.NONE || node.GetAction() != ActionType.DEFAULT) {
+            if (node.GetAction() != ActionType.DEFAULT) {
                 GUI.enabled = false;
             }
             for (int i = 0; i < nodeValues.Length; i++) {

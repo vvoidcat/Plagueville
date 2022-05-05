@@ -5,7 +5,6 @@ using UnityEngine;
 namespace PLAGUEV.Dialogue {
 
     public enum LocationType {
-        NONE,
         CITY_UPPER,
         CITY_LOWER,
         CITY_CEMETERY,

@@ -214,8 +214,8 @@ namespace PLAGUEV.Dialogue.Editor {
                 DialogueGUILayout.DrawCardToggles(selectedDialogue, node);
                 DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node);
             } else {
-                DialogueGUILayout.DrawLocationField(node);
                 DialogueGUILayout.DrawActionField(node);
+                DialogueGUILayout.DrawLocationField(node);
                 DialogueGUILayout.DrawStats(node);
             }
 

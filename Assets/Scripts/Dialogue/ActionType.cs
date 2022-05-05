@@ -6,6 +6,7 @@ namespace PLAGUEV.Dialogue {
 
     public enum ActionType {
         DEFAULT,
+        MOVE,
         RANDOM_MIN,
         RANDOM_MID,
         RANDOM_MAX,
