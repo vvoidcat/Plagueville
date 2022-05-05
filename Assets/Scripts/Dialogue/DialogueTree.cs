@@ -19,17 +19,17 @@ namespace PLAGUEV.Dialogue {
         float canvasHeight = 5000;
 
 
-        // private void Awake() {
-        //     OnValidate();
-        // }
-
         private void OnValidate() {
             nodeLookup.Clear();
 
             if (nodes.Count > 0) {
-                foreach (DialogueNode node in nodes) {
-                    Debug.Log(node.name);                   // Null reference?
-                    nodeLookup[node.name] = node;
+                for (int i = 0; i < nodes.Count; i++) {
+                    if (nodes[i] != null) {
+                        if (i == 0) {
+                            nodes[i].SetRoot(true);
+                        }
+                        nodeLookup[nodes[i].name] = nodes[i];
+                    }
                 }
             }
         }
@@ -141,9 +141,7 @@ namespace PLAGUEV.Dialogue {
 
         public void OnBeforeSerialize() {
 #if UNITY_EDITOR
-            // if (nodes.Count == 0) {
-            //     CreateRootNode();
-            // }
+            // Initialize();
             if (AssetDatabase.GetAssetPath(this) != "") {
                 foreach (DialogueNode node in nodes) {
                     if (AssetDatabase.GetAssetPath(node) == "") {

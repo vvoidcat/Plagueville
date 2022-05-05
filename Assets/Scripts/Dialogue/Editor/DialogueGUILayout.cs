@@ -14,6 +14,8 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private const float playerHeight = 310;
         private const float cardHeight = 250;
+        private const float rootHeight = 100;
+        private const float rootWidth = 150;
 
 
         public static void DrawConnections(DialogueTree selectedDialogue, DialogueNode node) {
@@ -39,6 +41,9 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (node.GetSpeaker() == SpeakerType.CARD) {
                 newRect.height = cardHeight;
+            } else if (node.GetRootState()) {
+                newRect.height = rootHeight;
+                newRect.width = rootWidth;
             } else {
                 newRect.height = playerHeight;
             }
