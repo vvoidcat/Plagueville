@@ -141,7 +141,6 @@ namespace PLAGUEV.Dialogue {
 
         public void OnBeforeSerialize() {
 #if UNITY_EDITOR
-            // Initialize();
             if (AssetDatabase.GetAssetPath(this) != "") {
                 foreach (DialogueNode node in nodes) {
                     if (AssetDatabase.GetAssetPath(node) == "") {

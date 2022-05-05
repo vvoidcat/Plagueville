@@ -24,7 +24,7 @@ namespace PLAGUEV.Dialogue {
 
         // player node settings
         [SerializeField] ActionType action;
-        [SerializeField] bool isLocationChanger = false;
+        [SerializeField] LocationType location;
         [Range(-100, 100)] [SerializeField] int money = 0;
         [Range(-100, 100)] [SerializeField] int knowledge = 0;
         [Range(-100, 100)] [SerializeField] int glory = 0;
@@ -75,8 +75,8 @@ namespace PLAGUEV.Dialogue {
             return action;
         }
 
-        public bool GetLocationChangerState() {
-            return isLocationChanger;
+        public LocationType GetLocationChange() {
+            return location;
         }
 
         public int[] GetStatValues() {
@@ -131,8 +131,8 @@ namespace PLAGUEV.Dialogue {
             action = newAction;
         }
 
-        public void SetLocationChanger(bool state) {
-            isLocationChanger = state;
+        public void SetLocationChange(LocationType newLocation) {
+            location = newLocation;
         }
 
         public void SetStatValues(int[] newValues) {

@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speaker: 0
   text: 
-  children: []
+  children:
+  - 55502c07-1dda-4933-a170-2afdae27bd69
   rect:
     serializedVersion: 2
-    x: 294
-    y: 242.99998
+    x: 247
+    y: 173
     width: 300
     height: 250
   sprite: {fileID: 0}
@@ -27,7 +28,7 @@ MonoBehaviour:
   isCustom: 0
   isCleared: 0
   action: 0
-  isLocationChanger: 0
+  location: 0
   money: 0
   knowledge: 0
   glory: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
   nodes:
   - {fileID: 1791609781625243118}
   - {fileID: -4493739087627105702}
+  - {fileID: 3856921387041531476}
 --- !u!114 &1791609781625243118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,8 +67,8 @@ MonoBehaviour:
   - febe780a-b30b-4db4-9597-8605ff1b53eb
   rect:
     serializedVersion: 2
-    x: 55
-    y: 190.99998
+    x: 41
+    y: 146.99998
     width: 150
     height: 100
   sprite: {fileID: 0}
@@ -75,7 +77,39 @@ MonoBehaviour:
   isCustom: 0
   isCleared: 0
   action: 0
-  isLocationChanger: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &3856921387041531476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 55502c07-1dda-4933-a170-2afdae27bd69
+  m_EditorClassIdentifier: 
+  speaker: 1
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 630
+    y: 127
+    width: 300
+    height: 310
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
   money: 0
   knowledge: 0
   glory: 0
