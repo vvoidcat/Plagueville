@@ -98,6 +98,9 @@ namespace PLAGUEV.Dialogue {
             newNode.name = System.Guid.NewGuid().ToString();
 
             if (parent != null) {
+                Rect newRect = parent.GetRect();
+                newRect.position = new Vector2(newRect.position.x + 100, newRect.position.y + 50);
+                newNode.SetRect(newRect);
                 parent.AddChild(newNode.name);
             }
 

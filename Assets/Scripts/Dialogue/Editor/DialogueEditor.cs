@@ -61,7 +61,6 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void OnGUI() {
             DialogueGUIStyles.SetGUIStyles();
-            EditorGUI.BeginChangeCheck();
 
             if (selectedDialogue == null) {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
@@ -79,14 +78,11 @@ namespace PLAGUEV.Dialogue.Editor {
 
                 EditorGUILayout.EndScrollView();
 
-
                 if (parentNode != null) {
-                    Undo.RecordObject(selectedDialogue, "Undo Add Node");
                     selectedDialogue.CreateNode(parentNode);
                     parentNode = null;
                 }
                 if (deadNode != null) {
-                    Undo.RecordObject(selectedDialogue, "Undo Delete Node");
                     selectedDialogue.DeleteNode(deadNode);
                     deadNode = null;
                 }
@@ -107,11 +103,8 @@ namespace PLAGUEV.Dialogue.Editor {
                     Selection.activeObject = selectedDialogue;
                 }
             } else if (Event.current.type == EventType.MouseDrag && draggingNode != null) {
-                Undo.RecordObject(selectedDialogue, "Undo Reposition Node");
-
                 Rect newRect = draggingNode.GetRect();
                 newRect.position = Event.current.mousePosition + draggingNodeOffset;
-                
                 draggingNode.SetRect(newRect);
                 Repaint();
             } else if (Event.current.type == EventType.MouseDrag && draggingCanvas) {
@@ -159,6 +152,8 @@ namespace PLAGUEV.Dialogue.Editor {
 
 
         private void DrawDialogueSettings() {
+            EditorGUI.BeginChangeCheck();
+
             EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel);
 
             GUILayout.BeginHorizontal(GUILayout.Width(600));
@@ -226,10 +221,6 @@ namespace PLAGUEV.Dialogue.Editor {
             linkerNode = DialogueGUILayout.DrawLinkButtons(node, linkerNode);
             deadNode = DialogueGUILayout.DrawDeleteButton(node, deadNode);
             EditorGUILayout.EndHorizontal();
-
-            if (EditorGUI.EndChangeCheck()) {
-                Undo.RecordObject(selectedDialogue, "Update Node Settings");
-            }
 
             DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
         }

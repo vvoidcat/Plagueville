@@ -88,15 +88,21 @@ namespace PLAGUEV.Dialogue {
 
 #if UNITY_EDITOR
         public void SetSpeaker(SpeakerType newSpeaker) {
+            Undo.RecordObject(this, "Undo Update Node Speaker");
             speaker = newSpeaker;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetText(string newText) {
+            Undo.RecordObject(this, "Undo Update Node Text");
             text = newText;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetRect(Rect newRect) {
+            Undo.RecordObject(this, "Undo Update Node Rect");
             rect = newRect;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetRoot(bool state) {
@@ -104,42 +110,62 @@ namespace PLAGUEV.Dialogue {
         }
 
         public void AddChild(string childID) {
+            Undo.RecordObject(this, "Undo Node Add Child");
             children.Add(childID);
+            EditorUtility.SetDirty(this);
         }
 
         public void RemoveChild(string childID) {
+            Undo.RecordObject(this, "Undo Node Remove Child");
             children.Remove(childID);
+            EditorUtility.SetDirty(this);
         }
 
         public void SetSprite(Sprite newSprite) {
+            Undo.RecordObject(this, "Undo Update Node Sprite");
             sprite = newSprite;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetCharacterName(string newName) {
+            Undo.RecordObject(this, "Undo Update Node Character Name");
             characterName = newName;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetChained(bool state) {
+            Undo.RecordObject(this, "Undo Update Node Chained State");
             isChained = state;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetCustom(bool state) {
+            Undo.RecordObject(this, "Undo Update Node Custom State");
             isCustom = state;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetAction(ActionType newAction) {
+            Undo.RecordObject(this, "Undo Update Node Action");
             action = newAction;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetLocationChange(LocationType newLocation) {
+            Undo.RecordObject(this, "Undo Update Node Location");
             location = newLocation;
+            EditorUtility.SetDirty(this);
         }
 
         public void SetStatValues(int[] newValues) {
+            Undo.RecordObject(this, "Undo Update Node Stat Values");
+
             money = newValues[0];
             knowledge = newValues[1];
             glory = newValues[2];
             faith = newValues[3];
+
+            EditorUtility.SetDirty(this);
         }
 #endif
 
