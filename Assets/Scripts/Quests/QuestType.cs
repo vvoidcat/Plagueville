@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PLAGUEV.Cards {
+namespace PLAGUEV.Quests {
 
-    public class CardProgression : MonoBehaviour {
-
+    public enum QuestType {
+        MAIN,
+        ELSE
     }
 }

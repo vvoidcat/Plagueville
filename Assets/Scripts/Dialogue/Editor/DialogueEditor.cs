@@ -220,6 +220,7 @@ namespace PLAGUEV.Dialogue.Editor {
             parentNode = DialogueGUILayout.DrawAddChildButton(node, parentNode);
             linkerNode = DialogueGUILayout.DrawLinkButtons(node, linkerNode);
             deadNode = DialogueGUILayout.DrawDeleteButton(node, deadNode);
+            // DialogueGUILayout.DrawButtons(node, parentNode, deadNode, linkerNode);
             EditorGUILayout.EndHorizontal();
 
             DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);

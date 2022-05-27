@@ -20,7 +20,8 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] bool isChained = false;
         [SerializeField] bool isCustom = false;
         [SerializeField] bool isCleared = false;    // implement
-        // set timer
+        [SerializeField] bool isAvailable = true;   // implement
+        bool isFoldedOut = false;
 
         // player node settings
         [SerializeField] ActionType action;

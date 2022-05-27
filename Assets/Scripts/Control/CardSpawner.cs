@@ -17,6 +17,9 @@ namespace PLAGUEV.Control {
         CardData cardData;
         PlayerSettings playerSettings;
 
+        [SerializeField] int defaultMaxCounter = 5;
+        [SerializeField] int uniqueMaxCounter = 20;
+
         float timeToWait = 25f;
         float hasWaited = 0f;
 
@@ -66,24 +69,11 @@ namespace PLAGUEV.Control {
             int orderInDeck = Random.Range(0, cardDatas.Length);
             cardData = cardDatas[orderInDeck];
 
-            if (!cardData.canAppearEverywhere) {
-                bool canBeChosen = false;
-
-                foreach (LocationType cardLocation in cardData.locations) {
-                    if (cardLocation == currentLocation) {
-                        canBeChosen = true;
-                        break;
-                    }
-                }
-                
-                if (!canBeChosen) {
-                    ChooseAgain();
-                }
+            if (!cardData.CanBeChosen(currentLocation)) {
+                ChooseCard();
+            } else {
+                // select DialogueNode
             }
-        }
-
-        private void ChooseAgain() {
-            ChooseCard();
         }
 
         private void CreateNewCard() {
@@ -91,7 +81,7 @@ namespace PLAGUEV.Control {
                 Destroy(card);
             }
 
-            card = Instantiate(cardPrefab, transform);              // move all these to card controller
+            card = Instantiate(cardPrefab, transform);
             card.GetComponent<SpriteRenderer>().sprite = cardData.sprite;
             card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);         // should this be configurable in the dialogue system instead?..
 
@@ -121,13 +111,14 @@ namespace PLAGUEV.Control {
 
         private void UpdateCardSettings(CardType cardType) {
             foreach (CardData data in cardDatas) {
+                data.SetMaxCounter(defaultMaxCounter, uniqueMaxCounter);
                 if (data.hasClassTrees && data.type == cardType) {
                     data.useMainTree = false;
                 }
             }
         }
 
-        private bool LocationExistsInDeck() {
+        private bool LocationExistsInDeck() {       // remove later
             bool isInDeck = false;
 
             foreach (CardData data in cardDatas) {

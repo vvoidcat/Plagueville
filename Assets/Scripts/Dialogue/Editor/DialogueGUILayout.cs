@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using PLAGUEV.Quests;
 
 namespace PLAGUEV.Dialogue.Editor {
 
@@ -51,6 +51,20 @@ namespace PLAGUEV.Dialogue.Editor {
             node.SetRect(newRect);
         }
 
+        public static void DrawAvailabilitySettings() {
+            bool isFoldedOut = true;
+            isFoldedOut = EditorGUILayout.Foldout(isFoldedOut, "Available if:");
+            if (isFoldedOut) {
+                //EditorGUILayout.
+                // DrawLabel("Available if", 95);
+            }
+        }
+
+        // public static void DrawButtons(DialogueNode node, DialogueNode parentNode, DialogueNode deadNode, DialogueNode linkerNode) {
+        //     parentNode = DrawAddChildButton(node, parentNode);
+        //     linkerNode = DrawLinkButtons(node, linkerNode);
+        //     deadNode = DrawDeleteButton(node, deadNode);
+        // }
 
         public static DialogueNode DrawAddChildButton(DialogueNode node, DialogueNode parentNode) {
             if (GUILayout.Button("+")) {
@@ -98,6 +112,26 @@ namespace PLAGUEV.Dialogue.Editor {
             }
 
             return linkerNode;
+        }
+
+        public static void DrawCardToggles(DialogueTree selectedDialogue, DialogueNode node) {
+            bool newChainedState = node.GetChainedState();
+            bool newCustomState = node.GetCustomState();
+
+            GUILayout.BeginHorizontal();
+            GUI.enabled = !selectedDialogue.GetPlotState();
+            DrawLabel("Customizable", 95);
+            newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
+            GUI.enabled = true;
+
+            DrawLabel("Chained", 60);
+            newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
+            GUILayout.EndHorizontal();
+
+            node.SetChained(newChainedState);
+            node.SetCustom(newCustomState);
+
+            DrawAvailabilitySettings(); ///////////////////
         }
 
         public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
@@ -198,24 +232,6 @@ namespace PLAGUEV.Dialogue.Editor {
             newText = EditorGUILayout.TextField(node.GetText(), DialogueGUIStyles.GetTextStyle(), GUILayout.Height(70));
 
             node.SetText(newText);
-        }
-
-        public static void DrawCardToggles(DialogueTree selectedDialogue, DialogueNode node) {
-            bool newChainedState = node.GetChainedState();
-            bool newCustomState = node.GetCustomState();
-
-            GUILayout.BeginHorizontal();
-            GUI.enabled = !selectedDialogue.GetPlotState();
-            DrawLabel("Customizable", 95);
-            newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
-            GUI.enabled = true;
-
-            DrawLabel("Chained", 60);
-            newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
-            GUILayout.EndHorizontal();
-
-            node.SetChained(newChainedState);
-            node.SetCustom(newCustomState);
         }
 
         public static void DrawLabel(string labelText, float width) {

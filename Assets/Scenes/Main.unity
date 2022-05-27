@@ -1121,6 +1121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLocation: 16
   cardPrefab: {fileID: 6033554468970661597, guid: d716cd1666a9e044a939b8a63c77ba1f, type: 3}
+  defaultMaxCounter: 5
+  uniqueMaxCounter: 20
 --- !u!1 &1138655074
 GameObject:
   m_ObjectHideFlags: 0
@@ -2708,6 +2710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56dd0e7f427c3c4eb2da1a8ab474882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prologueOn: 1
+  endingOn: 0
 --- !u!114 &1979000584
 MonoBehaviour:
   m_ObjectHideFlags: 0
