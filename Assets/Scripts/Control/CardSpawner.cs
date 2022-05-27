@@ -17,6 +17,9 @@ namespace PLAGUEV.Control {
         CardData cardData;
         PlayerSettings playerSettings;
 
+        CardData savedCard = null;
+        DialogueNode savedNode = null;
+
         [SerializeField] int defaultMaxCounter = 5;
         [SerializeField] int uniqueMaxCounter = 20;
 
@@ -30,7 +33,7 @@ namespace PLAGUEV.Control {
         }
 
         void Start() {
-            ResolveDialogueTrees();
+            InitializeCards();
         }
 
         void FixedUpdate() {
@@ -61,34 +64,7 @@ namespace PLAGUEV.Control {
             // call location manager and update background
         }
 
-
-        private void ChooseCard() {
-            // if child of the card's current dialogue node is chained to the next one -> choose this card again and make it so that the chained node appears
-            // else below
-            
-            int orderInDeck = Random.Range(0, cardDatas.Length);
-            cardData = cardDatas[orderInDeck];
-
-            if (!cardData.CanBeChosen(currentLocation)) {
-                ChooseCard();
-            } else {
-                // select DialogueNode
-            }
-        }
-
-        private void CreateNewCard() {
-            if (card != null) {     // destruction should happen on dialogue choice
-                Destroy(card);
-            }
-
-            card = Instantiate(cardPrefab, transform);
-            card.GetComponent<SpriteRenderer>().sprite = cardData.sprite;
-            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);         // should this be configurable in the dialogue system instead?..
-
-            // card.transform.GetChild(1).GetComponent<TextMeshPro>().SetText(cardData.characterName);      // dialogue node text
-        }
-
-        private void ResolveDialogueTrees() {
+        private void InitializeCards() {
             CardType cardType = new CardType();
 
             switch (playerSettings.GetPlayerClass()) {
@@ -106,16 +82,50 @@ namespace PLAGUEV.Control {
                     break;
             }
 
-            UpdateCardSettings(cardType);
-        }
-
-        private void UpdateCardSettings(CardType cardType) {
             foreach (CardData data in cardDatas) {
                 data.SetMaxCounter(defaultMaxCounter, uniqueMaxCounter);
-                if (data.hasClassTrees && data.type == cardType) {
-                    data.useMainTree = false;
-                }
+                data.SetDialogueTree(cardType);
             }
+        }
+
+        private void ChooseCard() {
+            if (savedCard == null) {
+                int orderInDeck = Random.Range(0, cardDatas.Length);
+                cardData = cardDatas[orderInDeck];
+
+                if (!cardData.CanBeChosen(currentLocation)) {
+                    cardData.UpdateCounter();
+                    ChooseCard();
+                } else {
+                    // select DialogueNode
+                    // check if node is chained
+                    // if it is, remember the card && check if there's any player node next && get the next node in the chain if there isn't &&
+                    // && wait for the player's response if there is and remember its non-player child
+                    // savedCard = cardData;
+                    // ChooseCard();
+
+                    // if there isn't -> reset savings
+                }
+            } else {
+                // check for chained nodes again
+            }
+        }
+
+        private void ResetSavings() {
+            savedCard = null;
+            savedNode = null;
+        }
+
+        private void CreateNewCard() {
+            if (card != null) {     // destruction should happen on dialogue choice
+                Destroy(card);
+            }
+
+            card = Instantiate(cardPrefab, transform);
+            card.GetComponent<SpriteRenderer>().sprite = cardData.sprite;
+            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);         // should this be configurable in the dialogue system instead?..
+
+            // card.transform.GetChild(1).GetComponent<TextMeshPro>().SetText(cardData.characterName);      // dialogue node text
         }
 
         private bool LocationExistsInDeck() {       // remove later

@@ -15,9 +15,9 @@ namespace PLAGUEV.Cards {
         public bool canAppearEverywhere = false;
         public LocationType[] locations = new LocationType[1];
         public bool hasClassTrees = false;
-        public bool useMainTree = true;
         public DialogueTree dialogueTreeMain = null;
         public DialogueTree dialogueTreeAlternate = null;
+        DialogueTree dialogueTree = null;
         public Quest quest = null;
 
         int counter = 0;
@@ -31,6 +31,22 @@ namespace PLAGUEV.Cards {
         // [Range(-100, 100)] [SerializeField] int glory = 0;
         // [Range(-100, 100)] [SerializeField] int faith = 0;
 
+
+        public void SetDialogueTree(CardType cardType) {
+            if (hasClassTrees && type == cardType) {
+                dialogueTree = dialogueTreeAlternate;
+            } else {
+                dialogueTree = dialogueTreeMain;
+            }
+        }
+
+        public void SetMaxCounter(int defaultMax, int uniqueMax) {
+            if (type == CardType.UNIQUE) {
+                maxCounter = uniqueMax;
+            } else {
+                maxCounter = defaultMax;
+            }
+        }
 
         public bool CanBeChosen(LocationType currentLocation) {
             bool canBeChosen = false;
@@ -48,28 +64,29 @@ namespace PLAGUEV.Cards {
                 }
             }
 
-            UpdateCounter();
+            // UpdateCounter();
             return canBeChosen;
         }
 
-
-        public void SetMaxCounter(int defaultMax, int uniqueMax) {
-            if (type == CardType.UNIQUE) {
-                maxCounter = uniqueMax;
-            } else {
-                maxCounter = defaultMax;
-            }
-        }
-
-        private void UpdateCounter() {
+        public void UpdateCounter() {
             counter++;
 
-            if (counter == maxCounter) {
+            if (counter > maxCounter) {
                 counter = 0;
                 isReady = true;
             } else {
                 isReady = false;
             }
         }
+
+        // public DialogueNode GetNodeToDisplay() {
+        //     DialogueNode root = dialogueTree.GetRootNode();
+        //     DialogueNode[] results = (DialogueNode[])dialogueTree.GetAllChildren(root);
+
+        //     // randomly choose a node
+        //     // check if node is available
+        //     // if it isn't, get another node
+        //     // return node
+        // }
     }
 }
