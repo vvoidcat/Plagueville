@@ -21,6 +21,7 @@ namespace PLAGUEV.Dialogue {
         DUNGEON_TOMB,
         DUNGEON_CAVE,
         DUNGEON_CLASSIC,
-        VILLAGE_EXTERIOR
+        VILLAGE_EXTERIOR,
+        VILLAGE_FIELDS
     }
 }

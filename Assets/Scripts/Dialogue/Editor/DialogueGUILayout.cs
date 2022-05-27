@@ -138,7 +138,7 @@ namespace PLAGUEV.Dialogue.Editor {
         public static void DrawLocationField(DialogueNode node) {
             LocationType newLocation = node.GetLocationChange();
 
-            if (node.GetAction() != ActionType.MOVE) {
+            if (node.GetAction() != ActionType.MOVE_DEFAULT) {
                 GUI.enabled = false;
             }
             GUILayout.BeginHorizontal();

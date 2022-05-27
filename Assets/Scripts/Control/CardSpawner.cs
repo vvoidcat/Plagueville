@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using PLAGUEV.Dialogue;
 using PLAGUEV.Cards;
 using PLAGUEV.Core;
 
@@ -9,7 +10,7 @@ namespace PLAGUEV.Control {
 
     public class CardSpawner : MonoBehaviour {
 
-        [SerializeField] GameLocation currentLocation;
+        [SerializeField] LocationType currentLocation;
         [SerializeField] GameObject cardPrefab = null;
         GameObject card;
         CardData[] cardDatas;
@@ -48,11 +49,11 @@ namespace PLAGUEV.Control {
             return cardData;
         }
 
-        public GameLocation GetCurrentLocation() {
+        public LocationType GetCurrentLocation() {
             return currentLocation;
         }
 
-        public void SetCurrentLocation(GameLocation location) {
+        public void SetCurrentLocation(LocationType location) {
             currentLocation = location;
             // call location manager and update background
         }
@@ -68,7 +69,7 @@ namespace PLAGUEV.Control {
             if (!cardData.canAppearEverywhere) {
                 bool canBeChosen = false;
 
-                foreach (GameLocation cardLocation in cardData.locations) {
+                foreach (LocationType cardLocation in cardData.locations) {
                     if (cardLocation == currentLocation) {
                         canBeChosen = true;
                         break;
@@ -135,7 +136,7 @@ namespace PLAGUEV.Control {
                     break;
                 }
 
-                foreach (GameLocation cardLocation in data.locations) {
+                foreach (LocationType cardLocation in data.locations) {
                     if (cardLocation == currentLocation) {
                         isInDeck = true;
                         break;

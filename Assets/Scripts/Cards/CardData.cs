@@ -12,7 +12,7 @@ namespace PLAGUEV.Cards {
         public Sprite sprite = null;
         public CardType type;
         public bool canAppearEverywhere = false;
-        public GameLocation[] locations = new GameLocation[1];
+        public LocationType[] locations = new LocationType[1];
         public bool hasClassTrees = false;
         public bool useMainTree = true;
         public DialogueTree dialogueTreeMain = null;

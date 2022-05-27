@@ -18,8 +18,8 @@ MonoBehaviour:
   - 9fd98a0c-ea1f-42c8-8d15-93732b8140d2
   rect:
     serializedVersion: 2
-    x: 222
-    y: 48
+    x: 205
+    y: 120
     width: 300
     height: 250
   sprite: {fileID: 0}
@@ -50,8 +50,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 550
-    y: 100
+    x: 515
+    y: 104
     width: 300
     height: 310
   sprite: {fileID: 0}

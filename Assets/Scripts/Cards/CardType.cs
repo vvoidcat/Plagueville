@@ -11,5 +11,9 @@ namespace PLAGUEV.Cards {
         WIZARD,
         GUARD,
         NUN,
+        CITY,
+        FOREST,
+        DUNGEON,
+        VILLAGE
     }
 }
