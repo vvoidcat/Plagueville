@@ -15,13 +15,31 @@ namespace PLAGUEV.Core {
         }
 
         Player player = new Player();
+        [SerializeField] bool prologueOn = true;
+        [SerializeField] bool endingOn = false;
 
+
+        public bool GetPrologueState() {
+            return prologueOn;
+        }
+
+        public bool GetEndingState() {
+            return endingOn;
+        }
 
         public PlayerClass GetPlayerClass() {
             return player.playerClass;
         }
 
-        public void InitializePlayer(PlayerClass choiceClass) {
+        public void SetPrologueState(bool state) {
+            prologueOn = state;
+        }
+
+        public void SetEndingState(bool state) {
+            endingOn = state;
+        }
+
+        public void SetPlayerClass(PlayerClass choiceClass) {
             player.playerClass = choiceClass;
             player.isNull = false;
 

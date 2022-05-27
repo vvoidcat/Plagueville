@@ -25,7 +25,7 @@ namespace PLAGUEV.Control {
             playerSettings = transform.GetComponent<PlayerSettings>();
 
             statManager.InitializeStats();
-            playerSettings.InitializePlayer(playerClass);          // REMOVE WHEN THE MAIN MENU IS READY
+            playerSettings.SetPlayerClass(playerClass);          // REMOVE WHEN THE MAIN MENU IS READY
         }
 
         void Start() {
