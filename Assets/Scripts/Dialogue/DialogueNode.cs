@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using PLAGUEV.Quests;
 
 namespace PLAGUEV.Dialogue {
 
@@ -21,7 +22,6 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] bool isCustom = false;
         [SerializeField] bool isCleared = false;    // implement
         [SerializeField] bool isAvailable = true;   // implement
-        bool isFoldedOut = false;
 
         // player node settings
         [SerializeField] ActionType action;
@@ -72,6 +72,10 @@ namespace PLAGUEV.Dialogue {
             return isCleared;
         }
 
+        public bool GetAvailableState() {
+            return isAvailable;
+        }
+
         public ActionType GetAction() {
             return action;
         }
@@ -83,7 +87,6 @@ namespace PLAGUEV.Dialogue {
         public int[] GetStatValues() {
             return new int[] {money, knowledge, glory, faith};
         }
-
 
 
 
@@ -172,6 +175,10 @@ namespace PLAGUEV.Dialogue {
 
         public void SetCleared(bool state) {
             isCleared = state;
+        }
+
+        public void SetAvailable() {
+
         }
     }
 }

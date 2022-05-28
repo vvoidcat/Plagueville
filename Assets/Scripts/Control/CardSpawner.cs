@@ -98,8 +98,8 @@ namespace PLAGUEV.Control {
                     ChooseCard();
                 } else {
                     // select DialogueNode
-                    // check if node is chained
-                    // if it is, remember the card && check if there's any player node next && get the next node in the chain if there isn't &&
+                    // check if there's a child of the player response node that is chained
+                    // if there is, remember the card && check if there's any player node next && get the next node in the chain if there isn't &&
                     // && wait for the player's response if there is and remember its non-player child
                     // savedCard = cardData;
                     // ChooseCard();

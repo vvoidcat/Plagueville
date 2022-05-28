@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace PLAGUEV.Quests {
 
-    [CreateAssetMenu(fileName = "New Quest", menuName = "PLAGUEVILLE/Quest", order = 0)]
+    [CreateAssetMenu(fileName = "New Quest", menuName = "Quest", order = 0)]
     public class Quest : ScriptableObject {
 
         [SerializeField] QuestType questType;
         [SerializeField] QuestProgression questProgression;
-        [SerializeField] string[] objective;
+        [SerializeField] string[] objective;        // create a struct
 
 
         

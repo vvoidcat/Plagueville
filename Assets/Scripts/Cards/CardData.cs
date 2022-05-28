@@ -6,7 +6,7 @@ using PLAGUEV.Quests;
 
 namespace PLAGUEV.Cards {
 
-    [CreateAssetMenu(fileName = "Card", menuName = "Cards/New Card", order = 0)]
+    [CreateAssetMenu(fileName = "New Card", menuName = "Card", order = 0)]
     public class CardData : ScriptableObject {
 
         public string characterName = null;

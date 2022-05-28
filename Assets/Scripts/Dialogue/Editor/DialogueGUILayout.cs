@@ -13,7 +13,7 @@ namespace PLAGUEV.Dialogue.Editor {
         static Color chainColor = new Color(0.3f, 0.5f, 1f);
 
         private const float playerHeight = 310;
-        private const float cardHeight = 250;
+        private const float cardHeight = 300;
         private const float rootHeight = 100;
         private const float rootWidth = 150;
 
@@ -49,15 +49,6 @@ namespace PLAGUEV.Dialogue.Editor {
             }
 
             node.SetRect(newRect);
-        }
-
-        public static void DrawAvailabilitySettings() {
-            bool isFoldedOut = true;
-            isFoldedOut = EditorGUILayout.Foldout(isFoldedOut, "Available if:");
-            if (isFoldedOut) {
-                //EditorGUILayout.
-                // DrawLabel("Available if", 95);
-            }
         }
 
         // public static void DrawButtons(DialogueNode node, DialogueNode parentNode, DialogueNode deadNode, DialogueNode linkerNode) {
@@ -128,10 +119,13 @@ namespace PLAGUEV.Dialogue.Editor {
             newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
             GUILayout.EndHorizontal();
 
-            node.SetChained(newChainedState);
             node.SetCustom(newCustomState);
-
-            DrawAvailabilitySettings(); ///////////////////
+            node.SetChained(newChainedState);
+            foreach (DialogueNode child in selectedDialogue.GetAllChildren(node)) {
+                if (child.GetSpeaker() == SpeakerType.PLAYER) {
+                    child.SetChained(newChainedState);
+                }
+            }
         }
 
         public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
@@ -145,6 +139,30 @@ namespace PLAGUEV.Dialogue.Editor {
             DrawSpriteField(node);
 
             GUI.enabled = true;
+
+            DrawAvailabilitySettings(selectedDialogue, node);
+        }
+
+        // TEMP, change later
+        public static void DrawAvailabilitySettings(DialogueTree selectedDialogue, DialogueNode node) {
+            //QuestManager questManager = 
+            string[] stuff = new string[3] { "aaaa", "eee", "ok well ehmm" };
+            int index = 0;
+
+            DrawLabel("Available if", 80);
+            EditorGUILayout.BeginHorizontal();
+            DrawLabel("Quest", 50);
+            bool newQuestState = EditorGUILayout.Toggle(true);
+            EditorGUILayout.Popup(index, stuff);
+            //EditorGUILayout.BeginVertical();
+            EditorGUILayout.Popup(index, stuff);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            DrawLabel("Exact stage", 90);
+            bool newStageState = EditorGUILayout.Toggle(true);
+            EditorGUILayout.EndHorizontal();
+            //EditorGUILayout.EndVertical();
         }
 
         public static void DrawSpeakerField(DialogueNode node) {

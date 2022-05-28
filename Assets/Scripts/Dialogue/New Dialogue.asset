@@ -1,5 +1,72 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7789138178153222746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: ea67df31-5a29-4c13-b169-011d7f2f90c9
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children:
+  - 91531342-2349-479c-8eca-e02f26120d73
+  rect:
+    serializedVersion: 2
+    x: 807.00006
+    y: 15
+    width: 300
+    height: 300
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 1
+  isCustom: 0
+  isCleared: 0
+  isAvailable: 1
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &-5438870753074968591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: d0856ee8-65c1-430f-b685-5dbd8a2a7686
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 1444
+    y: -8.999939
+    width: 300
+    height: 300
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 1
+  isCustom: 0
+  isCleared: 0
+  isAvailable: 1
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
 --- !u!114 &-4493739087627105702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,10 +85,10 @@ MonoBehaviour:
   - 9fd98a0c-ea1f-42c8-8d15-93732b8140d2
   rect:
     serializedVersion: 2
-    x: 176
-    y: 97
+    x: 173
+    y: 84.000015
     width: 300
-    height: 250
+    height: 300
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
@@ -48,11 +115,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speaker: 1
   text: 
-  children: []
+  children:
+  - ea67df31-5a29-4c13-b169-011d7f2f90c9
   rect:
     serializedVersion: 2
-    x: 565
-    y: 159
+    x: 493
+    y: 61
     width: 300
     height: 310
   sprite: {fileID: 0}
@@ -66,7 +134,7 @@ MonoBehaviour:
   money: 0
   knowledge: 0
   glory: 0
-  faith: 0
+  faith: -55
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,6 +151,45 @@ MonoBehaviour:
   - {fileID: 1791609781625243118}
   - {fileID: -4493739087627105702}
   - {fileID: -310226440686923939}
+  - {fileID: -7789138178153222746}
+  - {fileID: 1662356277832623984}
+  - {fileID: 4710169737035900924}
+  - {fileID: -5438870753074968591}
+--- !u!114 &1662356277832623984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 91531342-2349-479c-8eca-e02f26120d73
+  m_EditorClassIdentifier: 
+  speaker: 1
+  text: 
+  children:
+  - 6ac60221-ea85-4771-bce2-cec29cbe043e
+  - d0856ee8-65c1-430f-b685-5dbd8a2a7686
+  rect:
+    serializedVersion: 2
+    x: 1120
+    y: 120.00006
+    width: 300
+    height: 310
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 1
+  isCustom: 0
+  isCleared: 0
+  isAvailable: 1
+  action: 0
+  location: 0
+  money: 100
+  knowledge: 0
+  glory: 0
+  faith: 0
 --- !u!114 &1791609781625243118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +215,39 @@ MonoBehaviour:
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
+  isCustom: 0
+  isCleared: 0
+  isAvailable: 1
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &4710169737035900924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 6ac60221-ea85-4771-bce2-cec29cbe043e
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 1447
+    y: 295.00003
+    width: 300
+    height: 300
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 1
   isCustom: 0
   isCleared: 0
   isAvailable: 1

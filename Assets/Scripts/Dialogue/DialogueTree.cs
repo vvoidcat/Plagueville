@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace PLAGUEV.Dialogue {
 
-    [CreateAssetMenu(fileName = "New Dialogue", menuName = "Dialogue/New Dialogue", order = 0)]
+    [CreateAssetMenu(fileName = "New Dialogue", menuName = "Dialogue", order = 0)]
     public class DialogueTree : ScriptableObject, ISerializationCallbackReceiver {
 
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
@@ -18,6 +18,10 @@ namespace PLAGUEV.Dialogue {
         float canvasWidth = 5000;
         float canvasHeight = 5000;
 
+
+        void Awake() {
+            OnValidate();
+        }
 
         private void OnValidate() {
             nodeLookup.Clear();
