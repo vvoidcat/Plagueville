@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7789138178153222746
+--- !u!114 &-6447507721423453227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
-  m_Name: ea67df31-5a29-4c13-b169-011d7f2f90c9
+  m_Name: 40eff923-75a7-408e-a8a4-5193e4eefee6
   m_EditorClassIdentifier: 
   speaker: 0
   text: 
   children:
-  - 91531342-2349-479c-8eca-e02f26120d73
+  - 52556abb-b92f-402b-aa6f-0502ccf26207
   rect:
     serializedVersion: 2
-    x: 810.00006
-    y: -5
+    x: 718
+    y: 42
     width: 300
     height: 300
   indexQuest: 0
   indexObjective: 0
-  isQuestChanger: 1
+  isQuestChanger: 0
   updObjective: 0
   sprite: {fileID: 0}
   characterName: 
-  isChained: 1
+  isChained: 0
   isCustom: 0
   isCleared: 0
   action: 0
@@ -54,8 +54,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 1459
-    y: -18.999939
+    x: 1571
+    y: -28.999939
     width: 300
     height: 300
   indexQuest: 0
@@ -91,14 +91,51 @@ MonoBehaviour:
   - 9fd98a0c-ea1f-42c8-8d15-93732b8140d2
   rect:
     serializedVersion: 2
-    x: 203
-    y: 109
+    x: 50.999985
+    y: 117
     width: 300
     height: 300
   indexQuest: 0
   indexObjective: 1
-  isQuestChanger: 1
-  updObjective: 1
+  isQuestChanger: 0
+  updObjective: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &-3332557445018123162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 52556abb-b92f-402b-aa6f-0502ccf26207
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children:
+  - 91531342-2349-479c-8eca-e02f26120d73
+  rect:
+    serializedVersion: 2
+    x: 901
+    y: 227.99998
+    width: 300
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 0
+  updObjective: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
@@ -125,11 +162,11 @@ MonoBehaviour:
   speaker: 1
   text: 
   children:
-  - ea67df31-5a29-4c13-b169-011d7f2f90c9
+  - 40eff923-75a7-408e-a8a4-5193e4eefee6
   rect:
     serializedVersion: 2
-    x: 497
-    y: 61
+    x: 398
+    y: 57
     width: 300
     height: 362
   indexQuest: 0
@@ -168,10 +205,11 @@ MonoBehaviour:
   - {fileID: 1791609781625243118}
   - {fileID: -4493739087627105702}
   - {fileID: -310226440686923939}
-  - {fileID: -7789138178153222746}
   - {fileID: 1662356277832623984}
   - {fileID: 4710169737035900924}
   - {fileID: -5438870753074968591}
+  - {fileID: -6447507721423453227}
+  - {fileID: -3332557445018123162}
 --- !u!114 &1662356277832623984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +229,8 @@ MonoBehaviour:
   - d0856ee8-65c1-430f-b685-5dbd8a2a7686
   rect:
     serializedVersion: 2
-    x: 1126
-    y: 90.00006
+    x: 1218
+    y: 39.00006
     width: 300
     height: 362
   indexQuest: 0
@@ -201,7 +239,7 @@ MonoBehaviour:
   updObjective: 0
   sprite: {fileID: 0}
   characterName: 
-  isChained: 1
+  isChained: 0
   isCustom: 0
   isCleared: 0
   action: 0
@@ -264,8 +302,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 1453
-    y: 298.00003
+    x: 1571
+    y: 279.00003
     width: 300
     height: 300
   indexQuest: 0

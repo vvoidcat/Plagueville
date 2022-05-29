@@ -82,6 +82,67 @@ namespace PLAGUEV.Dialogue.Editor {
             GUI.DrawTextureWithTexCoords(canvas, bgTexture, bgTextureCoords);
         }
 
+        public static DialogueNode[] DrawNode(DialogueTree selectedDialogue, DialogueNode node, DialogueNode[] specialNodes) {
+            DialogueGUIStyles.SetNodeStyle(node.GetSpeaker());
+
+            GUILayout.BeginArea(node.GetRect(), DialogueGUIStyles.GetNodeStyle());
+
+            if (!node.GetRootState()) {
+                specialNodes = DrawRegularNode(selectedDialogue, node, specialNodes);
+            } else {
+                specialNodes = DrawRootNode(node, specialNodes);
+            }
+
+            GUILayout.EndArea();
+
+            return specialNodes;
+        }
+
+        public static DialogueNode[] DrawRegularNode(DialogueTree selectedDialogue, DialogueNode node, DialogueNode[] specialNodes) {
+            DialogueNode parentNode = specialNodes[0];
+            DialogueNode linkerNode = specialNodes[1];
+            DialogueNode deadNode = specialNodes[2];
+
+            DrawSpeakerField(node);
+
+            if (node.GetSpeaker() == SpeakerType.CARD) {
+                DrawCardToggles(selectedDialogue, node);
+                DrawAdditionalFields(selectedDialogue, node);
+                DrawQuestSettings(selectedDialogue, node);
+            } else {
+                DrawActionField(node);
+                DrawLocationField(node);
+                DrawStats(node);
+                DrawQuestSettings(selectedDialogue, node);
+            }
+
+            DrawText(node);
+
+            EditorGUILayout.BeginHorizontal();
+            parentNode = DrawAddChildButton(node, parentNode);
+            linkerNode = DrawLinkButtons(node, linkerNode);
+            deadNode = DrawDeleteButton(node, deadNode);
+            EditorGUILayout.EndHorizontal();
+
+            ResetNodeHeight(selectedDialogue, node);
+
+            return new DialogueNode[] {parentNode, linkerNode, deadNode};
+        }
+
+        public static DialogueNode[] DrawRootNode(DialogueNode node, DialogueNode[] specialNodes) {
+            DialogueNode parentNode = specialNodes[0];
+            DialogueNode linkerNode = specialNodes[1];
+    
+            EditorGUILayout.LabelField("<START>", DialogueGUIStyles.GetRootLabelStyle());
+
+            GUILayout.FlexibleSpace();
+            GUILayout.BeginHorizontal();
+            parentNode = DrawAddChildButton(node, parentNode);
+            linkerNode = DrawLinkButtons(node, linkerNode);
+            GUILayout.EndHorizontal();
+
+            return new DialogueNode[] {parentNode, linkerNode, null};
+        }
 
         public static void DrawConnections(DialogueTree selectedDialogue, DialogueNode node) {
             Vector3 startPosition = new Vector2(node.GetRect().xMax, node.GetRect().center.y);
@@ -116,12 +177,6 @@ namespace PLAGUEV.Dialogue.Editor {
 
             node.SetRect(newRect);
         }
-
-        // public static void DrawButtons(DialogueNode node, DialogueNode parentNode, DialogueNode deadNode, DialogueNode linkerNode) {
-        //     parentNode = DrawAddChildButton(node, parentNode);
-        //     linkerNode = DrawLinkButtons(node, linkerNode);
-        //     deadNode = DrawDeleteButton(node, deadNode);
-        // }
 
         public static DialogueNode DrawAddChildButton(DialogueNode node, DialogueNode parentNode) {
             if (GUILayout.Button("+")) {
@@ -224,7 +279,9 @@ namespace PLAGUEV.Dialogue.Editor {
             EditorGUILayout.BeginHorizontal();
             DrawLabel("Update Objective", 130);
             bool newUpdObjective = EditorGUILayout.Toggle(node.IsObjectiveUpdater());
-            GUI.enabled = newUpdObjective;
+            if (newQuestChanger && !newUpdObjective) {
+                GUI.enabled = false;
+            }
             int newIndexObjective = EditorGUILayout.Popup(node.GetIndexObjective(), newQuest.GetObjectives(), GUILayout.Width(100));
             EditorGUILayout.EndHorizontal();
             GUI.enabled = true;

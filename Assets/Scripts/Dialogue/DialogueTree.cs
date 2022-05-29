@@ -20,7 +20,6 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
 
-        // bool allCleared = false;
         string characterName;
         float canvasWidth = 5000;
         float canvasHeight = 5000;

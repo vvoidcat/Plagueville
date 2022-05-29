@@ -72,7 +72,9 @@ namespace PLAGUEV.Dialogue.Editor {
                 DialogueGUILayout.DrawBackground(selectedDialogue);
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
-                    DrawNode(node);
+                    DialogueNode[] upd = DialogueGUILayout.DrawNode(selectedDialogue, node,
+                                                                    new DialogueNode[] {parentNode, linkerNode, deadNode});
+                    UpdateNodes(upd);
                     DialogueGUILayout.DrawConnections(selectedDialogue, node);
                 }
 
@@ -115,8 +117,6 @@ namespace PLAGUEV.Dialogue.Editor {
             } else if (Event.current.type == EventType.MouseUp && draggingCanvas) {
                 draggingCanvas = false;
             }
-
-            // deadzone rect ?
         }
 
         private DialogueNode GetNodeAtPoint(Vector2 mousePosition) {
@@ -138,63 +138,10 @@ namespace PLAGUEV.Dialogue.Editor {
             linkerNode = null;
         }
 
-
-
-
-
-
-
-
-
-
-        private void DrawNode(DialogueNode node) {
-            DialogueGUIStyles.SetNodeStyle(node.GetSpeaker());
-
-            GUILayout.BeginArea(node.GetRect(), DialogueGUIStyles.GetNodeStyle());
-
-            if (!node.GetRootState()) {
-                DrawRegularNode(node);
-            } else {
-                DrawRootNode(node);
-            }
-
-            GUILayout.EndArea();
-        }
-
-        private void DrawRegularNode(DialogueNode node) {
-            DialogueGUILayout.DrawSpeakerField(node);
-
-            if (node.GetSpeaker() == SpeakerType.CARD) {
-                DialogueGUILayout.DrawCardToggles(selectedDialogue, node);
-                DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node);
-                DialogueGUILayout.DrawQuestSettings(selectedDialogue, node);
-            } else {
-                DialogueGUILayout.DrawActionField(node);
-                DialogueGUILayout.DrawLocationField(node);
-                DialogueGUILayout.DrawStats(node);
-                DialogueGUILayout.DrawQuestSettings(selectedDialogue, node);
-            }
-
-            DialogueGUILayout.DrawText(node);
-
-            EditorGUILayout.BeginHorizontal();
-            parentNode = DialogueGUILayout.DrawAddChildButton(node, parentNode);
-            linkerNode = DialogueGUILayout.DrawLinkButtons(node, linkerNode);
-            deadNode = DialogueGUILayout.DrawDeleteButton(node, deadNode);
-            // DialogueGUILayout.DrawButtons(node, parentNode, deadNode, linkerNode);
-            EditorGUILayout.EndHorizontal();
-
-            DialogueGUILayout.ResetNodeHeight(selectedDialogue, node);
-        }
-
-        private void DrawRootNode(DialogueNode node) {
-            EditorGUILayout.LabelField("<START>", DialogueGUIStyles.GetRootLabelStyle());
-
-            GUILayout.FlexibleSpace();
-            GUILayout.BeginHorizontal();
-            parentNode = DialogueGUILayout.DrawAddChildButton(node, parentNode);
-            linkerNode = DialogueGUILayout.DrawLinkButtons(node, linkerNode);
-            GUILayout.EndHorizontal();
+        private void UpdateNodes(DialogueNode[] nodesUpdated) {
+            parentNode = nodesUpdated[0];
+            linkerNode = nodesUpdated[1];
+            deadNode = nodesUpdated[2];
         }
     }
 }
