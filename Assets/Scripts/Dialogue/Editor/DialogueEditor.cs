@@ -151,6 +151,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
 
 
+
         private void DrawDialogueSettings() {
             EditorGUI.BeginChangeCheck();
 
@@ -208,10 +209,12 @@ namespace PLAGUEV.Dialogue.Editor {
             if (node.GetSpeaker() == SpeakerType.CARD) {
                 DialogueGUILayout.DrawCardToggles(selectedDialogue, node);
                 DialogueGUILayout.DrawAdditionalFields(selectedDialogue, node);
+                DialogueGUILayout.DrawQuestSettings(selectedDialogue, node);
             } else {
                 DialogueGUILayout.DrawActionField(node);
                 DialogueGUILayout.DrawLocationField(node);
                 DialogueGUILayout.DrawStats(node);
+                DialogueGUILayout.DrawQuestSettings(selectedDialogue, node);
             }
 
             DialogueGUILayout.DrawText(node);

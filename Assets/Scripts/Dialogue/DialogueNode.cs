@@ -13,6 +13,12 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] string text;
         [SerializeField] List<string> children = new List<string>();
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
+        [SerializeField] Quest quest = null;
+        [SerializeField] string objective;
+        [SerializeField] QuestProgression progression;
+        [SerializeField] bool isQuestChanger = false;
+        [SerializeField] bool updObjective = false;
+        [SerializeField] bool updProgression = false;
         bool isRoot = false;
 
         // card node settings
@@ -21,7 +27,6 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] bool isChained = false;
         [SerializeField] bool isCustom = false;
         [SerializeField] bool isCleared = false;    // implement
-        [SerializeField] bool isAvailable = true;   // implement
 
         // player node settings
         [SerializeField] ActionType action;
@@ -48,6 +53,26 @@ namespace PLAGUEV.Dialogue {
             return rect;
         }
 
+        public Quest GetQuest() {
+            return quest;
+        }
+
+        public string GetQuestObjective() {
+            return objective;
+        }
+
+        public QuestProgression GetQuestProgression() {
+            return progression;
+        }
+
+        public bool[] GetQuestStates() {
+            return new bool[] {isQuestChanger, updObjective, updProgression};
+        }
+
+        public bool GetQuestChanger() {
+            return isQuestChanger;
+        }
+
         public bool GetRootState() {
             return isRoot;
         }
@@ -70,10 +95,6 @@ namespace PLAGUEV.Dialogue {
 
         public bool GetClearedState() {
             return isCleared;
-        }
-
-        public bool GetAvailableState() {
-            return isAvailable;
         }
 
         public ActionType GetAction() {
@@ -106,6 +127,20 @@ namespace PLAGUEV.Dialogue {
         public void SetRect(Rect newRect) {
             Undo.RecordObject(this, "Undo Update Node Rect");
             rect = newRect;
+            EditorUtility.SetDirty(this);
+        }
+
+        public void SetQuest(Quest newQuest, string newObjective, QuestProgression newProgression, bool[] newStates) {
+            Undo.RecordObject(this, "Undo Update Node Quest");
+
+            quest = newQuest;
+            objective = newObjective;
+            progression = newProgression;
+
+            isQuestChanger = newStates[0];
+            updObjective = newStates[1];
+            updProgression = newStates[2];
+
             EditorUtility.SetDirty(this);
         }
 
@@ -175,10 +210,6 @@ namespace PLAGUEV.Dialogue {
 
         public void SetCleared(bool state) {
             isCleared = state;
-        }
-
-        public void SetAvailable() {
-
         }
     }
 }

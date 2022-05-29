@@ -8,14 +8,20 @@ namespace PLAGUEV.Quests {
 
     public class QuestManager : MonoBehaviour {
 
-        Quest[] quests;
+        Quest[] quests = null;
+
 
         void Awake() {
-            quests = Resources.LoadAll<Quest>("Quests");
+            quests = LoadQuests();
         }
+
 
         public Quest[] GetAllQuests() {
             return quests;
+        }
+
+        public Quest[] LoadQuests() {
+            return Resources.LoadAll<Quest>("Quests");
         }
     }
 }

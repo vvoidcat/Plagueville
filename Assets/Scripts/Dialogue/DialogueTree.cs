@@ -3,20 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using PLAGUEV.Quests;
 
 namespace PLAGUEV.Dialogue {
 
     [CreateAssetMenu(fileName = "New Dialogue", menuName = "Dialogue", order = 0)]
     public class DialogueTree : ScriptableObject, ISerializationCallbackReceiver {
 
+        [SerializeField] bool isPlot = false;
+        
+        [SerializeField] bool alwaysAvailable = true;
+        [SerializeField] Quest quest = null;
+        //[SerializeField] Struct objective;
+
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
 
-        bool isPlot = false;
         // bool allCleared = false;
         string characterName;
         float canvasWidth = 5000;
         float canvasHeight = 5000;
+
+        Quest[] questData = null;
+        string[] questList = null;
 
 
         void Awake() {
@@ -24,6 +33,7 @@ namespace PLAGUEV.Dialogue {
         }
 
         private void OnValidate() {
+            BuildQuestList();
             nodeLookup.Clear();
 
             if (nodes.Count > 0) {
@@ -35,6 +45,14 @@ namespace PLAGUEV.Dialogue {
                         nodeLookup[nodes[i].name] = nodes[i];
                     }
                 }
+            }
+        }
+
+        private void BuildQuestList() {
+            questData = Resources.LoadAll<Quest>("Quests");
+            questList = new string[questData.Length];
+            for (int i = 0; i < questData.Length; i++) {
+                questList[i] = questData[i].GetQuestName();
             }
         }
 
@@ -71,12 +89,25 @@ namespace PLAGUEV.Dialogue {
             return canvasHeight;
         }
 
+        public Quest[] GetQuests() {
+            return questData;
+        }
+
+        public Quest GetQuestByIndex(int index) {
+            return questData[index];
+        }
+
+        public string[] GetQuestList() {
+            return questList;
+        }
+
 
 #if UNITY_EDITOR
         public void Initialize() {
             if (nodes.Count == 0) {
                 CreateRootNode();
             }
+
             OnValidate();
         }
 

@@ -12,8 +12,10 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
         static Color chainColor = new Color(0.3f, 0.5f, 1f);
 
-        private const float playerHeight = 310;
-        private const float cardHeight = 300;
+        private const float playerHeight = 380;
+        private const float cardHeight = 320;
+        private const float defaultWidth = 300;
+
         private const float rootHeight = 100;
         private const float rootWidth = 150;
 
@@ -38,6 +40,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
         public static void ResetNodeHeight(DialogueTree selectedDialogue, DialogueNode node) {
             Rect newRect = node.GetRect();
+            newRect.width = defaultWidth;
 
             if (node.GetSpeaker() == SpeakerType.CARD) {
                 newRect.height = cardHeight;
@@ -111,11 +114,11 @@ namespace PLAGUEV.Dialogue.Editor {
 
             GUILayout.BeginHorizontal();
             GUI.enabled = !selectedDialogue.GetPlotState();
-            DrawLabel("Customizable", 95);
+            DrawLabel("Customizable", 105);
             newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
             GUI.enabled = true;
 
-            DrawLabel("Chained", 60);
+            DrawLabel("Chained", 65);
             newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
             GUILayout.EndHorizontal();
 
@@ -139,30 +142,49 @@ namespace PLAGUEV.Dialogue.Editor {
             DrawSpriteField(node);
 
             GUI.enabled = true;
-
-            DrawAvailabilitySettings(selectedDialogue, node);
         }
 
-        // TEMP, change later
-        public static void DrawAvailabilitySettings(DialogueTree selectedDialogue, DialogueNode node) {
-            //QuestManager questManager = 
-            string[] stuff = new string[3] { "aaaa", "eee", "ok well ehmm" };
-            int index = 0;
+        // TODO move to a dedicated class ??
+        public static void DrawQuestSettings(DialogueTree selectedDialogue, DialogueNode node) {
+            int indexQuest = 0;
+            int indexObjective = 0;
 
-            DrawLabel("Available if", 80);
+            bool[] newStates = node.GetQuestStates();
+            Quest newQuest = node.GetQuest();
+            QuestProgression newProgression = node.GetQuestProgression();
+            string newObjective = node.GetQuestObjective();
+
+            EditorGUILayout.Space(2);
+
             EditorGUILayout.BeginHorizontal();
-            DrawLabel("Quest", 50);
-            bool newQuestState = EditorGUILayout.Toggle(true);
-            EditorGUILayout.Popup(index, stuff);
-            //EditorGUILayout.BeginVertical();
-            EditorGUILayout.Popup(index, stuff);
+            DrawLabel("Quest Changer", 130);
+            newStates[0] = EditorGUILayout.Toggle(newStates[0]);
+            GUI.enabled = newStates[0];
+            indexQuest = EditorGUILayout.Popup(indexQuest, selectedDialogue.GetQuestList(), GUILayout.Width(100));
+            newQuest = selectedDialogue.GetQuestByIndex(indexQuest);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            DrawLabel("Exact stage", 90);
-            bool newStageState = EditorGUILayout.Toggle(true);
+            DrawLabel("Update Objective", 130);
+            newStates[1] = EditorGUILayout.Toggle(newStates[1]);
+            GUI.enabled = newStates[1];
+            indexObjective = EditorGUILayout.Popup(indexObjective, newQuest.GetObjectives(), GUILayout.Width(100));
+            newObjective = newQuest.GetObjectiveByIndex(indexObjective);
+            GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
-            //EditorGUILayout.EndVertical();
+
+            EditorGUILayout.BeginHorizontal();
+            DrawLabel("Update Progression", 130);
+            newStates[2] = EditorGUILayout.Toggle(newStates[2]);
+            GUI.enabled = newStates[2];
+            newProgression = (QuestProgression)EditorGUILayout.EnumPopup(node.GetQuestProgression(), GUILayout.Width(100));
+            GUI.enabled = true;
+            EditorGUILayout.EndHorizontal();
+
+            GUI.enabled = true;
+            EditorGUILayout.Space(2);
+
+            node.SetQuest(newQuest, newObjective, newProgression, newStates);
         }
 
         public static void DrawSpeakerField(DialogueNode node) {
