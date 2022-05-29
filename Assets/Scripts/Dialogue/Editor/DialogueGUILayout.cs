@@ -170,15 +170,14 @@ namespace PLAGUEV.Dialogue.Editor {
             GUI.enabled = newStates[1];
             indexObjective = EditorGUILayout.Popup(indexObjective, newQuest.GetObjectives(), GUILayout.Width(100));
             newObjective = newQuest.GetObjectiveByIndex(indexObjective);
-            GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
+            GUI.enabled = newStates[0];
             DrawLabel("Update Progression", 130);
             newStates[2] = EditorGUILayout.Toggle(newStates[2]);
             GUI.enabled = newStates[2];
             newProgression = (QuestProgression)EditorGUILayout.EnumPopup(node.GetQuestProgression(), GUILayout.Width(100));
-            GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
             GUI.enabled = true;

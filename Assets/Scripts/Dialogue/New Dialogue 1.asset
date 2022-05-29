@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9201789798566535050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: dfc42632-c1e3-48f5-a5a2-f751cd192b28
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children:
+  - d11a6929-5c1f-405d-bf9e-987cce760edb
+  rect:
+    serializedVersion: 2
+    x: 262
+    y: 53
+    width: 300
+    height: 320
+  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
+  objective: 
+  progression: 0
+  isQuestChanger: 0
+  updObjective: 0
+  updProgression: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &-8270972738369579125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: d11a6929-5c1f-405d-bf9e-987cce760edb
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 607
+    y: 129
+    width: 300
+    height: 320
+  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
+  objective: 
+  progression: 0
+  isQuestChanger: 0
+  updObjective: 0
+  updProgression: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &-5544685816563916447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 5e0546a2-acc3-4606-b831-7f6eca0865f5
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children:
+  - dfc42632-c1e3-48f5-a5a2-f751cd192b28
+  rect:
+    serializedVersion: 2
+    x: 66
+    y: 79
+    width: 150
+    height: 100
+  quest: {fileID: 0}
+  objective: 
+  progression: 0
+  isQuestChanger: 0
+  updObjective: 0
+  updProgression: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 590f0aab90260554d94deb56c8d62009, type: 3}
+  m_Name: New Dialogue 1
+  m_EditorClassIdentifier: 
+  isPlot: 0
+  alwaysAvailable: 1
+  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
+  nodes:
+  - {fileID: -5544685816563916447}
+  - {fileID: -9201789798566535050}
+  - {fileID: -8270972738369579125}

@@ -54,6 +54,10 @@ namespace PLAGUEV.Dialogue {
             for (int i = 0; i < questData.Length; i++) {
                 questList[i] = questData[i].GetQuestName();
             }
+
+            if (quest == null) {
+                quest = questData[0];
+            }
         }
 
 
