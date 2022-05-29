@@ -11,6 +11,7 @@ namespace PLAGUEV.Dialogue {
     public class DialogueTree : ScriptableObject, ISerializationCallbackReceiver {
 
         [SerializeField] bool isPlot = false;
+        bool isCleared = false;
         
         [SerializeField] bool alwaysAvailable = true;
         [SerializeField] int indexQuest = 0;
@@ -73,11 +74,15 @@ namespace PLAGUEV.Dialogue {
             }
         }
 
-        public bool GetPlotState() {
+        public bool IsPlot() {
             return isPlot;
         }
 
-        public bool GetAvailabilityState() {
+        public bool IsCleared() {
+            return isCleared;
+        }
+
+        public bool IsAlwaysAvailable() {
             return alwaysAvailable;
         }
         
@@ -203,6 +208,10 @@ namespace PLAGUEV.Dialogue {
             canvasHeight = height;
         }
 #endif
+
+        public void SetCleared(bool state) {
+            isCleared = state;
+        }
 
 
 

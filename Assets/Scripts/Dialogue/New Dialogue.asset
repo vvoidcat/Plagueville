@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8436535601417244657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 4c992272-6ecb-49e9-9e19-533e0260b5d1
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 2291
+    y: 246.00006
+    width: 300
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 0
+  updObjective: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
 --- !u!114 &-6447507721423453227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,8 +54,8 @@ MonoBehaviour:
   - 52556abb-b92f-402b-aa6f-0502ccf26207
   rect:
     serializedVersion: 2
-    x: 718
-    y: 42
+    x: 730
+    y: 7
     width: 300
     height: 300
   indexQuest: 0
@@ -54,8 +90,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 1571
-    y: -28.999939
+    x: 1741
+    y: -66.99994
     width: 300
     height: 300
   indexQuest: 0
@@ -65,6 +101,79 @@ MonoBehaviour:
   sprite: {fileID: 0}
   characterName: 
   isChained: 1
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &-5346982719779449885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: acf9ffe4-d137-4267-aa7d-b9957b2863a1
+  m_EditorClassIdentifier: 
+  speaker: 1
+  text: 
+  children:
+  - 40eff923-75a7-408e-a8a4-5193e4eefee6
+  rect:
+    serializedVersion: 2
+    x: 417
+    y: 98
+    width: 300
+    height: 362
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 0
+  updObjective: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &-5297945298050528649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 86a3e06f-1ac5-4f6c-9958-2348c39049b9
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 2315
+    y: -13.999939
+    width: 300
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 0
+  updObjective: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
   isCustom: 0
   isCleared: 0
   action: 0
@@ -88,11 +197,11 @@ MonoBehaviour:
   speaker: 0
   text: 
   children:
-  - 9fd98a0c-ea1f-42c8-8d15-93732b8140d2
+  - acf9ffe4-d137-4267-aa7d-b9957b2863a1
   rect:
     serializedVersion: 2
-    x: 50.999985
-    y: 117
+    x: 105.999985
+    y: 236
     width: 300
     height: 300
   indexQuest: 0
@@ -128,8 +237,8 @@ MonoBehaviour:
   - 91531342-2349-479c-8eca-e02f26120d73
   rect:
     serializedVersion: 2
-    x: 901
-    y: 227.99998
+    x: 1002
+    y: 250.99998
     width: 300
     height: 300
   indexQuest: 0
@@ -147,43 +256,6 @@ MonoBehaviour:
   knowledge: 0
   glory: 0
   faith: 0
---- !u!114 &-310226440686923939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
-  m_Name: 9fd98a0c-ea1f-42c8-8d15-93732b8140d2
-  m_EditorClassIdentifier: 
-  speaker: 1
-  text: 
-  children:
-  - 40eff923-75a7-408e-a8a4-5193e4eefee6
-  rect:
-    serializedVersion: 2
-    x: 398
-    y: 57
-    width: 300
-    height: 362
-  indexQuest: 0
-  indexObjective: 0
-  isQuestChanger: 1
-  updObjective: 0
-  sprite: {fileID: 0}
-  characterName: 
-  isChained: 0
-  isCustom: 0
-  isCleared: 0
-  action: 0
-  location: 0
-  money: 0
-  knowledge: 0
-  glory: 0
-  faith: -7
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,12 +276,15 @@ MonoBehaviour:
   nodes:
   - {fileID: 1791609781625243118}
   - {fileID: -4493739087627105702}
-  - {fileID: -310226440686923939}
   - {fileID: 1662356277832623984}
   - {fileID: 4710169737035900924}
   - {fileID: -5438870753074968591}
   - {fileID: -6447507721423453227}
   - {fileID: -3332557445018123162}
+  - {fileID: 7567915291550084370}
+  - {fileID: -8436535601417244657}
+  - {fileID: -5297945298050528649}
+  - {fileID: -5346982719779449885}
 --- !u!114 &1662356277832623984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,8 +304,8 @@ MonoBehaviour:
   - d0856ee8-65c1-430f-b685-5dbd8a2a7686
   rect:
     serializedVersion: 2
-    x: 1218
-    y: 39.00006
+    x: 1362
+    y: 42.00006
     width: 300
     height: 362
   indexQuest: 0
@@ -299,13 +374,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speaker: 0
   text: 
-  children: []
+  children:
+  - 1f83a86e-a7ed-4782-8d3b-91cf821daad3
   rect:
     serializedVersion: 2
-    x: 1571
-    y: 279.00003
+    x: 1681
+    y: 251.00003
     width: 300
     height: 300
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 0
+  updObjective: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 1
+  isCustom: 0
+  isCleared: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
+--- !u!114 &7567915291550084370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: 1f83a86e-a7ed-4782-8d3b-91cf821daad3
+  m_EditorClassIdentifier: 
+  speaker: 1
+  text: 
+  children:
+  - 4c992272-6ecb-49e9-9e19-533e0260b5d1
+  - 86a3e06f-1ac5-4f6c-9958-2348c39049b9
+  rect:
+    serializedVersion: 2
+    x: 2067
+    y: 80.00006
+    width: 300
+    height: 362
   indexQuest: 0
   indexObjective: 0
   isQuestChanger: 0

@@ -24,7 +24,6 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] string characterName;
         [SerializeField] bool isChained = false;
         [SerializeField] bool isCustom = false;
-        [SerializeField] bool isCleared = false;    // implement
 
         // player node settings
         [SerializeField] ActionType action;
@@ -67,7 +66,7 @@ namespace PLAGUEV.Dialogue {
             return updObjective;
         }
 
-        public bool GetRootState() {
+        public bool IsRoot() {
             return isRoot;
         }
 
@@ -79,16 +78,12 @@ namespace PLAGUEV.Dialogue {
             return characterName;
         }
 
-        public bool GetChainedState() {
+        public bool IsChained() {
             return isChained;
         }
 
-        public bool GetCustomState() {
+        public bool IsCustom() {
             return isCustom;
-        }
-
-        public bool GetClearedState() {
-            return isCleared;
         }
 
         public ActionType GetAction() {
@@ -200,8 +195,5 @@ namespace PLAGUEV.Dialogue {
         }
 #endif
 
-        public void SetCleared(bool state) {
-            isCleared = state;
-        }
     }
 }

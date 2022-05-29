@@ -30,9 +30,9 @@ namespace PLAGUEV.Dialogue.Editor {
 
             GUILayout.BeginHorizontal(GUILayout.Width(700));
             DrawLabel("Is Plot", 50);
-            bool newPlot = EditorGUILayout.Toggle(selectedDialogue.GetPlotState());
+            bool newPlot = EditorGUILayout.Toggle(selectedDialogue.IsPlot());
 
-            GUI.enabled = !selectedDialogue.GetPlotState();
+            GUI.enabled = !selectedDialogue.IsPlot();
             DrawLabel("Character Name", 115);
             string newName = EditorGUILayout.TextField(selectedDialogue.GetCharacterName(), GUILayout.Width(200));
             GUI.enabled = true;
@@ -56,9 +56,9 @@ namespace PLAGUEV.Dialogue.Editor {
             QuestProgression newProgression;
     
             DrawLabel("Always Available", 115);
-            bool newAvailability = EditorGUILayout.Toggle(selectedDialogue.GetAvailabilityState(), GUILayout.Width(50));
+            bool newAvailability = EditorGUILayout.Toggle(selectedDialogue.IsAlwaysAvailable(), GUILayout.Width(50));
 
-            GUI.enabled = selectedDialogue.GetAvailabilityState();
+            GUI.enabled = selectedDialogue.IsAlwaysAvailable();
             EditorGUILayout.LabelField("Quest: ", GUILayout.Width(50));
             int newIndexQuest = EditorGUILayout.Popup(selectedDialogue.GetIndexQuest(), selectedDialogue.GetQuestList(), GUILayout.Width(100));
             newQuest = selectedDialogue.GetQuestByIndex(newIndexQuest);
@@ -87,7 +87,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
             GUILayout.BeginArea(node.GetRect(), DialogueGUIStyles.GetNodeStyle());
 
-            if (!node.GetRootState()) {
+            if (!node.IsRoot()) {
                 specialNodes = DrawRegularNode(selectedDialogue, node, specialNodes);
             } else {
                 specialNodes = DrawRootNode(node, specialNodes);
@@ -99,10 +99,6 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static DialogueNode[] DrawRegularNode(DialogueTree selectedDialogue, DialogueNode node, DialogueNode[] specialNodes) {
-            DialogueNode parentNode = specialNodes[0];
-            DialogueNode linkerNode = specialNodes[1];
-            DialogueNode deadNode = specialNodes[2];
-
             DrawSpeakerField(node);
 
             if (node.GetSpeaker() == SpeakerType.CARD) {
@@ -119,14 +115,14 @@ namespace PLAGUEV.Dialogue.Editor {
             DrawText(node);
 
             EditorGUILayout.BeginHorizontal();
-            parentNode = DrawAddChildButton(node, parentNode);
-            linkerNode = DrawLinkButtons(node, linkerNode);
-            deadNode = DrawDeleteButton(node, deadNode);
+            specialNodes[0] = DrawAddChildButton(node, specialNodes[0]);
+            specialNodes[1] = DrawLinkButtons(node, specialNodes[1]);
+            specialNodes[2] = DrawDeleteButton(node, specialNodes[2]);
             EditorGUILayout.EndHorizontal();
 
             ResetNodeHeight(selectedDialogue, node);
 
-            return new DialogueNode[] {parentNode, linkerNode, deadNode};
+            return specialNodes;
         }
 
         public static DialogueNode[] DrawRootNode(DialogueNode node, DialogueNode[] specialNodes) {
@@ -151,7 +147,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 Vector3 endPosition = new Vector2(childNode.GetRect().xMin, childNode.GetRect().center.y);
                 Color lineColor = Color.white;
 
-                if (childNode.GetChainedState()) {
+                if (childNode.IsChained()) {
                     lineColor = chainColor;
                 }
 
@@ -168,7 +164,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (node.GetSpeaker() == SpeakerType.CARD) {
                 newRect.height = cardHeight;
-            } else if (node.GetRootState()) {
+            } else if (node.IsRoot()) {
                 newRect.height = rootHeight;
                 newRect.width = rootWidth;
             } else {
@@ -227,17 +223,17 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static void DrawCardToggles(DialogueTree selectedDialogue, DialogueNode node) {
-            bool newChainedState = node.GetChainedState();
-            bool newCustomState = node.GetCustomState();
+            bool newChainedState = node.IsChained();
+            bool newCustomState = node.IsCustom();
 
             GUILayout.BeginHorizontal();
-            GUI.enabled = !selectedDialogue.GetPlotState();
+            GUI.enabled = !selectedDialogue.IsPlot();
             DrawLabel("Customizable", 105);
-            newCustomState = EditorGUILayout.Toggle(node.GetCustomState());
+            newCustomState = EditorGUILayout.Toggle(node.IsCustom());
             GUI.enabled = true;
 
             DrawLabel("Chained", 65);
-            newChainedState = EditorGUILayout.Toggle(node.GetChainedState());
+            newChainedState = EditorGUILayout.Toggle(node.IsChained());
             GUILayout.EndHorizontal();
 
             node.SetCustom(newCustomState);
@@ -250,9 +246,9 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         public static void DrawAdditionalFields(DialogueTree selectedDialogue, DialogueNode node) {
-            if (node.GetCustomState()) {
+            if (node.IsCustom()) {
                 GUI.enabled = true;
-            } else if (!selectedDialogue.GetPlotState()) {
+            } else if (!selectedDialogue.IsPlot()) {
                 GUI.enabled = false;
             }
 
