@@ -21,13 +21,11 @@ MonoBehaviour:
     x: 810.00006
     y: -5
     width: 300
-    height: 320
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
-  objective: 
-  progression: 0
-  isQuestChanger: 0
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 1
   updObjective: 0
-  updProgression: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 1
@@ -59,13 +57,11 @@ MonoBehaviour:
     x: 1459
     y: -18.999939
     width: 300
-    height: 320
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
-  objective: 
-  progression: 0
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
   isQuestChanger: 0
   updObjective: 0
-  updProgression: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 1
@@ -95,16 +91,14 @@ MonoBehaviour:
   - 9fd98a0c-ea1f-42c8-8d15-93732b8140d2
   rect:
     serializedVersion: 2
-    x: 173
-    y: 185
+    x: 203
+    y: 109
     width: 300
-    height: 320
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
-  objective: 
-  progression: 0
-  isQuestChanger: 0
-  updObjective: 0
-  updProgression: 0
+    height: 300
+  indexQuest: 0
+  indexObjective: 1
+  isQuestChanger: 1
+  updObjective: 1
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
@@ -134,16 +128,14 @@ MonoBehaviour:
   - ea67df31-5a29-4c13-b169-011d7f2f90c9
   rect:
     serializedVersion: 2
-    x: 494
-    y: 34
+    x: 497
+    y: 61
     width: 300
-    height: 380
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
-  objective: 
-  progression: 0
-  isQuestChanger: 0
+    height: 362
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 1
   updObjective: 0
-  updProgression: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
@@ -154,7 +146,7 @@ MonoBehaviour:
   money: 0
   knowledge: 0
   glory: 0
-  faith: -55
+  faith: -7
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +161,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlot: 0
   alwaysAvailable: 1
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
+  indexQuest: 0
+  indexObjective: 0
+  conditionProgression: 0
   nodes:
   - {fileID: 1791609781625243118}
   - {fileID: -4493739087627105702}
@@ -200,13 +194,11 @@ MonoBehaviour:
     x: 1126
     y: 90.00006
     width: 300
-    height: 380
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
-  objective: 
-  progression: 0
+    height: 362
+  indexQuest: 0
+  indexObjective: 0
   isQuestChanger: 0
   updObjective: 0
-  updProgression: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 1
@@ -240,12 +232,10 @@ MonoBehaviour:
     y: 138.99998
     width: 150
     height: 100
-  quest: {fileID: 0}
-  objective: 
-  progression: 0
+  indexQuest: 0
+  indexObjective: 0
   isQuestChanger: 0
   updObjective: 0
-  updProgression: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
@@ -277,13 +267,11 @@ MonoBehaviour:
     x: 1453
     y: 298.00003
     width: 300
-    height: 320
-  quest: {fileID: 11400000, guid: 5a036a3cc5a25844bad07e9561c1f755, type: 2}
-  objective: 
-  progression: 0
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
   isQuestChanger: 0
   updObjective: 0
-  updProgression: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 1

@@ -13,8 +13,9 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] bool isPlot = false;
         
         [SerializeField] bool alwaysAvailable = true;
-        [SerializeField] Quest quest = null;
-        //[SerializeField] Struct objective;
+        [SerializeField] int indexQuest = 0;
+        [SerializeField] int indexObjective = 0;
+        [SerializeField] QuestProgression conditionProgression;
 
         [SerializeField] public List<DialogueNode> nodes = new List<DialogueNode>();
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
@@ -54,10 +55,6 @@ namespace PLAGUEV.Dialogue {
             for (int i = 0; i < questData.Length; i++) {
                 questList[i] = questData[i].GetQuestName();
             }
-
-            if (quest == null) {
-                quest = questData[0];
-            }
         }
 
 
@@ -81,6 +78,22 @@ namespace PLAGUEV.Dialogue {
             return isPlot;
         }
 
+        public bool GetAvailabilityState() {
+            return alwaysAvailable;
+        }
+        
+        public int GetIndexQuest() {
+            return indexQuest;
+        }
+
+        public int GetIndexObjective() {
+            return indexObjective;
+        }
+
+        public QuestProgression GetConditionProgression() {
+            return conditionProgression;
+        }
+
         public string GetCharacterName() {
             return characterName;
         }
@@ -93,7 +106,7 @@ namespace PLAGUEV.Dialogue {
             return canvasHeight;
         }
 
-        public Quest[] GetQuests() {
+        public Quest[] GetAllQuests() {
             return questData;
         }
 
@@ -164,14 +177,29 @@ namespace PLAGUEV.Dialogue {
         }
 
         public void SetPlotRelation(bool state) {
+            Undo.RecordObject(this, "Undo Update Dialogue Plot Relation");
             isPlot = state;
         }
 
+        public void SetAvailability(bool state) {
+            Undo.RecordObject(this, "Undo Update Dialogue Conditions Settings");
+            alwaysAvailable = state;
+        }
+
+        public void SetQuestConditions(int[] newIndexes, QuestProgression newProgression) {
+            Undo.RecordObject(this, "Undo Update Dialogue Conditions Settings");
+            indexQuest = newIndexes[0];
+            indexObjective = newIndexes[1];
+            conditionProgression = newProgression;
+        }
+
         public void SetCharacterName(string newName) {
+            Undo.RecordObject(this, "Undo Update Dialogue Character Name");
             characterName = newName;
         }
 
         public void SetCanvasSize(float width, float height) {
+            Undo.RecordObject(this, "Undo Update Dialogue Canvas Size");
             canvasWidth = width;
             canvasHeight = height;
         }

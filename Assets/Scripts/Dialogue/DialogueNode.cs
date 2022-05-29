@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using PLAGUEV.Quests;
+
 
 namespace PLAGUEV.Dialogue {
 
@@ -13,12 +13,10 @@ namespace PLAGUEV.Dialogue {
         [SerializeField] string text;
         [SerializeField] List<string> children = new List<string>();
         [SerializeField] Rect rect = new Rect(0, 0, 300, 250);
-        [SerializeField] Quest quest = null;
-        [SerializeField] string objective;
-        [SerializeField] QuestProgression progression;
+        [SerializeField] int indexQuest = 0;
+        [SerializeField] int indexObjective = 0;
         [SerializeField] bool isQuestChanger = false;
         [SerializeField] bool updObjective = false;
-        [SerializeField] bool updProgression = false;
         bool isRoot = false;
 
         // card node settings
@@ -53,24 +51,20 @@ namespace PLAGUEV.Dialogue {
             return rect;
         }
 
-        public Quest GetQuest() {
-            return quest;
+        public int GetIndexQuest() {
+            return indexQuest;
         }
 
-        public string GetQuestObjective() {
-            return objective;
+        public int GetIndexObjective() {
+            return indexObjective;
         }
 
-        public QuestProgression GetQuestProgression() {
-            return progression;
-        }
-
-        public bool[] GetQuestStates() {
-            return new bool[] {isQuestChanger, updObjective, updProgression};
-        }
-
-        public bool GetQuestChanger() {
+        public bool IsQuestChanger() {
             return isQuestChanger;
+        }
+
+        public bool IsObjectiveUpdater() {
+            return updObjective;
         }
 
         public bool GetRootState() {
@@ -130,16 +124,14 @@ namespace PLAGUEV.Dialogue {
             EditorUtility.SetDirty(this);
         }
 
-        public void SetQuest(Quest newQuest, string newObjective, QuestProgression newProgression, bool[] newStates) {
+        public void SetQuest(int[] newIndexes, bool[] newStates) {
             Undo.RecordObject(this, "Undo Update Node Quest");
 
-            quest = newQuest;
-            objective = newObjective;
-            progression = newProgression;
+            indexQuest = newIndexes[0];
+            indexObjective = newIndexes[1];
 
             isQuestChanger = newStates[0];
             updObjective = newStates[1];
-            updProgression = newStates[2];
 
             EditorUtility.SetDirty(this);
         }

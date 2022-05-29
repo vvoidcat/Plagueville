@@ -65,11 +65,11 @@ namespace PLAGUEV.Dialogue.Editor {
             if (selectedDialogue == null) {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
-                DrawDialogueSettings();
+                DialogueGUILayout.DrawDialogueSettings(selectedDialogue);
                 ProcessEvents();
 
                 scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-                DrawBackground();
+                DialogueGUILayout.DrawBackground(selectedDialogue);
 
                 foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
                     DrawNode(node);
@@ -146,48 +146,6 @@ namespace PLAGUEV.Dialogue.Editor {
 
 
 
-
-
-
-
-
-
-        private void DrawDialogueSettings() {
-            EditorGUI.BeginChangeCheck();
-
-            EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel);
-
-            GUILayout.BeginHorizontal(GUILayout.Width(600));
-            DialogueGUILayout.DrawLabel("Is Plot", 50);
-            bool isPlot = EditorGUILayout.Toggle(selectedDialogue.GetPlotState());
-
-            GUI.enabled = !selectedDialogue.GetPlotState();
-            DialogueGUILayout.DrawLabel("Character Name", 115);
-            string newName = EditorGUILayout.TextField(selectedDialogue.GetCharacterName(), GUILayout.Width(200));
-            GUI.enabled = true;
-
-            DialogueGUILayout.DrawLabel("   Canvas", 70);
-            float newWidth = EditorGUILayout.FloatField(selectedDialogue.GetCanvasWidth(), GUILayout.Width(50));
-            float newHeight = EditorGUILayout.FloatField(selectedDialogue.GetCanvasHeight(), GUILayout.Width(50));
-            GUILayout.EndHorizontal();
-
-            EditorGUILayout.Space(4);
-
-            if (EditorGUI.EndChangeCheck()) {
-                Undo.RecordObject(selectedDialogue, "Undo Update Dialogue Settings");
-                selectedDialogue.SetPlotRelation(isPlot);
-                selectedDialogue.SetCharacterName(newName);
-                selectedDialogue.SetCanvasSize(newWidth, newHeight);
-            }
-        }
-
-        private void DrawBackground() {
-            Rect canvas = GUILayoutUtility.GetRect(selectedDialogue.GetCanvasWidth(), selectedDialogue.GetCanvasHeight());
-            Texture2D bgTexture = Resources.Load("background") as Texture2D;
-            Rect bgTextureCoords = new Rect(0, 0, selectedDialogue.GetCanvasWidth() / DialogueGUIStyles.bgTextureSize,
-                                                    selectedDialogue.GetCanvasHeight() / DialogueGUIStyles.bgTextureSize);
-            GUI.DrawTextureWithTexCoords(canvas, bgTexture, bgTextureCoords);
-        }
 
         private void DrawNode(DialogueNode node) {
             DialogueGUIStyles.SetNodeStyle(node.GetSpeaker());

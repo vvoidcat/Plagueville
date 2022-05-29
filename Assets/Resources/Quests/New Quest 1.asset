@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4731d6b3ba1dc684fb0a96348627f549, type: 3}
-  m_Name: New Quest
+  m_Name: New Quest 1
   m_EditorClassIdentifier: 
   type: 0
   progression: 0
   objectives:
-  - qq
-  - qqq
-  - qqqqq
+  - 
+  - 
+  - 

@@ -5,6 +5,7 @@ using UnityEngine;
 namespace PLAGUEV.Quests {
 
     public enum QuestProgression {
+        ANY,
         INACTIVE,
         ACTIVE,
         COMPLETE

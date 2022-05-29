@@ -12,12 +12,75 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
         static Color chainColor = new Color(0.3f, 0.5f, 1f);
 
-        private const float playerHeight = 380;
-        private const float cardHeight = 320;
+        private const float playerHeight = 362;
+        private const float cardHeight = 300;
         private const float defaultWidth = 300;
 
         private const float rootHeight = 100;
         private const float rootWidth = 150;
+
+
+        public static void DrawDialogueSettings(DialogueTree selectedDialogue) {
+            EditorGUI.BeginChangeCheck();
+
+            GUILayout.BeginHorizontal(GUILayout.Width(1050));
+            EditorGUILayout.LabelField("dialogue selected: " + selectedDialogue.name, EditorStyles.boldLabel, GUILayout.Width(300));
+            DrawDialogueConditionsSettings(selectedDialogue);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal(GUILayout.Width(700));
+            DrawLabel("Is Plot", 50);
+            bool newPlot = EditorGUILayout.Toggle(selectedDialogue.GetPlotState());
+
+            GUI.enabled = !selectedDialogue.GetPlotState();
+            DrawLabel("Character Name", 115);
+            string newName = EditorGUILayout.TextField(selectedDialogue.GetCharacterName(), GUILayout.Width(200));
+            GUI.enabled = true;
+
+            DrawLabel("   Canvas Size", 90);
+            EditorGUILayout.LabelField("x", GUILayout.Width(10));
+            float newWidth = EditorGUILayout.FloatField(selectedDialogue.GetCanvasWidth(), GUILayout.Width(50));
+            EditorGUILayout.LabelField("y", GUILayout.Width(10));
+            float newHeight = EditorGUILayout.FloatField(selectedDialogue.GetCanvasHeight(), GUILayout.Width(50));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space(4);
+
+            selectedDialogue.SetPlotRelation(newPlot);
+            selectedDialogue.SetCharacterName(newName);
+            selectedDialogue.SetCanvasSize(newWidth, newHeight);
+        }
+
+        private static void DrawDialogueConditionsSettings(DialogueTree selectedDialogue) {
+            Quest newQuest = selectedDialogue.GetAllQuests()[selectedDialogue.GetIndexQuest()];
+            QuestProgression newProgression;
+    
+            DrawLabel("Always Available", 115);
+            bool newAvailability = EditorGUILayout.Toggle(selectedDialogue.GetAvailabilityState(), GUILayout.Width(50));
+
+            GUI.enabled = selectedDialogue.GetAvailabilityState();
+            EditorGUILayout.LabelField("Quest: ", GUILayout.Width(50));
+            int newIndexQuest = EditorGUILayout.Popup(selectedDialogue.GetIndexQuest(), selectedDialogue.GetQuestList(), GUILayout.Width(100));
+            newQuest = selectedDialogue.GetQuestByIndex(newIndexQuest);
+
+            EditorGUILayout.LabelField("At Objective: ", GUILayout.Width(80));
+            int newIndexObjective = EditorGUILayout.Popup(selectedDialogue.GetIndexObjective(), newQuest.GetObjectives(), GUILayout.Width(100));
+
+            EditorGUILayout.LabelField("At Progress Stage: ", GUILayout.Width(110));
+            newProgression = (QuestProgression)EditorGUILayout.EnumPopup(selectedDialogue.GetConditionProgression());
+            GUI.enabled = true;
+
+            selectedDialogue.SetAvailability(newAvailability);
+            selectedDialogue.SetQuestConditions(new int[] {newIndexQuest, newIndexObjective}, newProgression);
+        }
+
+        public static void DrawBackground(DialogueTree selectedDialogue) {
+            Rect canvas = GUILayoutUtility.GetRect(selectedDialogue.GetCanvasWidth(), selectedDialogue.GetCanvasHeight());
+            Texture2D bgTexture = Resources.Load("background") as Texture2D;
+            Rect bgTextureCoords = new Rect(0, 0, selectedDialogue.GetCanvasWidth() / DialogueGUIStyles.bgTextureSize,
+                                                    selectedDialogue.GetCanvasHeight() / DialogueGUIStyles.bgTextureSize);
+            GUI.DrawTextureWithTexCoords(canvas, bgTexture, bgTextureCoords);
+        }
 
 
         public static void DrawConnections(DialogueTree selectedDialogue, DialogueNode node) {
@@ -146,44 +209,29 @@ namespace PLAGUEV.Dialogue.Editor {
 
         // TODO move to a dedicated class ??
         public static void DrawQuestSettings(DialogueTree selectedDialogue, DialogueNode node) {
-            int indexQuest = 0;
-            int indexObjective = 0;
-
-            bool[] newStates = node.GetQuestStates();
-            Quest newQuest = node.GetQuest();
-            QuestProgression newProgression = node.GetQuestProgression();
-            string newObjective = node.GetQuestObjective();
+            Quest newQuest = selectedDialogue.GetAllQuests()[node.GetIndexQuest()];
 
             EditorGUILayout.Space(2);
 
             EditorGUILayout.BeginHorizontal();
             DrawLabel("Quest Changer", 130);
-            newStates[0] = EditorGUILayout.Toggle(newStates[0]);
-            GUI.enabled = newStates[0];
-            indexQuest = EditorGUILayout.Popup(indexQuest, selectedDialogue.GetQuestList(), GUILayout.Width(100));
-            newQuest = selectedDialogue.GetQuestByIndex(indexQuest);
+            bool newQuestChanger = EditorGUILayout.Toggle(node.IsQuestChanger());
+            GUI.enabled = newQuestChanger;
+            int newIndexQuest = EditorGUILayout.Popup(node.GetIndexQuest(), selectedDialogue.GetQuestList(), GUILayout.Width(100));
+            newQuest = selectedDialogue.GetQuestByIndex(newIndexQuest);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
             DrawLabel("Update Objective", 130);
-            newStates[1] = EditorGUILayout.Toggle(newStates[1]);
-            GUI.enabled = newStates[1];
-            indexObjective = EditorGUILayout.Popup(indexObjective, newQuest.GetObjectives(), GUILayout.Width(100));
-            newObjective = newQuest.GetObjectiveByIndex(indexObjective);
+            bool newUpdObjective = EditorGUILayout.Toggle(node.IsObjectiveUpdater());
+            GUI.enabled = newUpdObjective;
+            int newIndexObjective = EditorGUILayout.Popup(node.GetIndexObjective(), newQuest.GetObjectives(), GUILayout.Width(100));
             EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            GUI.enabled = newStates[0];
-            DrawLabel("Update Progression", 130);
-            newStates[2] = EditorGUILayout.Toggle(newStates[2]);
-            GUI.enabled = newStates[2];
-            newProgression = (QuestProgression)EditorGUILayout.EnumPopup(node.GetQuestProgression(), GUILayout.Width(100));
-            EditorGUILayout.EndHorizontal();
-
             GUI.enabled = true;
+
             EditorGUILayout.Space(2);
 
-            node.SetQuest(newQuest, newObjective, newProgression, newStates);
+            node.SetQuest(new int[] {newIndexQuest, newIndexObjective}, new bool[] {newQuestChanger, newUpdObjective});
         }
 
         public static void DrawSpeakerField(DialogueNode node) {
@@ -250,6 +298,8 @@ namespace PLAGUEV.Dialogue.Editor {
             int[] newValues = new int[nodeValues.Length];
             string[] labels = new string[] {"Money", "Knowledge", "Glory", "Faith"};
 
+            EditorGUILayout.Space(2);
+
             if (node.GetAction() != ActionType.DEFAULT) {
                 GUI.enabled = false;
             }
@@ -273,7 +323,7 @@ namespace PLAGUEV.Dialogue.Editor {
             node.SetText(newText);
         }
 
-        public static void DrawLabel(string labelText, float width) {
+        private static void DrawLabel(string labelText, float width) {
             EditorGUILayout.LabelField(labelText + ":", EditorStyles.boldLabel, GUILayout.Width(width));
         }
     }
