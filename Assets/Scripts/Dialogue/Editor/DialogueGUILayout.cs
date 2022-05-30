@@ -12,12 +12,9 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] static Vector3 controlPointOffset = new Vector2(20, 0);
         static Color chainColor = new Color(0.3f, 0.5f, 1f);
 
-        private const float playerHeight = 362;
-        private const float cardHeight = 300;
-        private const float defaultWidth = 300;
-
-        private const float rootHeight = 100;
-        private const float rootWidth = 150;
+        static Vector2 player = new Vector2(300, 362);
+        static Vector2 card = new Vector2(300, 300);
+        static Vector2 root = new Vector2(150, 100);
 
 
         public static void DrawDialogueSettings(DialogueTree selectedDialogue) {
@@ -52,7 +49,7 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private static void DrawDialogueConditionsSettings(DialogueTree selectedDialogue) {
-            Quest newQuest = selectedDialogue.GetAllQuests()[selectedDialogue.GetIndexQuest()];
+            Quest newQuest = selectedDialogue.GetQuestByIndex(selectedDialogue.GetIndexQuest());
             QuestProgression newProgression;
     
             DrawLabel("Always Available", 115);
@@ -160,15 +157,13 @@ namespace PLAGUEV.Dialogue.Editor {
 
         public static void ResetNodeHeight(DialogueTree selectedDialogue, DialogueNode node) {
             Rect newRect = node.GetRect();
-            newRect.width = defaultWidth;
 
-            if (node.GetSpeaker() == SpeakerType.CARD) {
-                newRect.height = cardHeight;
+            if (node.GetSpeaker() == SpeakerType.PLAYER) {
+                newRect.size = player;
             } else if (node.IsRoot()) {
-                newRect.height = rootHeight;
-                newRect.width = rootWidth;
+                newRect.size = root;
             } else {
-                newRect.height = playerHeight;
+                newRect.size = card;
             }
 
             node.SetRect(newRect);
@@ -260,7 +255,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
         // TODO move to a dedicated class ??
         public static void DrawQuestSettings(DialogueTree selectedDialogue, DialogueNode node) {
-            Quest newQuest = selectedDialogue.GetAllQuests()[node.GetIndexQuest()];
+            Quest newQuest = selectedDialogue.GetQuestByIndex(selectedDialogue.GetIndexQuest());
 
             EditorGUILayout.Space(2);
 

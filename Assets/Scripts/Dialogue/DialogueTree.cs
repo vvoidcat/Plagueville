@@ -28,13 +28,14 @@ namespace PLAGUEV.Dialogue {
         Quest[] questData = null;
         string[] questList = null;
 
+        private const float cardHeight = 300;
+
 
         void Awake() {
             OnValidate();
         }
 
         private void OnValidate() {
-            BuildQuestList();
             nodeLookup.Clear();
 
             if (nodes.Count > 0) {
@@ -48,15 +49,6 @@ namespace PLAGUEV.Dialogue {
                 }
             }
         }
-
-        private void BuildQuestList() {
-            questData = Resources.LoadAll<Quest>("Quests");
-            questList = new string[questData.Length];
-            for (int i = 0; i < questData.Length; i++) {
-                questList[i] = questData[i].GetQuestName();
-            }
-        }
-
 
         public IEnumerable<DialogueNode> GetAllNodes() {
             return nodes;
@@ -110,10 +102,8 @@ namespace PLAGUEV.Dialogue {
             return canvasHeight;
         }
 
-        public Quest[] GetAllQuests() {
-            return questData;
-        }
 
+#if UNITY_EDITOR
         public Quest GetQuestByIndex(int index) {
             return questData[index];
         }
@@ -122,9 +112,12 @@ namespace PLAGUEV.Dialogue {
             return questList;
         }
 
-
-#if UNITY_EDITOR
         public void Initialize() {
+            if (questData == null || questList == null) {
+                questData = QuestManagement.LoadQuests();
+                questList = QuestManagement.BuildQuestList(questData);
+            }
+
             if (nodes.Count == 0) {
                 CreateRootNode();
             }
@@ -155,7 +148,14 @@ namespace PLAGUEV.Dialogue {
 
             if (parent != null) {
                 Rect newRect = parent.GetRect();
-                newRect.position = new Vector2(newRect.position.x + 100, newRect.position.y + 50);
+                Vector2 creationOffset = new Vector2(newRect.position.x + 100, newRect.position.y + 50);
+                
+                if (parent.GetSpeaker() == SpeakerType.PLAYER) {
+                    newRect.height = cardHeight;
+                    creationOffset.y += 60;
+                }
+
+                newRect.position = creationOffset;
                 newNode.SetRect(newRect);
                 parent.AddChild(newNode.name);
             }

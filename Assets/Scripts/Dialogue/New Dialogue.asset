@@ -29,7 +29,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -54,8 +53,8 @@ MonoBehaviour:
   - 52556abb-b92f-402b-aa6f-0502ccf26207
   rect:
     serializedVersion: 2
-    x: 730
-    y: 7
+    x: 785
+    y: -32
     width: 300
     height: 300
   indexQuest: 0
@@ -66,7 +65,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -102,7 +100,6 @@ MonoBehaviour:
   characterName: 
   isChained: 1
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -125,21 +122,21 @@ MonoBehaviour:
   text: 
   children:
   - 40eff923-75a7-408e-a8a4-5193e4eefee6
+  - c8bd8d97-5573-4fa8-992f-b67f7d973b22
   rect:
     serializedVersion: 2
-    x: 417
-    y: 98
+    x: 363
+    y: 45
     width: 300
     height: 362
   indexQuest: 0
   indexObjective: 0
-  isQuestChanger: 0
+  isQuestChanger: 1
   updObjective: 0
   sprite: {fileID: 0}
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -175,7 +172,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -200,8 +196,8 @@ MonoBehaviour:
   - acf9ffe4-d137-4267-aa7d-b9957b2863a1
   rect:
     serializedVersion: 2
-    x: 105.999985
-    y: 236
+    x: 59
+    y: 221
     width: 300
     height: 300
   indexQuest: 0
@@ -212,7 +208,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -249,7 +244,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -285,6 +279,42 @@ MonoBehaviour:
   - {fileID: -8436535601417244657}
   - {fileID: -5297945298050528649}
   - {fileID: -5346982719779449885}
+  - {fileID: 692087400380732264}
+--- !u!114 &692087400380732264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b36015b173c6442901dc850b88a248, type: 3}
+  m_Name: c8bd8d97-5573-4fa8-992f-b67f7d973b22
+  m_EditorClassIdentifier: 
+  speaker: 0
+  text: 
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 671
+    y: 249
+    width: 300
+    height: 300
+  indexQuest: 0
+  indexObjective: 0
+  isQuestChanger: 0
+  updObjective: 0
+  sprite: {fileID: 0}
+  characterName: 
+  isChained: 0
+  isCustom: 0
+  action: 0
+  location: 0
+  money: 0
+  knowledge: 0
+  glory: 0
+  faith: 0
 --- !u!114 &1662356277832623984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +346,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 100
@@ -353,7 +382,6 @@ MonoBehaviour:
   characterName: 
   isChained: 0
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -390,7 +418,6 @@ MonoBehaviour:
   characterName: 
   isChained: 1
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
@@ -428,7 +455,6 @@ MonoBehaviour:
   characterName: 
   isChained: 1
   isCustom: 0
-  isCleared: 0
   action: 0
   location: 0
   money: 0
