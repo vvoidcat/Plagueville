@@ -7,49 +7,58 @@ namespace PLAGUEV.Quests {
     [CreateAssetMenu(fileName = "New Quest", menuName = "Quest", order = 0)]
     public class Quest : ScriptableObject {
 
+        [System.Serializable] public struct Objective {
+            public string name;
+            public string description;
+        };
+
         [SerializeField] QuestType type;
         [SerializeField] QuestProgression progression;
-        [SerializeField] string questName;
-        [SerializeField] string[] objectives;       // create a struct?
-        int indexQuest = 0;
-        int indexObjective = 0;
+        [SerializeField] Objective[] objectives;
+
 
         void Awake() {
 
         }
 
 
+        public QuestType GetQuestType() {
+            return type;
+        }
+
         public QuestProgression GetProgression() {
             return progression;
         }
 
         public string[] GetObjectives() {
-            return objectives;
+            string[] result = new string[objectives.Length];
+
+            for (int i = 0; i < objectives.Length; i++) {
+                result[i] = objectives[i].name;
+            }
+
+            return result;
         }
 
         public string GetObjectiveByIndex(int index) {
-            return (objectives.Length == 0) ? null : objectives[index];
+            return (objectives.Length == 0) ? null : GetObjectives()[index];
         }
 
-        public string GetQuestName() {
-            return "New Quest";             // customize
-        }
-
-        public int GetIndexQuest() {
-            return indexQuest;
-        }
-
-        public int GetIndexObjective(string objective) {
+        public int GetIndexObjective(string obj) {
             int result = 0;
 
             for (int i = 0; i < objectives.Length; i++) {
-                if (objective == objectives[i]) {
+                if (obj == objectives[i].name) {
                     result = i;
                     break;
                 }
             }
 
             return result;
+        }
+
+        public string GetQuestName() {
+            return name;
         }
     }
 }
