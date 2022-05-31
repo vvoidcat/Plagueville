@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: New Quest 1
   m_EditorClassIdentifier: 
   type: 0
-  progression: 0
+  progression: 1
   objectives:
-  - 
-  - 
-  - 
+  - name: 
+    description: 
+    updateProgression: 0
+    newProgression: 2

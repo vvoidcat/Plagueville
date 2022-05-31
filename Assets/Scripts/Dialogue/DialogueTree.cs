@@ -36,6 +36,9 @@ namespace PLAGUEV.Dialogue {
         }
 
         private void OnValidate() {
+            questData = QuestManagement.LoadQuests();
+            questList = QuestManagement.BuildQuestList(questData);
+
             nodeLookup.Clear();
 
             if (nodes.Count > 0) {
@@ -113,11 +116,6 @@ namespace PLAGUEV.Dialogue {
         }
 
         public void Initialize() {
-            if (questData == null || questList == null) {
-                questData = QuestManagement.LoadQuests();
-                questList = QuestManagement.BuildQuestList(questData);
-            }
-
             if (nodes.Count == 0) {
                 CreateRootNode();
             }

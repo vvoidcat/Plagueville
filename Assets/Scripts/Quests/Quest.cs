@@ -13,13 +13,12 @@ namespace PLAGUEV.Quests {
         };
 
         [SerializeField] QuestType type;
-        [SerializeField] QuestProgression progression;
-        [SerializeField] Objective[] objectives;
+        [SerializeField] QuestProgression progression = QuestProgression.INACTIVE;
+        [SerializeField] Objective[] objectives = new Objective[1] { new Objective() };
 
+        // readonly static Objective first = new Objective { name = "init", description = "quest inactive // DO NOT EDIT" };
+        // readonly static Objective last = new Objective { name = "end", description = "fin // DO NOT EDIT" };
 
-        void Awake() {
-
-        }
 
 
         public QuestType GetQuestType() {
@@ -41,7 +40,21 @@ namespace PLAGUEV.Quests {
         }
 
         public string GetObjectiveByIndex(int index) {
-            return (objectives.Length == 0) ? null : GetObjectives()[index];
+            return objectives[index].name;
+        }
+
+        public string[] GetDescriptions() {
+            string[] result = new string[objectives.Length];
+
+            for (int i = 0; i < objectives.Length; i++) {
+                result[i] = objectives[i].description;
+            }
+
+            return result;
+        }
+
+        public string GetDescriptionByIndex(int index) {
+            return objectives[index].description;
         }
 
         public int GetIndexObjective(string obj) {
