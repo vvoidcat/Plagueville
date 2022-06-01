@@ -17,5 +17,7 @@ MonoBehaviour:
   objectives:
   - name: 
     description: 
-    updateProgression: 0
-    newProgression: 2
+  - name: 
+    description: 
+  - name: 
+    description: 

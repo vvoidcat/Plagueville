@@ -17,8 +17,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 2291
-    y: 246.00006
+    x: 2400
+    y: 266.00006
     width: 300
     height: 300
   indexQuest: 0
@@ -125,12 +125,12 @@ MonoBehaviour:
   - c8bd8d97-5573-4fa8-992f-b67f7d973b22
   rect:
     serializedVersion: 2
-    x: 363
-    y: 45
+    x: 369
+    y: 14
     width: 300
     height: 362
   indexQuest: 0
-  indexObjective: 0
+  indexObjective: 2
   isQuestChanger: 1
   updObjective: 0
   sprite: {fileID: 0}
@@ -160,8 +160,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 2315
-    y: -13.999939
+    x: 2401
+    y: -48.99994
     width: 300
     height: 300
   indexQuest: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 59
-    y: 221
+    y: 176
     width: 300
     height: 300
   indexQuest: 0
@@ -232,8 +232,8 @@ MonoBehaviour:
   - 91531342-2349-479c-8eca-e02f26120d73
   rect:
     serializedVersion: 2
-    x: 1002
-    y: 250.99998
+    x: 1015
+    y: 241
     width: 300
     height: 300
   indexQuest: 0
@@ -297,8 +297,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 671
-    y: 249
+    x: 681
+    y: 235
     width: 300
     height: 300
   indexQuest: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
   - 1f83a86e-a7ed-4782-8d3b-91cf821daad3
   rect:
     serializedVersion: 2
-    x: 1681
+    x: 1750
     y: 251.00003
     width: 300
     height: 300

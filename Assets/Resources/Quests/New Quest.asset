@@ -15,6 +15,9 @@ MonoBehaviour:
   type: 0
   progression: 0
   objectives:
-  - qq
-  - qqq
-  - qqqqq
+  - name: qqq
+    description: Do stuff
+  - name: q
+    description: Do more stuff
+  - name: q...
+    description: Do stuff (again)

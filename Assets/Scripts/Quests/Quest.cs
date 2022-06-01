@@ -16,10 +16,6 @@ namespace PLAGUEV.Quests {
         [SerializeField] QuestProgression progression = QuestProgression.INACTIVE;
         [SerializeField] Objective[] objectives = new Objective[1] { new Objective() };
 
-        // readonly static Objective first = new Objective { name = "init", description = "quest inactive // DO NOT EDIT" };
-        // readonly static Objective last = new Objective { name = "end", description = "fin // DO NOT EDIT" };
-
-
 
         public QuestType GetQuestType() {
             return type;

@@ -21,7 +21,14 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] Vector2 draggingNodeOffset;
         [NonSerialized] Vector2 draggingCanvasOffset;
         [NonSerialized] Vector2 dlgSettingsOffset = new Vector2(0, -44);
+
         Vector2 scrollPosition;
+        Vector2 mousePosition;
+        
+        float scaling;
+        Rect groupRect;
+
+        const float maxGraphSize = 16000.0f;
 
 
         [MenuItem("Window/Dialogue Editor")]
@@ -66,19 +73,25 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DialogueGUILayout.DrawDialogueSettings(selectedDialogue);
+                ProcessScrolling();
                 ProcessEvents();
 
-                scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-                DialogueGUILayout.DrawBackground(selectedDialogue);
+                DrawView();
+                // ProcessEvents();
 
-                foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
-                    DialogueNode[] upd = DialogueGUILayout.DrawNode(selectedDialogue, node,
-                                                                    new DialogueNode[] {parentNode, linkerNode, deadNode});
-                    UpdateNodes(upd);
-                    DialogueGUILayout.DrawConnections(selectedDialogue, node);
-                }
+                // scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
+                // DialogueGUILayout.DrawBackground(selectedDialogue);
 
-                EditorGUILayout.EndScrollView();
+                // foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
+                //     DialogueNode[] upd = DialogueGUILayout.DrawNode(selectedDialogue, node,
+                //                                                     new DialogueNode[] {parentNode, linkerNode, deadNode});
+                //     UpdateNodes(upd);
+                //     DialogueGUILayout.DrawConnections(selectedDialogue, node);
+                // }
+
+                //EditorGUILayout.EndScrollView();
+
+                //DialogueGUILayout.DrawDialogueSettings(selectedDialogue);
 
                 if (parentNode != null) {
                     selectedDialogue.CreateNode(parentNode);
@@ -91,6 +104,65 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
+
+        private void ProcessScrolling() {
+            mousePosition = (Event.current.mousePosition + scrollPosition / scaling);
+
+            if (Event.current.type == EventType.ScrollWheel && Event.current.control) {
+                float shiftMultiplier = Event.current.shift ? 4 : 1;
+                scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 2f);
+                Event.current.Use();
+            }
+        }
+
+        private void ScaleWindowGroup() {
+            GUI.EndGroup();
+
+            groupRect.x = 0;
+            groupRect.y = 120;
+            groupRect.width = (maxGraphSize + scrollPosition.x) / scaling;
+            groupRect.height = (maxGraphSize + scrollPosition.y) / scaling;
+
+            GUI.BeginGroup(groupRect);
+        }
+
+        private void ScaleScrollGroup() {
+            GUI.EndGroup();
+        
+            groupRect.x = -scrollPosition.x / scaling;
+            groupRect.y = -scrollPosition.y / scaling;
+            groupRect.width = (position.width + scrollPosition.x - GUI.skin.verticalScrollbar.fixedWidth) / scaling;
+            groupRect.height = (position.height + scrollPosition.y - 21 - GUI.skin.horizontalScrollbar.fixedHeight) / scaling;
+
+            GUI.BeginGroup(groupRect);
+        }
+
+        private void DrawView() {
+            ScaleWindowGroup();
+
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, true, true);
+            ScaleScrollGroup();
+
+            Matrix4x4 old = GUI.matrix;
+            Matrix4x4 translation = Matrix4x4.TRS(new Vector3(0, 21, 1), Quaternion.identity, Vector3.one);
+            Matrix4x4 scale = Matrix4x4.Scale(new Vector3(scaling, scaling, scaling));
+            GUI.matrix = translation * scale * translation.inverse;
+
+            GUILayout.BeginArea(new Rect(0, 0, maxGraphSize * scaling, maxGraphSize * scaling));
+    
+            DialogueGUILayout.DrawBackground(selectedDialogue);
+            foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
+                DialogueNode[] upd = DialogueGUILayout.DrawNode(selectedDialogue, node,
+                                                                new DialogueNode[] {parentNode, linkerNode, deadNode});
+                UpdateNodes(upd);
+                DialogueGUILayout.DrawConnections(selectedDialogue, node);
+            }
+
+            GUILayout.EndArea();
+
+            GUI.matrix = old;
+            EditorGUILayout.EndScrollView();
+        }
 
         private void ProcessEvents() {
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
@@ -119,11 +191,11 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
-        private DialogueNode GetNodeAtPoint(Vector2 mousePosition) {
+        private DialogueNode GetNodeAtPoint(Vector2 mousePos) {
             DialogueNode foundNode = null;
 
             foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
-                if (node.GetRect().Contains(mousePosition)) {
+                if (node.GetRect().Contains(mousePos)) {
                     foundNode = node;
                 }
             }
