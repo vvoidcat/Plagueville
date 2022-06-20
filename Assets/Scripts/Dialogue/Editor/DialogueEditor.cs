@@ -25,7 +25,7 @@ namespace PLAGUEV.Dialogue.Editor {
         Vector2 scrollPosition;
         Vector2 mousePosition;
         
-        float scaling;
+        float scaling = 1f;
         Rect groupRect;
 
         const float maxGraphSize = 16000.0f;
@@ -73,7 +73,7 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DialogueGUILayout.DrawDialogueSettings(selectedDialogue);
-                ProcessScrolling();
+                // ProcessScrolling();
                 ProcessEvents();
 
                 DrawView();
@@ -105,15 +105,15 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
 
-        private void ProcessScrolling() {
-            mousePosition = (Event.current.mousePosition + scrollPosition / scaling);
+        // private void ProcessScrolling() {
+        //     mousePosition = (Event.current.mousePosition + scrollPosition / scaling);
 
-            if (Event.current.type == EventType.ScrollWheel && Event.current.control) {
-                float shiftMultiplier = Event.current.shift ? 4 : 1;
-                scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 2f);
-                Event.current.Use();
-            }
-        }
+        //     if (Event.current.type == EventType.ScrollWheel && Event.current.control) {
+        //         float shiftMultiplier = Event.current.shift ? 4 : 1;
+        //         scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 2f);
+        //         Event.current.Use();
+        //     }
+        // }
 
         private void ScaleWindowGroup() {
             GUI.EndGroup();
@@ -128,7 +128,7 @@ namespace PLAGUEV.Dialogue.Editor {
 
         private void ScaleScrollGroup() {
             GUI.EndGroup();
-        
+
             groupRect.x = -scrollPosition.x / scaling;
             groupRect.y = -scrollPosition.y / scaling;
             groupRect.width = (position.width + scrollPosition.x - GUI.skin.verticalScrollbar.fixedWidth) / scaling;
@@ -138,8 +138,9 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void DrawView() {
-            ScaleWindowGroup();
+            Debug.Log("start; scaling = " + scaling);
 
+            ScaleWindowGroup();
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, true, true);
             ScaleScrollGroup();
 
@@ -165,8 +166,16 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void ProcessEvents() {
+            mousePosition = (Event.current.mousePosition + scrollPosition) / scaling;
+
+            if (Event.current.type == EventType.ScrollWheel && Event.current.control) {
+                float shiftMultiplier = Event.current.shift ? 4 : 1;
+                scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 2f);
+                Event.current.Use();
+            }
+
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
-                draggingNode = GetNodeAtPoint(Event.current.mousePosition + scrollPosition + dlgSettingsOffset);
+                draggingNode = GetNodeAtPoint((Event.current.mousePosition + scrollPosition + dlgSettingsOffset) / scaling);        // CHANGE
 
                 if (draggingNode != null) {
                     draggingNodeOffset = draggingNode.GetRect().position - Event.current.mousePosition;
@@ -178,11 +187,11 @@ namespace PLAGUEV.Dialogue.Editor {
                 }
             } else if (Event.current.type == EventType.MouseDrag && draggingNode != null) {
                 Rect newRect = draggingNode.GetRect();
-                newRect.position = Event.current.mousePosition + draggingNodeOffset;
+                newRect.position = Event.current.mousePosition + draggingNodeOffset;        // CHANGE
                 draggingNode.SetRect(newRect);
                 Repaint();
             } else if (Event.current.type == EventType.MouseDrag && draggingCanvas) {
-                scrollPosition = draggingCanvasOffset - Event.current.mousePosition;
+                scrollPosition = draggingCanvasOffset - Event.current.mousePosition;        // CHANGE
                 Repaint();
             } else if (Event.current.type == EventType.MouseUp && draggingNode != null) {
                 draggingNode = null;

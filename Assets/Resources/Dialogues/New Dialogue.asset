@@ -53,8 +53,8 @@ MonoBehaviour:
   - 52556abb-b92f-402b-aa6f-0502ccf26207
   rect:
     serializedVersion: 2
-    x: 785
-    y: -32
+    x: 787
+    y: 67
     width: 300
     height: 300
   indexQuest: 0
@@ -125,8 +125,8 @@ MonoBehaviour:
   - c8bd8d97-5573-4fa8-992f-b67f7d973b22
   rect:
     serializedVersion: 2
-    x: 369
-    y: 14
+    x: 424
+    y: 71.000015
     width: 300
     height: 362
   indexQuest: 0
@@ -196,8 +196,8 @@ MonoBehaviour:
   - acf9ffe4-d137-4267-aa7d-b9957b2863a1
   rect:
     serializedVersion: 2
-    x: 59
-    y: 176
+    x: 200
+    y: 558
     width: 300
     height: 300
   indexQuest: 0
@@ -232,8 +232,8 @@ MonoBehaviour:
   - 91531342-2349-479c-8eca-e02f26120d73
   rect:
     serializedVersion: 2
-    x: 1015
-    y: 241
+    x: 1113
+    y: 133
     width: 300
     height: 300
   indexQuest: 0
@@ -297,8 +297,8 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 681
-    y: 235
+    x: 832
+    y: 421
     width: 300
     height: 300
   indexQuest: 0
@@ -334,8 +334,8 @@ MonoBehaviour:
   - d0856ee8-65c1-430f-b685-5dbd8a2a7686
   rect:
     serializedVersion: 2
-    x: 1362
-    y: 42.00006
+    x: 1410
+    y: 77.00006
     width: 300
     height: 362
   indexQuest: 0
@@ -370,8 +370,8 @@ MonoBehaviour:
   - febe780a-b30b-4db4-9597-8605ff1b53eb
   rect:
     serializedVersion: 2
-    x: 0
-    y: 138.99998
+    x: 159.00002
+    y: 107
     width: 150
     height: 100
   indexQuest: 0
@@ -406,8 +406,8 @@ MonoBehaviour:
   - 1f83a86e-a7ed-4782-8d3b-91cf821daad3
   rect:
     serializedVersion: 2
-    x: 1750
-    y: 251.00003
+    x: 1677
+    y: 257.00003
     width: 300
     height: 300
   indexQuest: 0
