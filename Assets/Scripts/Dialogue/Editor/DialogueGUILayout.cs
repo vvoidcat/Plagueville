@@ -55,7 +55,7 @@ namespace PLAGUEV.Dialogue.Editor {
             DrawLabel("Always Available", 115);
             bool newAvailability = EditorGUILayout.Toggle(selectedDialogue.IsAlwaysAvailable(), GUILayout.Width(50));
 
-            GUI.enabled = selectedDialogue.IsAlwaysAvailable();
+            GUI.enabled = !selectedDialogue.IsAlwaysAvailable();
             EditorGUILayout.LabelField("Quest: ", GUILayout.Width(50));
             int newIndexQuest = EditorGUILayout.Popup(selectedDialogue.GetIndexQuest(), selectedDialogue.GetQuestList(), GUILayout.Width(100));
             newQuest = selectedDialogue.GetQuestByIndex(newIndexQuest);

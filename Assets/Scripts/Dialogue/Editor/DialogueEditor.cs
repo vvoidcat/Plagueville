@@ -73,25 +73,8 @@ namespace PLAGUEV.Dialogue.Editor {
                 EditorGUILayout.LabelField("dialogue selected: N/A", EditorStyles.boldLabel);
             } else {
                 DialogueGUILayout.DrawDialogueSettings(selectedDialogue);
-                // ProcessScrolling();
                 ProcessEvents();
-
                 DrawView();
-                // ProcessEvents();
-
-                // scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-                // DialogueGUILayout.DrawBackground(selectedDialogue);
-
-                // foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
-                //     DialogueNode[] upd = DialogueGUILayout.DrawNode(selectedDialogue, node,
-                //                                                     new DialogueNode[] {parentNode, linkerNode, deadNode});
-                //     UpdateNodes(upd);
-                //     DialogueGUILayout.DrawConnections(selectedDialogue, node);
-                // }
-
-                //EditorGUILayout.EndScrollView();
-
-                //DialogueGUILayout.DrawDialogueSettings(selectedDialogue);
 
                 if (parentNode != null) {
                     selectedDialogue.CreateNode(parentNode);
@@ -104,22 +87,11 @@ namespace PLAGUEV.Dialogue.Editor {
             }
         }
 
-
-        // private void ProcessScrolling() {
-        //     mousePosition = (Event.current.mousePosition + scrollPosition / scaling);
-
-        //     if (Event.current.type == EventType.ScrollWheel && Event.current.control) {
-        //         float shiftMultiplier = Event.current.shift ? 4 : 1;
-        //         scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 2f);
-        //         Event.current.Use();
-        //     }
-        // }
-
         private void ScaleWindowGroup() {
             GUI.EndGroup();
 
             groupRect.x = 0;
-            groupRect.y = 120;
+            groupRect.y = 70 / scaling;
             groupRect.width = (maxGraphSize + scrollPosition.x) / scaling;
             groupRect.height = (maxGraphSize + scrollPosition.y) / scaling;
 
@@ -131,17 +103,15 @@ namespace PLAGUEV.Dialogue.Editor {
 
             groupRect.x = -scrollPosition.x / scaling;
             groupRect.y = -scrollPosition.y / scaling;
-            groupRect.width = (position.width + scrollPosition.x - GUI.skin.verticalScrollbar.fixedWidth) / scaling;
-            groupRect.height = (position.height + scrollPosition.y - 21 - GUI.skin.horizontalScrollbar.fixedHeight) / scaling;
+            groupRect.width = (position.width + scrollPosition.x) / scaling;
+            groupRect.height = (position.height + scrollPosition.y) / scaling;
 
             GUI.BeginGroup(groupRect);
         }
 
         private void DrawView() {
-            Debug.Log("start; scaling = " + scaling);
-
             ScaleWindowGroup();
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, true, true);
+            EditorGUILayout.BeginScrollView(scrollPosition, true, true);
             ScaleScrollGroup();
 
             Matrix4x4 old = GUI.matrix;
@@ -149,7 +119,7 @@ namespace PLAGUEV.Dialogue.Editor {
             Matrix4x4 scale = Matrix4x4.Scale(new Vector3(scaling, scaling, scaling));
             GUI.matrix = translation * scale * translation.inverse;
 
-            GUILayout.BeginArea(new Rect(0, 0, maxGraphSize * scaling, maxGraphSize * scaling));
+            GUILayout.BeginArea(new Rect(0, 120, maxGraphSize * scaling, maxGraphSize * scaling));
     
             DialogueGUILayout.DrawBackground(selectedDialogue);
             foreach (DialogueNode node in selectedDialogue.GetAllNodes()) {
@@ -168,14 +138,15 @@ namespace PLAGUEV.Dialogue.Editor {
         private void ProcessEvents() {
             mousePosition = (Event.current.mousePosition + scrollPosition) / scaling;
 
-            if (Event.current.type == EventType.ScrollWheel && Event.current.control) {
+            if (Event.current.type == EventType.ScrollWheel) {
                 float shiftMultiplier = Event.current.shift ? 4 : 1;
-                scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 2f);
+                scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 1f);
                 Event.current.Use();
             }
 
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
-                draggingNode = GetNodeAtPoint((Event.current.mousePosition + scrollPosition + dlgSettingsOffset) / scaling);        // CHANGE
+                float temp = CalculateScalingOffset();
+                draggingNode = GetNodeAtPoint((Event.current.mousePosition + scrollPosition + dlgSettingsOffset * temp) / scaling);
 
                 if (draggingNode != null) {
                     draggingNodeOffset = draggingNode.GetRect().position - Event.current.mousePosition;
@@ -187,11 +158,11 @@ namespace PLAGUEV.Dialogue.Editor {
                 }
             } else if (Event.current.type == EventType.MouseDrag && draggingNode != null) {
                 Rect newRect = draggingNode.GetRect();
-                newRect.position = Event.current.mousePosition + draggingNodeOffset;        // CHANGE
+                newRect.position = Event.current.mousePosition + draggingNodeOffset;
                 draggingNode.SetRect(newRect);
                 Repaint();
             } else if (Event.current.type == EventType.MouseDrag && draggingCanvas) {
-                scrollPosition = draggingCanvasOffset - Event.current.mousePosition;        // CHANGE
+                scrollPosition = draggingCanvasOffset - Event.current.mousePosition;
                 Repaint();
             } else if (Event.current.type == EventType.MouseUp && draggingNode != null) {
                 draggingNode = null;
@@ -210,6 +181,20 @@ namespace PLAGUEV.Dialogue.Editor {
             }
 
             return foundNode;
+        }
+
+        private float CalculateScalingOffset() {
+            float result = 0f;
+
+            if (scaling >= 0.85f && scaling <= 1f) {
+                result = 4f * scaling;
+            } else if (scaling >= 0.65f && scaling <= 0.84f) {
+                result = 4.4f * scaling;
+            } else {
+                result = 5.6f * scaling;
+            }
+
+            return result;
         }
 
         private void ResetNodes() {
