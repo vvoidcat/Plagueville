@@ -23,7 +23,6 @@ namespace PLAGUEV.Dialogue.Editor {
         [NonSerialized] Vector2 dlgSettingsOffset = new Vector2(0, -44);
 
         Vector2 scrollPosition;
-        Vector2 mousePosition;
         
         float scaling = 1f;
         Rect groupRect;
@@ -115,7 +114,7 @@ namespace PLAGUEV.Dialogue.Editor {
             ScaleScrollGroup();
 
             Matrix4x4 old = GUI.matrix;
-            Matrix4x4 translation = Matrix4x4.TRS(new Vector3(0, 21, 1), Quaternion.identity, Vector3.one);
+            Matrix4x4 translation = Matrix4x4.TRS(new Vector3(0, 0, 1), Quaternion.identity, Vector3.one);
             Matrix4x4 scale = Matrix4x4.Scale(new Vector3(scaling, scaling, scaling));
             GUI.matrix = translation * scale * translation.inverse;
 
@@ -136,8 +135,6 @@ namespace PLAGUEV.Dialogue.Editor {
         }
 
         private void ProcessEvents() {
-            mousePosition = (Event.current.mousePosition + scrollPosition) / scaling;
-
             if (Event.current.type == EventType.ScrollWheel) {
                 float shiftMultiplier = Event.current.shift ? 4 : 1;
                 scaling = Mathf.Clamp(scaling - Event.current.delta.y * 0.01f * shiftMultiplier, 0.5f, 1f);
@@ -146,7 +143,8 @@ namespace PLAGUEV.Dialogue.Editor {
 
             if (Event.current.type == EventType.MouseDown && draggingNode == null) {
                 float temp = CalculateScalingOffset();
-                draggingNode = GetNodeAtPoint((Event.current.mousePosition + scrollPosition + dlgSettingsOffset * temp) / scaling);
+                draggingNode = GetNodeAtPoint((Event.current.mousePosition + scrollPosition + dlgSettingsOffset * temp)
+                                               / scaling);
 
                 if (draggingNode != null) {
                     draggingNodeOffset = draggingNode.GetRect().position - Event.current.mousePosition;
@@ -189,9 +187,9 @@ namespace PLAGUEV.Dialogue.Editor {
             if (scaling >= 0.85f && scaling <= 1f) {
                 result = 4f * scaling;
             } else if (scaling >= 0.65f && scaling <= 0.84f) {
-                result = 4.4f * scaling;
+                result = 4.2f * scaling;
             } else {
-                result = 5.6f * scaling;
+                result = 5f * scaling;
             }
 
             return result;
