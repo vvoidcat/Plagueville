@@ -196,8 +196,8 @@ MonoBehaviour:
   - acf9ffe4-d137-4267-aa7d-b9957b2863a1
   rect:
     serializedVersion: 2
-    x: 155.99994
-    y: 129
+    x: 152.99994
+    y: 107
     width: 300
     height: 300
   indexQuest: 0

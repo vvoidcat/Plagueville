@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using PLAGUEV.Core;
+using PLAGUEV.Stats;
 
 
 namespace PLAGUEV.UI {

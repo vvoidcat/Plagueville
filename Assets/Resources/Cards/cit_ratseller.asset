@@ -14,10 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: 
   sprite: {fileID: 21300000, guid: ff119eb98194b3240ba38940480c813a, type: 3}
-  type: 0
+  isUnique: 0
   canAppearEverywhere: 0
   locations: 00000000010000000300000002000000
-  hasClassTrees: 0
-  useMainTree: 1
-  dialogueTreeMain: {fileID: 0}
-  dialogueTreeAlternate: {fileID: 0}
+  dialogues:
+  - dialogueTree: {fileID: 0}
+    classRestriction: 0
+    isOneTimer: 0
+    isCleared: 0
+  - dialogueTree: {fileID: 0}
+    classRestriction: 0
+    isOneTimer: 0
+    isCleared: 0
+  quest: {fileID: 0}

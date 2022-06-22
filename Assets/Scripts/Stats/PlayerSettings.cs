@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PLAGUEV.Core {
+namespace PLAGUEV.Stats {
 
     public class PlayerSettings : MonoBehaviour {
 

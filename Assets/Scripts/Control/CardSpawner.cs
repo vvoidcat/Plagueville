@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using PLAGUEV.Dialogue;
 using PLAGUEV.Cards;
-using PLAGUEV.Core;
+using PLAGUEV.Stats;
 
 namespace PLAGUEV.Control {
 
@@ -65,26 +65,9 @@ namespace PLAGUEV.Control {
         }
 
         private void InitializeCards() {
-            CardType cardType = new CardType();
-
-            switch (playerSettings.GetPlayerClass()) {
-                case PlayerClass.THIEF:
-                    cardType = CardType.THIEF;
-                    break;
-                case PlayerClass.WIZARD:
-                    cardType = CardType.WIZARD;
-                    break;
-                case PlayerClass.GUARD:
-                    cardType = CardType.GUARD;
-                    break;
-                case PlayerClass.NUN:
-                    cardType = CardType.NUN;
-                    break;
-            }
-
             foreach (CardData data in cardDatas) {
                 data.SetMaxCounter(defaultMaxCounter, uniqueMaxCounter);
-                data.SetDialogueTree(cardType);
+                // data.SetDialogueTree(cardType);
             }
         }
 
@@ -97,6 +80,7 @@ namespace PLAGUEV.Control {
                     cardData.UpdateCounter();
                     ChooseCard();
                 } else {
+                    // select DialogueTree
                     // select DialogueNode
                     // check if there's a child of the player response node that is chained
                     // if there is, remember the card && check if there's any player node next && get the next node in the chain if there isn't &&
@@ -123,7 +107,7 @@ namespace PLAGUEV.Control {
 
             card = Instantiate(cardPrefab, transform);
             card.GetComponent<SpriteRenderer>().sprite = cardData.sprite;
-            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);         // should this be configurable in the dialogue system instead?..
+            card.transform.GetChild(0).GetComponent<TextMeshPro>().SetText(cardData.characterName);         // move to UI
 
             // card.transform.GetChild(1).GetComponent<TextMeshPro>().SetText(cardData.characterName);      // dialogue node text
         }

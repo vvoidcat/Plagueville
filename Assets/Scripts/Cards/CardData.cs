@@ -3,45 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using PLAGUEV.Dialogue;
 using PLAGUEV.Quests;
+using PLAGUEV.Stats;
 
 namespace PLAGUEV.Cards {
 
     [CreateAssetMenu(fileName = "New Card", menuName = "Card", order = 0)]
     public class CardData : ScriptableObject {
 
+        [System.Serializable] public struct Dialogue {
+            public DialogueTree dialogueTree;
+            public PlayerClass classRestriction;
+            public bool isOneTimer;
+            public bool isCleared;
+        }
+
         public string characterName = null;
         public Sprite sprite = null;
-        public CardType type;
+        public bool isUnique = false;
         public bool canAppearEverywhere = false;
         public LocationType[] locations = new LocationType[1];
-        public bool hasClassTrees = false;
-        public DialogueTree dialogueTreeMain = null;
-        public DialogueTree dialogueTreeAlternate = null;
-        DialogueTree dialogueTree = null;
+
+        [SerializeField] Dialogue[] dialogues = new Dialogue[1] { new Dialogue() }; 
+
         public Quest quest = null;
 
         int counter = 0;
         int maxCounter = 0;
         bool isReady = true;
-        
-
-        // this should go to dialogue choices
-        // [Range(-100, 100)] [SerializeField] int money = 0;
-        // [Range(-100, 100)] [SerializeField] int knowledge = 0;
-        // [Range(-100, 100)] [SerializeField] int glory = 0;
-        // [Range(-100, 100)] [SerializeField] int faith = 0;
 
 
-        public void SetDialogueTree(CardType cardType) {
-            if (hasClassTrees && type == cardType) {
-                dialogueTree = dialogueTreeAlternate;
-            } else {
-                dialogueTree = dialogueTreeMain;
-            }
+        public DialogueTree ChooseDialogueTree() {
+            DialogueTree result = null;
+
+            // randomizer
+
+            return result;
         }
 
         public void SetMaxCounter(int defaultMax, int uniqueMax) {
-            if (type == CardType.UNIQUE) {
+            if (isUnique) {
                 maxCounter = uniqueMax;
             } else {
                 maxCounter = defaultMax;

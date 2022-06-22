@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using PLAGUEV.Core;
+using PLAGUEV.Stats;
 
 namespace PLAGUEV.Control {
 
